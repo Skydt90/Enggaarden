@@ -11,12 +11,14 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * Tell eloquent to use username as PK
+     * and set auto increment to false
      */
+    protected $primaryKey = 'username';
+    public $incrementing = false;
+    
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'username', 'password',
     ];
 
     /**
