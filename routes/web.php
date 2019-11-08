@@ -14,5 +14,5 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('/');
-
+Route::get('/test', 'HomeController@testPage');
 

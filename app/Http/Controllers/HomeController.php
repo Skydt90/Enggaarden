@@ -14,4 +14,9 @@ class HomeController extends Controller
             return view('home');
         }
     }
+
+    public function testPage()
+    {
+        return view('members.index');
+    }
 }
