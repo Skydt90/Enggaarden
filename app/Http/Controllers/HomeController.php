@@ -17,6 +17,6 @@ class HomeController extends Controller
 
     public function testPage()
     {
-        return view('members.index');
+        return view('members.show');
     }
 }

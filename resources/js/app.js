@@ -7,6 +7,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+Vue.config.devtools = false; //disable download tip message
+Vue.config.productionTip = false; //disable production mode tip
 
 /**
  * The following block of code may be used to automatically register your

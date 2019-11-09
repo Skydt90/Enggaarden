@@ -72,9 +72,11 @@
             </div>
         </div>
         <br>
-        @include('members.partials.delete-modal')
+        @include('components.modals.delete-modal')
+        
         <a href="{{ route('/') }}" class="btn btn-primary">Tilbage</a>
         <button type="button" class="delete-modal-button btn btn-danger col-md-1">Slet</button>
     </div>
       		
 @endsection
+<script src="{{ asset('js/members.js') }}" defer></script>
