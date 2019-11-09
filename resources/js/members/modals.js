@@ -1,13 +1,14 @@
-$(document).ready(function() {
-    
-    console.log('loaded!');
+$(function() {
 
+    //delete modal
     $('.delete-modal-button').on('click', function() {
         $('#delete-modal').modal(); 
     });
-});
 
-/* document.addEventListener('DOMContentLoaded', function() {
-  
+    //register modal
+    $('.register-modal-button').on('click', function() {
+        $('#register-modal').modal();
+    });
+
+
 });
- */

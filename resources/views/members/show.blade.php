@@ -73,9 +73,11 @@
         </div>
         <br>
         @include('components.modals.delete-modal')
-        
-        <a href="{{ route('/') }}" class="btn btn-primary">Tilbage</a>
-        <button type="button" class="delete-modal-button btn btn-danger col-md-1">Slet</button>
+        @include('components.modals.register-form-modal')
+
+        <a href="{{ route('/') }}" class="btn btn-sm btn-warning">Tilbage</a>
+        <button type="button" class="register-modal-button btn btn-sm btn-primary col-md-1">Rediger</button>
+        <button data-id="{{ $member->id ?? null }}" type="button" class="delete-modal-button btn btn-sm btn-danger col-md-1">Slet</button>
     </div>
       		
 @endsection
