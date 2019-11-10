@@ -15,4 +15,5 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('/');
 Route::get('/test', 'HomeController@testPage');
+Route::delete('/test/delete/{id}', 'HomeController@destroyTest');
 

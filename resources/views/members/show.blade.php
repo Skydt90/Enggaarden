@@ -75,9 +75,9 @@
         @include('components.modals.delete-modal')
         @include('components.modals.register-form-modal')
 
-        <a href="{{ route('/') }}" class="btn btn-sm btn-warning">Tilbage</a>
-        <button type="button" class="register-modal-button btn btn-sm btn-primary col-md-1">Rediger</button>
-        <button data-id="{{ $member->id ?? null }}" type="button" class="delete-modal-button btn btn-sm btn-danger col-md-1">Slet</button>
+        <a href="{{ route('/') }}" class="btn btn-warning col-md-1">Tilbage</a>
+        <button type="button" data-toggle="modal" data-target="#register-modal" class="btn btn-primary col-md-1">Rediger</button>
+        <button type="button" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id ?? null }}" class="btn btn-danger col-md-1">Slet</button>
     </div>
       		
 @endsection

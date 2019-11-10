@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-danger col-md-2 mr-2 mt-2" data-dismiss="modal">Nej</button>
-                        <button type="button" class="btn btn-success col-md-2 mt-2">Ja</button>
+                        <button type="button" class="member-delete-button btn btn-success col-md-2 mt-2" data-id="{{ $member->id ?? 1 }}" data-dismiss="modal" >Ja</button>
                     </div>
                 </div>
             </div>

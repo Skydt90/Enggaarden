@@ -1,14 +1,33 @@
-$(function() {
-
+document.addEventListener("DOMContentLoaded", function() {
+    
     //delete modal
-    $('.delete-modal-button').on('click', function() {
-        $('#delete-modal').modal(); 
+    document.querySelector('.member-delete-button').addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        const request = 'DELETE';
+        const url = `/test/delete/${id}`;
+
+        ajaxRequests(request, url);
     });
 
-    //register modal
-    $('.register-modal-button').on('click', function() {
-        $('#register-modal').modal();
-    });
+    //generalised function to handle all ajax calls. Work in progress!
+    function ajaxRequests(request, url, data, showSuccess, callback) {
+        const xhr = new XMLHttpRequest();
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        xhr.open(request, url);
+        xhr.setRequestHeader('X-CSRF-TOKEN', token);
+        xhr.send();
+        xhr.onload = function() {
+            
+            if(this.status >= 200 && this.status < 300) {
 
+                if(callback !== undefined) {
+                    return callback();
+                }
+                return;
+            } 
+        }
+        xhr.onerror(); 
+    }
 
 });
