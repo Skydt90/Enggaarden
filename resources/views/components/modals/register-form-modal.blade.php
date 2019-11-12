@@ -33,7 +33,7 @@
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label for="member_type">Medlemstype</label>
-                            <select class="form-control">
+                            <select class="form-control" name="member_type">
                                 <option>Primær</option>
                                 <option>Sekundær</option>
                             </select>

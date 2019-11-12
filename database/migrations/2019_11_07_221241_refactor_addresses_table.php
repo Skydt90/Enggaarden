@@ -21,7 +21,6 @@ class RefactorAddressesTable extends Migration
             $table->renameColumn('zipCode', 'zip_code');
             $table->timestamps();
             //$table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
-
         });
     }
 

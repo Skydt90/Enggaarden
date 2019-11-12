@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const url = `/test/delete/${id}`;
 
         ajaxRequests(request, url, null, true, function(result) {
-            console.log('success status from ajax callback: ' + result);
+            console.log('status from ajax callback: ' + result);
         });
     });
 
