@@ -25,9 +25,9 @@ class RefactorSublogsTable extends Migration
      */
     public function down()
     {
-        Schema::rename('user_types', 'userTypes');
+        Schema::rename('sub_logs', 'subLogs');
 
-        Schema::table('userTypes', function (Blueprint $table) {
+        Schema::table('subLogs', function (Blueprint $table) {
             $table->renameColumn('id', 'subLogId');
             $table->renameColumn('edit_date', 'editDate');
             $table->renameColumn('member_id', 'memberId');
