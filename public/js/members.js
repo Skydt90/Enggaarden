@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const request = 'DELETE';
         const url = `/test/delete/${id}`;
 
-        ajaxRequests(request, url, null, true, function() {
-            console.log('success cb!');
+        ajaxRequests(request, url, null, true, function(result) {
+            console.log('success status from ajax callback: ' + result);
         });
     });
 
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
 
                 if(callback !== undefined) {
-                    return callback();
+                    return callback(this.status);
                 }
                 return;
             } 
