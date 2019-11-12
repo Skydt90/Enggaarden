@@ -74,9 +74,11 @@
         <br>
         @include('components.modals.delete-modal')
         @include('components.modals.register-form-modal')
+        @include('components.modals.success-modal')
 
         <a href="{{ route('/') }}" class="btn btn-warning col-md-1">Tilbage</a>
-        <button type="button" data-toggle="modal" data-target="#register-modal" class="btn btn-primary col-md-1">Rediger</button>
+        <button type="button" id="success-button" data-toggle="modal" data-target="#success-modal" style="display:none" class="btn btn-primary col-md-1">Success</button>
+        <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-primary col-md-1">Rediger</button>
         <button type="button" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id ?? null }}" class="btn btn-danger col-md-1">Slet</button>
     </div>
       		

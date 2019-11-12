@@ -6,7 +6,9 @@ document.addEventListener("DOMContentLoaded", function() {
         const request = 'DELETE';
         const url = `/test/delete/${id}`;
 
-        ajaxRequests(request, url);
+        ajaxRequests(request, url, null, true, function() {
+            console.log('success cb!');
+        });
     });
 
     //generalised function to handle all ajax calls. Work in progress!
@@ -21,13 +23,16 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if(this.status >= 200 && this.status < 300) {
 
+                if(showSuccess) {
+                    document.getElementById('success-button').click();
+                }
+
                 if(callback !== undefined) {
                     return callback();
                 }
                 return;
             } 
         }
-        xhr.onerror(); 
     }
 
 });
