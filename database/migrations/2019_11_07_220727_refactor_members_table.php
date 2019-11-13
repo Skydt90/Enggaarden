@@ -25,7 +25,7 @@ class RefactorMembersTable extends Migration
             //$table->timestamp('creation_date')->change();
             $table->renameColumn('memberType', 'member_type');
             $table->renameColumn('isBoard', 'is_board');
-            $table->timestamp('updated_at');
+            $table->timestamp('updated_at')->nullable();
             //$table->timestamps();
         });
 
