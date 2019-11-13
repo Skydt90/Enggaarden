@@ -14,4 +14,7 @@ const mix = require('laravel-mix');
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
 
-mix.combine(['resources/js/members/modals.js'], 'public/js/members.js');
+mix.combine([
+   'resources/js/members/modals.js', 
+   'resources/js/general/ajax-requests.js',
+], 'public/js/members.js');
