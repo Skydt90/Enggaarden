@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Traits\Timestamp;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,11 +25,12 @@ class RefactorMembersTable extends Migration
             //$table->timestamp('creation_date')->change();
             $table->renameColumn('memberType', 'member_type');
             $table->renameColumn('isBoard', 'is_board');
+            $table->timestamp('updated_at');
             //$table->timestamps();
         });
 
         DB::statement('ALTER TABLE members MODIFY COLUMN created_at TIMESTAMP');
-        DB::statement('ALTER TABLE members ADD updated_at TIMESTAMP');
+        //DB::statement('ALTER TABLE members ADD updated_at TIMESTAMP');
     }
 
     /**
