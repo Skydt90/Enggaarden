@@ -20,17 +20,13 @@ class RefactorMembersTable extends Migration
             $table->renameColumn('lastName', 'last_name');
             $table->renameColumn('mail', 'email');
             $table->renameColumn('phoneNumber', 'phone_number');
-            //$table->dropColumn('creationDate');
             $table->renameColumn('creationDate', 'created_at');
-            //$table->timestamp('creation_date')->change();
             $table->renameColumn('memberType', 'member_type');
             $table->renameColumn('isBoard', 'is_board');
             $table->timestamp('updated_at')->nullable();
-            //$table->timestamps();
         });
 
         DB::statement('ALTER TABLE members MODIFY COLUMN created_at TIMESTAMP');
-        //DB::statement('ALTER TABLE members ADD updated_at TIMESTAMP');
     }
 
     /**
@@ -41,6 +37,7 @@ class RefactorMembersTable extends Migration
     public function down()
     {
         DB::statement('ALTER TABLE members MODIFY COLUMN created_at DATE');
+        
         Schema::table('members', function (Blueprint $table) {
             $table->renameColumn('id', 'memberId');
             $table->renameColumn('first_name', 'firstName');

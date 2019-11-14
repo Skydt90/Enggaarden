@@ -13,15 +13,23 @@ class RefactorAddressesTable extends Migration
      */
     public function up()
     {
-        //Not sure if foreign key alterations are needed.
-        //when renaming the column. Seems to work atm like this.
         Schema::table('addresses', function (Blueprint $table) {
             $table->renameColumn('memberId', 'member_id');
             $table->renameColumn('streetName', 'street_name');
             $table->renameColumn('zipCode', 'zip_code');
             $table->timestamps();
-            //$table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
         });
+
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->dropForeign(['member_id']);
+            $table->dropPrimary('member_id');
+        });
+        
+        // new primary has to be added in seperate function or it fails for some reason
+        Schema::table('addresses', function (Blueprint $table) {
+            $table->bigIncrements('id')->first();
+            $table->bigInteger('member_id')->change();
+        });     
     }
 
     /**
@@ -31,12 +39,22 @@ class RefactorAddressesTable extends Migration
      */
     public function down()
     {
+        Schema::table('addresses', function(Blueprint $table) {
+            $table->dropColumn('id');
+            $table->primary('member_id');
+        });
+
+        // same here. Further mods on primary key has to be done seperately
+        Schema::table('addresses', function(Blueprint $table) {
+            $table->smallInteger('member_id')->change();
+            $table->foreign('member_id')->references('id')->on('members');
+        });
+
         Schema::table('addresses', function (Blueprint $table) {
             $table->renameColumn('member_id', 'memberId');
             $table->renameColumn('street_name', 'streetName');
             $table->renameColumn('zip_code', 'zipCode');
             $table->dropTimestamps();
-            //$table->foreign('memberId')->references('id')->on('members')->onDelete('cascade');
         });
     }
 }

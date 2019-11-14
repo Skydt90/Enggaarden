@@ -16,6 +16,11 @@ class RefactorSublogsTable extends Migration
             $table->renameColumn('memberId', 'member_id');
             $table->timestamps();
         });
+
+        Schema::table('sub_logs', function(Blueprint $table) {
+            $table->dropForeign(['member_id']);
+            $table->dropForeign(['username']);
+        });
     }
 
     /**
@@ -25,6 +30,11 @@ class RefactorSublogsTable extends Migration
      */
     public function down()
     {
+        Schema::table('sub_logs', function(Blueprint $table) {
+            $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('username')->references('username')->on('users');
+        });
+        
         Schema::rename('sub_logs', 'subLogs');
 
         Schema::table('subLogs', function (Blueprint $table) {

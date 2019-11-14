@@ -18,7 +18,10 @@ class RefactorContributionsTable extends Migration
             $table->renameColumn('activityType', 'activity_type');
             $table->renameColumn('paymentDate', 'payment_date');
             $table->timestamps();
-            //maybe foreign key mods,
+        });
+
+        Schema::table('contributions', function (Blueprint $table) {
+            $table->bigInteger('id')->change();
         });
     }
 
@@ -34,7 +37,10 @@ class RefactorContributionsTable extends Migration
             $table->renameColumn('activity_type', 'activityType');
             $table->renameColumn('payment_date', 'paymentDate');
             $table->dropTimestamps();
-            //maybe foreign??
+        });
+        
+        Schema::table('contributions', function (Blueprint $table) {
+            $table->integer('contributionId')->change();
         });
     }
 }
