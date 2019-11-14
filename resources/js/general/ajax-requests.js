@@ -9,10 +9,15 @@ class AjaxRequests
             headers: {
                 'X-CSRF-TOKEN': token
             }
-        });
-        
+        });    
         if(response.ok && showSuccess) {
-            document.getElementById('success-button').click();
+            const success = document.getElementById('success');
+            const dismiss = document.getElementById('dismiss');
+            
+            success.click(setTimeout(function() {
+                dismiss.click();
+            }, 1500));
+            
         }
         const result = `${response.statusText}: ${response.status}`;
         return result;
@@ -24,9 +29,9 @@ class AjaxRequests
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': token
+                'X-CSRF-TOKEN': token,
             },
-            body: JSON.stringify(data)
+            body: data
         });
         const result = await response.json();
         return result;

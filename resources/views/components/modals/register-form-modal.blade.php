@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST">
+                <form action="#" method="POST" class="register-form">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -43,11 +43,11 @@
                         <div class="col-md-6">
                             <label for="is_board col-md-6">Er personen bestyrelsesmedlem?</label>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radio_member" value="Ja">
+                                <input class="form-check-input" type="radio" name="is_board" value="Ja">
                                 <label class="form-check-label" for="yes">Ja</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="radio_member" value="Nej">
+                                <input class="form-check-input" type="radio" name="is_board" value="Nej">
                                 <label class="form-check-label" for="no">Nej</label>
                             </div>
                         </div>

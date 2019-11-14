@@ -14,6 +14,12 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('/');
-Route::get('/test', 'HomeController@testPage');
-Route::delete('/test/delete/{id}', 'HomeController@destroyTest');
+
+
+// TestController
+Route::group(['prefix' => 'test'], function () {
+    Route::get('show', 'TestController@testPage');
+    Route::delete('delete/{id}', 'TestController@destroyTest');
+    Route::post('member-create', 'TestController@postFormTest');
+});
 

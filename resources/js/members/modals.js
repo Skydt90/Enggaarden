@@ -7,9 +7,24 @@ document.addEventListener("DOMContentLoaded", function() {
         const url = `/test/delete/${id}`;
 
         ajax.delete(url, true)
-            .then(data => console.log('Server responded with: ' + data))
+            .then(data => {
+                console.log('Server responded with: ' + data);
+                document.getElementById('dismiss').click();
+            })
             .catch(error => console.log(error));
     });
+
+    //post modal
+    document.querySelector('.register-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const ajax = new AjaxRequests();
+        const form = new FormData(this);
+        const url = '/test/member-create';
+
+        ajax.post(url, form)
+            .then(data => console.log('Server Responded with: ' + data))
+            .catch(error => console.log(error));
+    })
 
 
 });

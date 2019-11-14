@@ -14,17 +14,4 @@ class HomeController extends Controller
             return view('home');
         }
     }
-
-    public function testPage()
-    {
-        return view('members.show');
-    }
-
-    public function destroyTest($id)
-    {
-        return [
-            'status' => 200,
-            'message' => 'deleted with id ' . $id
-        ];
-    }
 }
