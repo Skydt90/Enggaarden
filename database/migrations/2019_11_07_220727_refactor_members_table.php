@@ -26,6 +26,10 @@ class RefactorMembersTable extends Migration
             $table->timestamp('updated_at')->nullable();
         });
 
+        Schema::table('members', function (Blueprint $table) {
+            $table->string('email', 100)->unique()->change();
+        });
+
         DB::statement('ALTER TABLE members MODIFY COLUMN created_at TIMESTAMP');
     }
 
@@ -38,6 +42,12 @@ class RefactorMembersTable extends Migration
     {
         DB::statement('ALTER TABLE members MODIFY COLUMN created_at DATE');
         
+        Schema::table('members', function (Blueprint $table) {
+            $table->string('email', 100)->change();
+            $table->dropIndex('email');
+            $table->dropIndex('members_email_unique');
+        });
+
         Schema::table('members', function (Blueprint $table) {
             $table->renameColumn('id', 'memberId');
             $table->renameColumn('first_name', 'firstName');
