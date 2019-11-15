@@ -24,13 +24,14 @@ class RefactorUsersTable extends Migration
 
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['user_type']);
+            $table->dropIndex('userType');
             $table->dropPrimary('username');
         });
         
         // new primary has to be added in seperate function or it fails for some reason
         Schema::table('users', function (Blueprint $table) {
             $table->bigIncrements('id')->first();
-            //$table->string('username')->unique()->change();
+            $table->string('username')->unique()->change();
         });
     }
 
@@ -42,14 +43,16 @@ class RefactorUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function(Blueprint $table) {
+            $table->dropIndex('username');
+            $table->dropIndex('users_username_unique');
             $table->dropColumn('id');
             $table->primary('username');
         });
 
         // same here. Further mods on primary key has to be done seperately
         Schema::table('users', function(Blueprint $table) {
-            //$table->dropUnique('username')->change(); FIX!!!!!!
             $table->foreign('user_type')->references('userType')->on('userTypes');
+            $table->renameIndex('users_user_type_foreign', 'userType');
         });
 
         Schema::table('users', function (Blueprint $table) {
