@@ -13,23 +13,26 @@ class RefactorAddressesTable extends Migration
      */
     public function up()
     {
+        //renames
         Schema::table('addresses', function (Blueprint $table) {
             $table->renameColumn('memberId', 'member_id');
             $table->renameColumn('streetName', 'street_name');
             $table->renameColumn('zipCode', 'zip_code');
             $table->timestamps();
         });
-
+        
+        //drop foreign and primary
         Schema::table('addresses', function (Blueprint $table) {
             $table->dropForeign(['member_id']);
             $table->dropPrimary('member_id');
         });
         
-        // new primary has to be added in seperate function or it fails for some reason
+        //new primary and change old to bigint
         Schema::table('addresses', function (Blueprint $table) {
             $table->bigIncrements('id')->first();
-            $table->bigInteger('member_id')->change();
-        });     
+            $table->bigInteger('member_id')->unique()->unsigned()->change();
+            
+        });
     }
 
     /**
@@ -42,6 +45,8 @@ class RefactorAddressesTable extends Migration
         Schema::table('addresses', function(Blueprint $table) {
             $table->dropColumn('id');
             $table->primary('member_id');
+            $table->dropIndex('member_id');
+            $table->dropIndex('addresses_member_id_unique');
         });
 
         // same here. Further mods on primary key has to be done seperately

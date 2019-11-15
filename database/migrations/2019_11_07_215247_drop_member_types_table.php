@@ -15,6 +15,7 @@ class DropMemberTypesTable extends Migration
     {
         Schema::table('members', function(Blueprint $table) {
             $table->dropForeign(['memberType']);
+            $table->dropIndex('memberType');
         });
 
         Schema::drop('memberTypes');
@@ -38,6 +39,7 @@ class DropMemberTypesTable extends Migration
 
         Schema::table('members', function(Blueprint $table) {
             $table->foreign('memberType')->references('memberType')->on('memberTypes');
+            $table->renameIndex('members_membertype_foreign', 'memberType');
         });
         
     }

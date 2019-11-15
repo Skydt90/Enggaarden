@@ -28,7 +28,7 @@ class RefactorSubscriptionsTable extends Migration
         // new primary has to be added in seperate function or it fails for some reason
         Schema::table('subscriptions', function (Blueprint $table) {
             $table->bigIncrements('id')->first();
-            $table->bigInteger('member_id')->change();
+            $table->unsignedBigInteger('member_id')->nullable()->change();
         });     
     }
 
@@ -39,6 +39,10 @@ class RefactorSubscriptionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->unsignedBigInteger('member_id')->nullable(false)->change();    
+        });
+
         Schema::table('subscriptions', function(Blueprint $table) {
             $table->dropColumn('id');
             $table->primary('member_id');

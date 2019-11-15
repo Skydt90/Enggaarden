@@ -20,6 +20,8 @@ class RefactorSublogsTable extends Migration
         Schema::table('sub_logs', function(Blueprint $table) {
             $table->dropForeign(['member_id']);
             $table->dropForeign(['username']);
+            $table->dropIndex('memberId');
+            $table->dropIndex('username');
         });
     }
 
@@ -32,7 +34,9 @@ class RefactorSublogsTable extends Migration
     {
         Schema::table('sub_logs', function(Blueprint $table) {
             $table->foreign('member_id')->references('id')->on('members');
+            $table->renameIndex('sub_logs_member_id_foreign', 'memberId');
             $table->foreign('username')->references('username')->on('users');
+            $table->renameIndex('sub_logs_username_foreign', 'username');
         });
         
         Schema::rename('sub_logs', 'subLogs');

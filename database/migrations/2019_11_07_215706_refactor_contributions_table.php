@@ -21,7 +21,7 @@ class RefactorContributionsTable extends Migration
         });
 
         Schema::table('contributions', function (Blueprint $table) {
-            $table->bigInteger('id')->change();
+            $table->unsignedBigInteger('id')->change();
         });
     }
 

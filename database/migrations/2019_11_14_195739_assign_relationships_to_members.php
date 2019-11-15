@@ -14,15 +14,15 @@ class AssignRelationshipsToMembers extends Migration
     public function up()
     {
         Schema::table('members', function (Blueprint $table) {
-            $table->bigInteger('id')->change()->autoIncrement();
-        });
+            $table->unsignedBigInteger('id')->change()->autoIncrement();
+        }); // skal være her pga sublog constraint
 
         Schema::table('subscriptions', function (Blueprint $table) {
-            $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('set null');
         });
 
         Schema::table('addresses', function(Blueprint $table) {
-            $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
 
