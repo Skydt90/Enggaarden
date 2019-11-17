@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -49,9 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'username' => ['required', 'string', 'max:20', 'unique:users,username'], //username must not exist in users -> username column in db
+            'user_type' => ['required', 'string', 'max:13'],
+            'password' => ['required', 'string', 'min:5', 'confirmed']
         ]);
     }
 
@@ -59,13 +59,13 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
             'username' => $data['username'],
+            'user_type' => $data['user_type'],
             'password' => Hash::make($data['password']),
         ]);
     }

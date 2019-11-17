@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,11 +14,15 @@ class User extends Authenticatable
      * Tell eloquent to use username as PK
      * and set auto increment to false
      */
-    protected $primaryKey = 'username';
-    public $incrementing = false;
+    /* protected $primaryKey = 'username';
+    public $incrementing = false; */
+    public const USER_TYPES = [
+        'standard' => 'Standard',
+        'admin' => 'Administrator'
+    ];
     
     protected $fillable = [
-        'name', 'username', 'password',
+        'username', 'password', 'user_type'
     ];
 
     /**

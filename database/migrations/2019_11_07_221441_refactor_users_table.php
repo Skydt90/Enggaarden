@@ -31,7 +31,7 @@ class RefactorUsersTable extends Migration
         // new primary has to be added in seperate function or it fails for some reason
         Schema::table('users', function (Blueprint $table) {
             $table->bigIncrements('id')->first();
-            $table->string('username')->unique()->change();
+            $table->string('username', 20)->unique()->change();
         });
     }
 
