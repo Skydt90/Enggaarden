@@ -16,9 +16,10 @@ class User extends Authenticatable
      */
     /* protected $primaryKey = 'username';
     public $incrementing = false; */
+    
     public const USER_TYPES = [
-        'standard' => 'Standard',
-        'admin' => 'Administrator'
+        'Standard',
+        'Administrator'
     ];
     
     protected $fillable = [

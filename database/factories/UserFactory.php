@@ -19,8 +19,8 @@ use Illuminate\Support\Str;
 $factory->define(User::class, function (Faker $faker) {
     return [
         'username' => $faker->unique()->word(),
-        'user_type' => $faker->text(13),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'user_type' => User::USER_TYPES[$faker->numberBetween(0, 1)],
+        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',  // password is password
         'remember_token' => Str::random(10),
     ];
 });
