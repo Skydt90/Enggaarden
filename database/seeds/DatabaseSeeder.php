@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(UsersTableSeeder::class);
+        if($this->command->confirm('Do you want to reseed the database?', true)) {
+            $this->call([
+                UsersTableSeeder::class,
+                MembersTableSeeder::class
+            ]);
+        } 
     }
 }
