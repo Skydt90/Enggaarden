@@ -25,3 +25,11 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+$factory->state(User::class, 'britta', function(Faker $faker) {
+    return [
+        'username' => 'britta',
+        'user_type' => 'Administrator',
+        'password' => '$2y$10$SVHYTn90cOCgqs.yZi9HiOThiU8yUn7qsKejlDNw/zwb4FJBha1WS' // 12345
+    ];
+});

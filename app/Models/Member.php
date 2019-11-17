@@ -11,14 +11,27 @@ class Member extends Model
         'Ekstern', 'Sekundær', 'Primær'
     ];
 
+    public const IS_BOARD = [
+        'Nej', 'Ja'
+    ];
+
     protected $fillable = [
         'first_name', 'last_name', 'email',
         'phone_number', 'is_board', 'member_type'
     ];
 
+
     // relationships
     public function address() {
         return $this->hasOne(Address::class);
+    }
+
+    public function externalUser() {
+        return $this->hasOne(ExternalUser::class);
+    }
+
+    public function subscriptions() {
+        return $this->hasMany(Subscription::class);
     }
 
 }

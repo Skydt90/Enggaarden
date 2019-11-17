@@ -11,11 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if($this->command->confirm('Do you want to reseed the database?', true)) {
-            $this->call([
-                UsersTableSeeder::class,
-                MembersTableSeeder::class
-            ]);
-        } 
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
+
+        $this->call([
+            UsersTableSeeder::class,
+            MembersTableSeeder::class,
+            ExternalUsersTableSeeder::class,    
+        ]);
+        
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1;'); 
     }
 }

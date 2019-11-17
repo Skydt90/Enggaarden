@@ -12,7 +12,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        User::query()->delete();
-        factory(User::class, 10)->create();
+        User::query()->truncate();
+
+        $userCount = (int) $this->command->ask('How many users would you like?', 10);
+
+        factory(User::class)->states('britta')->create();
+        factory(User::class, $userCount)->create();
     }
 }
