@@ -14,6 +14,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('/');
+Route::resource('member', 'Members\MemberController');
 
 
 // TestController
