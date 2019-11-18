@@ -6,3 +6,48 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@import '~toastr/toastr.scss';
+
+#toast-container {
+	> div {
+		opacity: 1 !important;
+	}
+
+	&.toast-top-center {
+		top: 9%;
+		&> div { width:450px !important; }
+	}
+	.toast-title {
+		font-size: 18px;
+		margin-bottom: 8px;
+		font-weight: 600;
+	}
+
+	/* .toast-info { background-color: $cyan-blue; }
+	.toast-error { background-color: $error-color; }
+	.toast.success { background-color: $success-color; } */
+	.toast-message { font-size: 15px; }
+	/* .toast-info2 { background-color: $dark_grayish_blue; } */
+	
+	.action-toastr-buttons {
+		width: 200px;
+		margin: auto;
+	
+		#confirmationRevertYes { margin-right: 36px; }
+		#confirmationRevertYes, #confirmationRevertNo {
+			width: 82px;
+			padding: 8px 0px;
+		}		
+	}
+	.action-toastr-buttons2 {
+		width: 245px;
+		margin: auto;
+
+		#confirmationRevertYes { margin-right: 41px; }
+		#confirmationRevertYes, #confirmationRevertNo { 
+			width: 102px;
+			padding: 8px 0px;
+		}
+	}
+}
