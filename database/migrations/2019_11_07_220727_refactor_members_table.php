@@ -23,11 +23,11 @@ class RefactorMembersTable extends Migration
             $table->renameColumn('creationDate', 'created_at');
             $table->renameColumn('memberType', 'member_type');
             $table->renameColumn('isBoard', 'is_board');
-            $table->timestamp('updated_at')->nullable();
         });
-
+        
         Schema::table('members', function (Blueprint $table) {
             $table->string('email', 100)->unique()->change();
+            $table->timestamp('updated_at')->nullable()->after('created_at');
         });
 
         DB::statement('ALTER TABLE members MODIFY COLUMN created_at TIMESTAMP');

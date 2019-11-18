@@ -29,6 +29,7 @@ class RefactorSubscriptionsTable extends Migration
         Schema::table('subscriptions', function (Blueprint $table) {
             $table->bigIncrements('id')->first();
             $table->unsignedBigInteger('member_id')->nullable()->change();
+            $table->unsignedInteger('amount')->after('member_id');
         });     
     }
 
@@ -45,6 +46,7 @@ class RefactorSubscriptionsTable extends Migration
 
         Schema::table('subscriptions', function(Blueprint $table) {
             $table->dropColumn('id');
+            $table->dropColumn('amount');
             $table->primary('member_id');
             $table->renameColumn('member_id', 'id');
         });
