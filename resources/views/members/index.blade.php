@@ -16,6 +16,7 @@
                     <th>Valgmuligheder:</th>
                 </thead>
                 <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-success col-md-2">Opret Medlem</button>
+                <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-success col-md-2">Opret Firma</button>
                 <tbody>
                     @foreach ($members as $member)
                         <tr>

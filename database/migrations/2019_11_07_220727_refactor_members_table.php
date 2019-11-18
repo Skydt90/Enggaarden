@@ -26,6 +26,7 @@ class RefactorMembersTable extends Migration
         });
         
         Schema::table('members', function (Blueprint $table) {
+            $table->string('last_name')->nullable()->change();
             $table->string('email', 100)->unique()->change();
             $table->timestamp('updated_at')->nullable()->after('created_at');
         });
@@ -46,6 +47,7 @@ class RefactorMembersTable extends Migration
             $table->string('email', 100)->change();
             $table->dropIndex('email');
             $table->dropIndex('members_email_unique');
+            $table->string('last_name')->change();
         });
 
         Schema::table('members', function (Blueprint $table) {
