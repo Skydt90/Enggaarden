@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\MemberRepositoryContract;
 use App\Contracts\MemberServiceContract;
+use App\Http\Requests\CreateMemberRequest;
 
 class MemberService implements MemberServiceContract
 {
@@ -26,8 +27,8 @@ class MemberService implements MemberServiceContract
 
     }
 
-    public function store($id)
+    public function store(CreateMemberRequest $request)
     {
-
+        return $this->memberRepository->store($request);
     }
 }
