@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(ActivityType::class, function (Faker $faker) {
     return [
-        'activity_type' => $faker->sentence(2, false)
+        'activity_type' => $faker->sentence(2, true)
     ];
 });

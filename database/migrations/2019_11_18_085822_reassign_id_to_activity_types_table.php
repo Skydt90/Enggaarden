@@ -23,6 +23,7 @@ class ReassignIdToActivityTypesTable extends Migration
         });
         Schema::table('activity_types', function (Blueprint $table) {
             $table->bigIncrements('id')->first();
+            $table->string('activity_type')->change();
         });
         Schema::table('contributions', function (Blueprint $table){
             $table->unsignedBigInteger('activity_type_id')->after('id');
