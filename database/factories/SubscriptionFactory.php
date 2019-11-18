@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Subscription::class, function (Faker $faker) {
     return [
-        'pay_date' => $faker->date()
+        'pay_date' => $faker->date(),
+        'amount' => $faker->randomNumber()
     ];
 });
