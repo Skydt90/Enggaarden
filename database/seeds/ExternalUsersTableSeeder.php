@@ -18,7 +18,6 @@ class ExternalUsersTableSeeder extends Seeder
         
         // fetch all members for id's
         $members = Member::all();
-        //dd($members->count());
 
         $eUserCount = (int) $this->command->ask('How many external users would you like? (Max: ' . $members->count() . ') ' ,
             ceil($members->count() / 2));

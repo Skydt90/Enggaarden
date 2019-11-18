@@ -12,6 +12,7 @@ class Address extends Model
         'zip_code', 'city'
     ];
 
+    
     // relationships
     public function members() {
         return $this->belongsTo(Member::class);

@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-    // static member_types
+    
+    protected $fillable = [
+        'first_name', 'last_name', 'email',
+        'phone_number', 'is_board', 'member_type'
+    ];
+
+    
+    // static attributes for server validation
     public const MEMBER_TYPES = [
         'Ekstern', 'Sekundær', 'Primær'
     ];
 
     public const IS_BOARD = [
         'Nej', 'Ja'
-    ];
-
-    protected $fillable = [
-        'first_name', 'last_name', 'email',
-        'phone_number', 'is_board', 'member_type'
     ];
 
 

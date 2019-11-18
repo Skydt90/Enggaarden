@@ -21,7 +21,7 @@ class MembersTableSeeder extends Seeder
 
         $memberCount = (int) $this->command->ask('How many members should be created?', 50);
 
-        // create 20 members and for each of them, add 1 address and 20 subs 
+        // create 20 members and for each of them, add 1 address and 1% subs 
         // using their factories inside the closure. (1 to 1 and many relationship)
         factory(Member::class, $memberCount)->create()->each(function ($member) use ($memberCount) {
             
