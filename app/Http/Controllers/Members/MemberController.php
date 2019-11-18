@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Members;
 
 use App\Contracts\MemberServiceContract;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateMemberRequest;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -22,8 +23,7 @@ class MemberController extends Controller
      */
     public function index()
     {
-        dd($this->memberService->getAll());
-        //return view('members.index', ['members' => $this->memberService->getAll()]);
+        return view('members.index', ['members' => $this->memberService->getAll()]);
     }
 
     /**
@@ -42,9 +42,13 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateMemberRequest $request)
     {
-        //
+        dd($request->request);
+        return [
+            'status' => 200,
+            'message' => 'deleted with id ' . $request->id
+        ];
     }
 
     /**

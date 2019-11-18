@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         const ajax = new AjaxRequests();
         const form = new FormData(this);
-        const url = '/test/member-create';
+        const url = 'member';
 
         ajax.post(url, form)
             .then(data => console.log('Server Responded with: ' + data))
