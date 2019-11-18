@@ -18,7 +18,7 @@ class ContributionsTableSeeder extends Seeder
         $contributionCount = (int) $this->command->ask('How many contributions should be created?', 100);
         
         $activityTypes = ActivityType::all();
-        $atMax = $activityTypes->sizeof();
+        $atMax = count($activityTypes);
 
         factory(Contribution::class, $contributionCount)->make()->each(function ($contribution) use ($atMax){
             $contribution->activity_type_id = rand(0, $atMax);
