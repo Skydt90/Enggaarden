@@ -13,7 +13,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="company_name">Firmanavn*</label>
-                            <input class="form-control" type="text" name="company_name">
+                            <input class="form-control" type="text" name="first_name">
                         </div>
                     </div>
                     <div class="form-row">

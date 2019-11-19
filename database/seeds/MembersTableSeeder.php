@@ -29,5 +29,13 @@ class MembersTableSeeder extends Seeder
             $member->address()->save(factory(Address::class)->make());
             $member->subscriptions()->saveMany(factory(Subscription::class, $subCount)->make());
         });
+
+        factory(Member::class, ceil($memberCount * 0.2))->states('company')->create()->each(function ($member) use ($memberCount) {
+            
+            $subCount = ceil($memberCount * 0.01);
+            $member->address()->save(factory(Address::class)->make());
+            $member->subscriptions()->saveMany(factory(Subscription::class, $subCount)->make());
+        });
+
     }
 }
