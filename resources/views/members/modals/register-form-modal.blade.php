@@ -55,6 +55,7 @@
                             </div>
                         </div>
                     </div>
+                    @include('members.partials.address-form')
                     <div class="form-group row">
                         <div class="col-md-12">
                             <button type="submit" class="add btn btn-primary col-md-3 float-right ml-2">Opret</button>

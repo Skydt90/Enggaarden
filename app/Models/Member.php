@@ -9,7 +9,7 @@ class Member extends Model
     
     protected $fillable = [
         'first_name', 'last_name', 'email',
-        'phone_number', 'is_board', 'member_type'
+        'phone_number', 'is_board', 'member_type', 'is_company'
     ];
 
     

@@ -8,5 +8,5 @@ interface MemberRepositoryContract
 
     public function getByID($id);
 
-    public function store($request);
+    public function store($member);
 }

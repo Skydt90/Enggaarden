@@ -17,14 +17,16 @@ class MemberRepository implements MemberRepositoryContract
 
     }
 
-    public function store($request)
+    public function store($member)
     {
-        if($member = Member::create($request->all())){
-            return response()->json([
-                'status' => 200,
-                'message' => 'Medlem tilføjet korrekt',
-                'data' => $member
-            ]);
-        };
+        // if($member->save()){
+        //     return response()->json([
+        //         'status' => 200,
+        //         'message' => 'Medlem tilføjet korrekt',
+        //         'data' => $member
+        //     ]);
+        // };
+        $member->save();
+        return $member;
     }
 }

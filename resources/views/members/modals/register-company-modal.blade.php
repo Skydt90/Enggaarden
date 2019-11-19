@@ -2,18 +2,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Nyt Medlem</h5>
+                <h5 class="modal-title">Nyt Firma</h5>
                 <button type="button" class="close" data-dismiss="modal" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" class="register-form">
+                <form action="#" method="POST" class="register-form" id="register-company-modal">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="company_name">Firmanavn*</label>
-                            <input class="form-control" type="text" name="company_name">
+                            <input class="form-control" type="text" name="first_name">
                         </div>
                     </div>
                     <div class="form-row">
@@ -26,16 +26,7 @@
                             <input class="form-control" type="number" name="phone_number">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <label for="member_type">Medlemstype</label>
-                            <select class="form-control" name="member_type">
-                                <option>Primær</option>
-                                <option>Sekundær</option>
-                            </select>
-                        </div>
-                    </div>
-                        <input type="hidden" name="is_board" value="Nej">
+                    @include('members.partials.address-form')
                     <div class="form-group row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary col-md-3 float-right ml-2">Opret</button>
