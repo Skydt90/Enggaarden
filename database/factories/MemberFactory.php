@@ -10,7 +10,7 @@ $factory->define(Member::class, function (Faker $faker) {
         'first_name' => $faker->firstName(),
         'last_name' => $faker->lastName(),
         'email' => $faker->unique()->email(),
-        'phone_number' => $faker->randomNumber(8),
+        'phone_number' => $faker->randomNumber(8, true),
         'member_type' => Member::MEMBER_TYPES[$faker->numberBetween(0, 2)],
         'is_board' => Member::IS_BOARD[$faker->numberBetween(0, 1)]
     ];

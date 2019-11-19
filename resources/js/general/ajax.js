@@ -1,4 +1,5 @@
-function ajax_calls(url, request, data, showSuccess, callback) {
+
+function ajax_requests(url, request, data, showSuccess, callback) {
     $.ajax({
         url: url,
         headers: {

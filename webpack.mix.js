@@ -16,6 +16,6 @@ mix.js('resources/js/app.js', 'public/js')
 
 mix.combine([
    'resources/js/members/modals.js', 
-   'resources/js/general/ajax-requests.js',
+   'resources/js/general/ajax.js',
    'resources/js/general/toastr.js'
 ], 'public/js/members.js');

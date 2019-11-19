@@ -1,9 +1,13 @@
 $(document).ready(function(){
 
+    // register member
     $('.register-form').on('submit', function(e) {
         e.preventDefault();
-        
-        ajax_calls('member', 'POST', $(this).serialize(), true, function(result) {
+        const url = 'member';
+        const request = 'POST';
+        const data = $(this).serialize();
+
+        ajax_requests(url, request, data, true, function(result) {
             
             if(result.status === 200) {
                 $('#register-modal').modal('hide');
@@ -17,7 +21,8 @@ $(document).ready(function(){
         });
     });
 });
-function ajax_calls(url, request, data, showSuccess, callback) {
+
+function ajax_requests(url, request, data, showSuccess, callback) {
     $.ajax({
         url: url,
         headers: {

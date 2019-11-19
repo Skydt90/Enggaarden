@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -50,7 +51,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:20', 'unique:users,username'], //username must not exist in users -> username column in db
-            'user_type' => ['required', 'string', 'max:13'],
+            'user_type' => ['required', 'string', 'max:13', Rule::in(User::USER_TYPES)],
             'password' => ['required', 'string', 'min:5', 'confirmed']
         ]);
     }
