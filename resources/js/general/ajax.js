@@ -8,21 +8,7 @@ function ajax_requests(url, request, data, showSuccess, callback) {
         type: request,
         data: data,
         success: function(result) {
-            var message = '';
-            
-            if(result.code === 400) {
-                for(var key in result.errors) {
-                    message += result.errors[key] + "<br>";
-                }
 
-                $.toastr.error.show(message);
-
-                // only stops here if force callback is not equal to true.
-                if(callback !== undefined) {
-                    return callback(result);
-                }
-                return;
-            }
             if(showSuccess === true) {
                 $.toastr.success.show(result.message);
             }
@@ -32,17 +18,11 @@ function ajax_requests(url, request, data, showSuccess, callback) {
         },
         error: function(error) {
             //hideLoader();
-            if(error.status === 422) {
+            if(error.status === 422 || error.status === 400) {
                 var returnData = JSON.parse(error.responseText);
                 returnData.status = error.status;
 
                 handleBadRequestMessage(error.responseJSON);
-            }
-            if(error.status === 400) { // bad request
-                var returnData = JSON.parse(error.responseText);
-                returnData.status = error.status;
-                
-                handleBadRequestMessage(returnData);
             }
             if(error.status === 404) { // page not found (wrong link provided)
                 $.toastr.warning.show('The link provided for the ajax call is not correct, please check it, and make correction to it.');
