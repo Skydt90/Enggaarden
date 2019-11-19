@@ -14,7 +14,7 @@ $(document).ready(function(){
         ajax_requests(url, request, data, true, function(result) {
             
             if(result.status === 200) {
-                $('#register-modal').modal('hide');
+                $('.register-modal').modal('hide');
                 if(result.data.last_name!=null)
                 {
                     $(`<tr>
