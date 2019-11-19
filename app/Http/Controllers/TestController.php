@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendExternalUserInvitation;
 use App\Mail\ExternalUserInvitation;
 use App\Models\Member;
 use Illuminate\Http\Request;
@@ -29,8 +30,22 @@ class TestController extends Controller
 
     public function sendMail()
     {
-        Mail::to('christian_skydt@hotmail.com')->send(
-            new ExternalUserInvitation('testinv', new Member())
+        $member = Member::find(1);
+        $when = now()->addMinutes(1);
+        
+        // when ShouldQueue is implemented on the mailable
+        /* Mail::to('christian_skydt@hotmail.com')->send(
+            new ExternalUserInvitation('testinv', $member)
+        ); */
+
+        // queue imidiately without shouldQueue interface on mailable
+        Mail::to('test@mail.dk')->queue(
+            new ExternalUserInvitation('test', $member)
         );
+
+        // add to queue and send later. Still without shouldQueue interface on mailable class 
+        /* Mail::to('test@mail.dk')->later(
+            $when, new ExternalUserInvitation('test', $member)
+        ); */
     }
 }

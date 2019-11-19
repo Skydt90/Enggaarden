@@ -1,16 +1,16 @@
-<style>
-    body {
-        font-family: Arial, Helvetica, sans-serif;
-    }
-</style>
+@component('mail::message')
+# Invitation
 
-<p>Hej {{ $member->first_name ?? 'test_navn' }}</p>
+Hej {{ $member->first_name ?? '' }}
 
-<p>
-    Du er registreret som medlem i foreningen Enggaardens Venner. <br>
-    Vi har for nyligt fået nyt it-system, hvor alle vores medlemmer står registreret. <br>
-    Det betyder du nu har mulighed for at få adgang hertil og se de oplysninger vi har på dig. <br>
-    <a href="{{ route('login') }}">login test</a>
-</p>
+Du er netop blevet oprettet som medlem i foreningen Enggaardens Venner.
+Det betyder du nu har mulighed for at få adgang til vores system og se hvilke oplysninger vi har på dig.
+Det eneste du skal gøre er at følge nedstående link.
 
-<hr/>
+@component('mail::button', ['url' => route('login')])
+Opret bruger
+@endcomponent
+
+Bedste hilsner,<br>
+{{ config('app.name') }}
+@endcomponent

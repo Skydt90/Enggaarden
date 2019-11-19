@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Contracts\MemberRepositoryContract;
 use App\Contracts\MemberServiceContract;
-use App\Http\Requests\CreateMemberRequest;
+use App\Mail\ExternalUserInvitation;
 use App\Models\Address;
 use App\Models\Member;
+use Illuminate\Support\Facades\Mail;
 
 class MemberService implements MemberServiceContract
 {
@@ -47,12 +48,17 @@ class MemberService implements MemberServiceContract
     private function makeMember($request)
     {
         $member = Member::make($request->all());
+
         $savedMember = $this->memberRepository->store($member);
+
         if($request->filled('street_name')){
             $address = Address::make($request->all());
             $savedMember->address()->save($address);
             $savedMember->address = $address;
         }
+
+        Mail::to($savedMember->email)->queue(new ExternalUserInvitation($savedMember));
+
         return response()->json([
                     'status' => 200,
                     'message' => 'Medlem tilføjet korrekt',
