@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Contracts\MemberRepositoryContract;
 use App\Contracts\MemberServiceContract;
 use App\Http\Requests\CreateMemberRequest;
+use App\Models\Address;
+use App\Models\Member;
 
 class MemberService implements MemberServiceContract
 {
@@ -29,7 +31,7 @@ class MemberService implements MemberServiceContract
 
     public function store($request)
     {
-        return $this->memberRepository->store($request);
+        return $this->makeMember($request);
     }
 
     public function storeCompany($request)
@@ -39,6 +41,22 @@ class MemberService implements MemberServiceContract
             'is_company' => true,
             'member_type' => 'Ekstern'
         ]);
-        return $this->memberRepository->store($request);
+        return $this->makeMember($request);
+    }
+
+    private function makeMember($request)
+    {
+        $member = Member::make($request->all());
+        $savedMember = $this->memberRepository->store($member);
+        if($request->filled('street_name')){
+            $address = Address::make($request->all());
+            $savedMember->address()->save($address);
+            $savedMember->address = $address;
+        }
+        return response()->json([
+                    'status' => 200,
+                    'message' => 'Medlem tilføjet korrekt',
+                    'data' => $savedMember
+                ]);
     }
 }

@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Nyt Medlem</h5>
+                <h5 class="modal-title">Nyt Firma</h5>
                 <button type="button" class="close" data-dismiss="modal" >
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -26,6 +26,7 @@
                             <input class="form-control" type="number" name="phone_number">
                         </div>
                     </div>
+                    @include('members.partials.address-form')
                     <div class="form-group row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary col-md-3 float-right ml-2">Opret</button>

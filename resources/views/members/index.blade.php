@@ -20,7 +20,11 @@
                 <tbody>
                     @foreach ($members as $member)
                         <tr>
+                            @if($member->is_company)
+                            <td class="font-weight-bold">{{ $member->first_name}}</td>
+                            @else
                             <td>{{ $member->first_name . ' ' . $member->last_name }}</td>
+                            @endif
                             <td>{{ $member->member_type }}</td>
                             <td>dummy data</td>
                             <td></td>
