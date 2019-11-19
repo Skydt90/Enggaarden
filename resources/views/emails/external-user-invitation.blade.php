@@ -11,6 +11,6 @@ Det eneste du skal gøre er at følge nedstående link.
 Opret bruger
 @endcomponent
 
-Thanks,<br>
+Bedste hilsner,<br>
 {{ config('app.name') }}
 @endcomponent

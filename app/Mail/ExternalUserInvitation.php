@@ -13,13 +13,10 @@ class ExternalUserInvitation extends Mailable// this interface will make Laravel
     use Queueable, SerializesModels;
 
     // public attributes from this class, will be available in the view
-    public $invitation;
     public $member;
 
-
-    public function __construct($invitation, Member $member)
+    public function __construct($member)
     {
-        $this->invitation = $invitation;
         $this->member = $member;
     }
 
