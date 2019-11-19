@@ -27,8 +27,18 @@ class MemberService implements MemberServiceContract
 
     }
 
-    public function store(CreateMemberRequest $request)
+    public function store($request)
     {
+        return $this->memberRepository->store($request);
+    }
+
+    public function storeCompany($request)
+    {
+        $request->merge([
+            'is_board' => 'Nej',
+            'is_company' => true,
+            'member_type' => 'Ekstern'
+        ]);
         return $this->memberRepository->store($request);
     }
 }

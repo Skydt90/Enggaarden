@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" class="register-form">
+                <form action="#" method="POST" class="register-form" id="register-company-modal">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">
@@ -26,16 +26,6 @@
                             <input class="form-control" type="number" name="phone_number">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <div class="col-md-12">
-                            <label for="member_type">Medlemstype</label>
-                            <select class="form-control" name="member_type">
-                                <option>Primær</option>
-                                <option>Sekundær</option>
-                            </select>
-                        </div>
-                    </div>
-                        <input type="hidden" name="is_board" value="Nej">
                     <div class="form-group row">
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary col-md-3 float-right ml-2">Opret</button>

@@ -15,6 +15,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('/');
 Route::resource('member', 'Members\MemberController');
+Route::post('member-company', 'Members\MemberController@storeCompany')->name('storeCompany');
 
 
 // TestController

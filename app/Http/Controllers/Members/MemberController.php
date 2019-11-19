@@ -28,6 +28,11 @@ class MemberController extends Controller
         return $this->memberService->store($request);
     }
 
+    public function storeCompany(CreateMemberRequest $request)
+    {
+        return $this->memberService->storeCompany($request);
+    }
+
     
     public function show($id)
     {
