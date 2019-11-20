@@ -7,6 +7,7 @@ use App\Contracts\MemberServiceContract;
 use App\Mail\ExternalUserInvitation;
 use App\Models\Address;
 use App\Models\Member;
+use App\Models\Subscription;
 use Illuminate\Support\Facades\Mail;
 
 class MemberService implements MemberServiceContract
@@ -53,9 +54,20 @@ class MemberService implements MemberServiceContract
 
         if($request->filled('street_name')){
             $address = Address::make($request->all());
-            $savedMember->address()->save($address);
+            $this->memberRepository->storeAddressOnMember($savedMember, $address);
             $savedMember->address = $address;
         }
+        $amount = 100;
+        if ($savedMember->is_company){
+            $amount = 300;
+        }
+
+        $subscription = Subscription::make([
+            'amount' => $amount,
+            'pay_date' => null
+        ]);
+
+        $this->memberRepository->storeSubscriptionOnMember($savedMember, $subscription);
 
         Mail::to($savedMember->email)->queue(new ExternalUserInvitation($savedMember));
 
