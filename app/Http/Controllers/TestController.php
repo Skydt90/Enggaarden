@@ -49,4 +49,11 @@ class TestController extends Controller
         ); */
     }
 
+    public function viewMail() 
+    {
+        $expire = now()->addMonth();
+        $member = Member::find(1);
+        return new ExternalUserInvitation($member, 'link', $expire);
+    }
+
 }

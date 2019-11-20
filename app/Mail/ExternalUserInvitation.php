@@ -15,13 +15,14 @@ class ExternalUserInvitation extends Mailable// this interface will make Laravel
     // public attributes from this class, will be available in the view
     public $member;
     public $link;
+    public $expire;
 
-    public function __construct(Member $member, $link)
+    public function __construct(Member $member, $link, $expire)
     {
         $this->member = $member;
         $this->link = $link;
+        $this->expire = $expire;
     }
-
 
     public function build()
     {

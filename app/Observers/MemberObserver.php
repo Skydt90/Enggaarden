@@ -17,8 +17,10 @@ class MemberObserver
      */
     public function created(Member $member)
     {
-        $link = URL::temporarySignedRoute('reg-ext', now()->addMinutes(1), ['member' => $member->email]);
-        Mail::to($member->email)->queue(new ExternalUserInvitation($member, $link));
+        $expire = now()->addMonth();
+        $link = URL::temporarySignedRoute('reg-ext', $expire, ['member' => $member->email]);
+        
+        Mail::to($member->email)->queue(new ExternalUserInvitation($member, $link, $expire));
     }
 
     /**

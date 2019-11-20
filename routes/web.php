@@ -27,5 +27,6 @@ Route::group(['prefix' => 'test'], function () {
     Route::delete('delete/{id}', 'TestController@destroyTest');
     Route::post('member-create', 'TestController@postFormTest');
     Route::get('mail', 'TestController@sendMail');
+    Route::get('view-mail', 'TestController@viewMail');
 });
 
