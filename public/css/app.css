@@ -11328,13 +11328,6 @@ button.toast-close-button {
   }
 }
 
-#toast-container {
-  /* .toast-info { background-color: $cyan-blue; }
-  .toast-error { background-color: $error-color; }
-  .toast.success { background-color: $success-color; } */
-  /* .toast-info2 { background-color: $dark_grayish_blue; } */
-}
-
 #toast-container > div {
   opacity: 1 !important;
 }
@@ -11351,39 +11344,5 @@ button.toast-close-button {
   font-size: 18px;
   margin-bottom: 8px;
   font-weight: 600;
-}
-
-#toast-container .toast-message {
-  font-size: 15px;
-}
-
-#toast-container .action-toastr-buttons {
-  width: 200px;
-  margin: auto;
-}
-
-#toast-container .action-toastr-buttons #confirmationRevertYes {
-  margin-right: 36px;
-}
-
-#toast-container .action-toastr-buttons #confirmationRevertYes,
-#toast-container .action-toastr-buttons #confirmationRevertNo {
-  width: 82px;
-  padding: 8px 0px;
-}
-
-#toast-container .action-toastr-buttons2 {
-  width: 245px;
-  margin: auto;
-}
-
-#toast-container .action-toastr-buttons2 #confirmationRevertYes {
-  margin-right: 41px;
-}
-
-#toast-container .action-toastr-buttons2 #confirmationRevertYes,
-#toast-container .action-toastr-buttons2 #confirmationRevertNo {
-  width: 102px;
-  padding: 8px 0px;
 }
 

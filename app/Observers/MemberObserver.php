@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Mail\ExternalUserInvitation;
 use App\Models\Member;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class MemberObserver
 {
@@ -16,7 +17,8 @@ class MemberObserver
      */
     public function created(Member $member)
     {
-        Mail::to($member->email)->queue(new ExternalUserInvitation($member));
+        $link = URL::temporarySignedRoute('reg-ext', now()->addMinutes(1), ['member' => $member->email]);
+        Mail::to($member->email)->queue(new ExternalUserInvitation($member, $link));
     }
 
     /**

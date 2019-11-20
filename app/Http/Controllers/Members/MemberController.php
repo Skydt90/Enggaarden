@@ -56,4 +56,6 @@ class MemberController extends Controller
     {
         //
     }
+
+   
 }

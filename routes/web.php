@@ -12,6 +12,7 @@
 */
 
 Auth::routes();
+Route::get('register-external', 'Auth\ExternalRegisterController@register')->name('reg-ext')->middleware('signed');
 
 Route::get('/', 'HomeController@index')->name('/');
 

@@ -39,13 +39,14 @@ class TestController extends Controller
         ); */
 
         // queue imidiately without shouldQueue interface on mailable
-        Mail::to('test@mail.dk')->queue(
-            new ExternalUserInvitation('test', $member)
-        );
+        // Mail::to('test@mail.dk')->queue(
+        //     new ExternalUserInvitation('test', $member)
+        // );
 
         // add to queue and send later. Still without shouldQueue interface on mailable class 
         /* Mail::to('test@mail.dk')->later(
             $when, new ExternalUserInvitation('test', $member)
         ); */
     }
+
 }

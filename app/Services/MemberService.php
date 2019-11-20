@@ -4,11 +4,9 @@ namespace App\Services;
 
 use App\Contracts\MemberRepositoryContract;
 use App\Contracts\MemberServiceContract;
-use App\Mail\ExternalUserInvitation;
 use App\Models\Address;
 use App\Models\Member;
 use App\Models\Subscription;
-use Illuminate\Support\Facades\Mail;
 
 class MemberService implements MemberServiceContract
 {
