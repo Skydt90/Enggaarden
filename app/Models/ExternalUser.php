@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class ExternalUser extends Model
+class ExternalUser extends Authenticatable
 {
+
+    protected $guard = 'external_user';
 
     protected $fillable = [
         'email', 'member_id', 'password'

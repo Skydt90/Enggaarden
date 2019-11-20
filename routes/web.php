@@ -11,15 +11,19 @@
 |
 */
 
-Auth::routes();
-Route::get('register-external', 'Auth\ExternalRegisterController@register')->name('reg-ext')->middleware('signed');
-
+// Home
 Route::get('/', 'HomeController@index')->name('/');
+
+// Authentication routes
+Auth::routes();
+Route::get('register-external', 'Auth\RegisterController@showExternalRegistrationForm')->name('reg-ext')->middleware('signed');
 
 // Members
 Route::resource('member', 'Members\MemberController');
 Route::post('member-company', 'Members\MemberController@storeCompany')->name('storeCompany');
 
+// External users
+Route::resource('external-user', 'ExternalUsers\ExternalUserController')->only('show');
 
 // TestController
 Route::group(['prefix' => 'test'], function () {

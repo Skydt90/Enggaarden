@@ -10,7 +10,7 @@
         <input class="form-control" type="number" name="zip_code">
     </div>
     <div class="form-group col-md-8">
-            <label for="city">By</label>
-            <input class="form-control" type="text" name="city">
-        </div>
+        <label for="city">By</label>
+        <input class="form-control" type="text" name="city">
+    </div>
 </div>
