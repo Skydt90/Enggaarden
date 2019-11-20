@@ -51,13 +51,11 @@ class MemberService implements MemberServiceContract
 
         $savedMember = $this->memberRepository->store($member);
 
-        if($request->filled('street_name')){
+        if($request->filled('street_name')) {
             $address = Address::make($request->all());
             $savedMember->address()->save($address);
             $savedMember->address = $address;
         }
-
-        Mail::to($savedMember->email)->queue(new ExternalUserInvitation($savedMember));
 
         return response()->json([
                     'status' => 200,
