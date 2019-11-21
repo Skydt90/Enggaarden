@@ -17,13 +17,17 @@ Route::get('/', 'HomeController@index')->name('/');
 // Authentication routes
 Auth::routes();
 Route::get('register-external', 'Auth\RegisterController@showExternalRegistrationForm')->name('reg-ext')->middleware('signed');
+Route::post('register-external', 'Auth\RegisterController@registerExternal')->name('reg-ext')->middleware('signed');
+Route::get('login-external', 'Auth\LoginController@showExternalLogin')->name('login-ext');
+Route::post('login-external', 'Auth\LoginController@externalLogin')->name('login-ext');
+
 
 // Members
 Route::resource('member', 'Members\MemberController');
 Route::post('member-company', 'Members\MemberController@storeCompany')->name('storeCompany');
 
 // External users
-Route::resource('external-user', 'ExternalUsers\ExternalUserController')->only('show');
+Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('ext-home')->middleware('auth:external');
 
 // TestController
 Route::group(['prefix' => 'test'], function () {

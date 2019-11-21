@@ -36,11 +36,11 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        if(is_null(Auth::user()->member)) {
-            session()->flash('status', 'Bruger oprettet korrekt');
-            return route('register');
-        }
-        return route('external-user.show', ["external_user" => Auth::user()]);
+        // if(is_null(Auth::user()->member)) {
+        //     session()->flash('status', 'Bruger oprettet korrekt');
+        //     return route('register');
+        // }
+        return route('ext-home', ["external_user" => Auth::user()]);
     } 
 
     /**
@@ -51,6 +51,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:external');
     }
 
 
@@ -60,16 +61,34 @@ class RegisterController extends Controller
     }
 
 
-    public function register(Request $request)
+    public function registerExternal(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->validateExternal($request);
 
-        event(new Registered($user = $this->create($request->all())));
+        event(new Registered($user = $this->createExternal($request->all())));
 
         $this->guard()->login($user);
 
-        return $this->registered($request, $user) ?: redirect($this->redirectPath());
+        // dd(Auth::user());
+
+        return $this->registered($request, $user) ? redirect(route('ext-home')) : dd('Du er ikke logget ind');
     }
+
+    public function registered($request, $user)
+    {
+        if (Auth::user() != null){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // public function registerExternal(Request $request)
+    // {
+    //     $this->validateExternal($request);
+
+    //     $this->
+    // }
 
     /**
      * Get a validator for an incoming registration request.
@@ -79,24 +98,23 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        switch(array_key_exists('external', $data)) {
-            
-            case false:
-                return Validator::make($data, [
-                    'username' => ['required', 'string', 'max:20', 'unique:users,username'], //username must not exist in users -> username column in db
-                    'user_type' => ['required', 'string', 'max:13', Rule::in(User::USER_TYPES)],
-                    'password' => ['required', 'string', 'min:5', 'confirmed']
-                ]);
-            case true:
-                return Validator::make($data, [
-                    'member_id' => ['exists:members,id'],
-                    'email' => ['required', 'string', 'exists:members,email'],
-                    'password' => ['required', 'string', 'min:8', 'confirmed']
-                ]);
-            default:
-                return;
-        }
 
+        return Validator::make($data, [
+            'username' => ['required', 'string', 'max:20', 'unique:users,username'], //username must not exist in users -> username column in db
+            'user_type' => ['required', 'string', 'max:13', Rule::in(User::USER_TYPES)],
+            'password' => ['required', 'string', 'min:5', 'confirmed']
+        ]);
+        
+    
+
+    }
+
+    protected function validateExternal (Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
     }
 
     /**
@@ -107,22 +125,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        switch(array_key_exists('external', $data)) {
-            
-            case false:
-                return User::create([
-                    'username' => $data['username'],
-                    'user_type' => $data['user_type'],
-                    'password' => Hash::make($data['password']),
-                ]);
-            case true:
-                return ExternalUser::create([
-                    'member_id' => $data['external'],
-                    'email' => $data['email'],
-                    'password' => Hash::make($data['password'])
-                ]);
-            default:
-                return;    
-        }
-    } 
+        return User::create([
+            'username' => $data['username'],
+            'user_type' => $data['user_type'],
+            'password' => Hash::make($data['password']),
+        ]);   
+    }
+
+    protected function createExternal(array $data)
+    {
+        return ExternalUser::create([
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'member_id' => $_GET['id'],
+        ]);   
+    }
 }

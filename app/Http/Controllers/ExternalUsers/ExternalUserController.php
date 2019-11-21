@@ -46,9 +46,10 @@ class ExternalUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function home()
     {
-        return view('external_users.show')->with(['externalUser' => ExternalUser::find($id)]);
+        $user = Auth::user();
+        return view('external_users.show', ['externalUser' => $user]);
     }
 
     /**

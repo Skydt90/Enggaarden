@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class ExternalUser extends Authenticatable
 {
+    use Notifiable;
 
-    protected $guard = 'external_user';
+    protected $guard = 'external';
 
     protected $fillable = [
         'email', 'member_id', 'password'

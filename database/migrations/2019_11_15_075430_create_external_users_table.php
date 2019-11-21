@@ -19,6 +19,7 @@ class CreateExternalUsersTable extends Migration
             $table->string('email', 100)->index()->unique();
             $table->string('password', 60);
             $table->timestamps();
+            $table->rememberToken();
             $table->foreign('member_id')->references('id')->on('members')->onDelete('cascade');
         });
     }
