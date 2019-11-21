@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendExternalUserInvitation;
 use App\Mail\ExternalUserInvitation;
+use App\Models\ExternalUser;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -12,7 +13,9 @@ class TestController extends Controller
 {
     public function testPage()
     {
-        return view('members.show');
+        $externalUser = ExternalUser::withRelations()->findOrFail(22);
+        
+        return view('external_users.show', ['ex_user' => $externalUser]);
     }
 
     public function destroyTest($id)
