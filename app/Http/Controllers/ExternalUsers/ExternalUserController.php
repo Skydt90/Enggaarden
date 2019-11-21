@@ -49,7 +49,7 @@ class ExternalUserController extends Controller
     public function home()
     {
         $user = Auth::user();
-        return view('external_users.show', ['externalUser' => $user]);
+        return view('external_users.show', ['ex_user' => $user]);
     }
 
     /**
