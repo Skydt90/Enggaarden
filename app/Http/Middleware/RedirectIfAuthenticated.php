@@ -18,7 +18,6 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if ($guard == 'external' && Auth::guard($guard)->check()) {
-            dd(Auth::user());
             return redirect('/external-user');
         }
 

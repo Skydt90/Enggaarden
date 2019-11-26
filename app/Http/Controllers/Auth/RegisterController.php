@@ -112,8 +112,8 @@ class RegisterController extends Controller
     protected function validateExternal (Request $request)
     {
         $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|string|confirmed',
         ]);
     }
 
@@ -135,7 +135,7 @@ class RegisterController extends Controller
     protected function createExternal(array $data)
     {
         return ExternalUser::create([
-            'email' => $data['email'],
+            'email' => $_GET['email'],
             'password' => Hash::make($data['password']),
             'member_id' => $_GET['id'],
         ]);   
