@@ -25,6 +25,7 @@ Route::post('login-external', 'Auth\LoginController@externalLogin')->name('login
 // Members
 Route::resource('member', 'Members\MemberController');
 Route::post('member-company', 'Members\MemberController@storeCompany')->name('storeCompany');
+Route::post('invite', 'Members\MemberController@invite')->name('invite');
 
 // External users
 Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('ext-home')->middleware('auth:external');

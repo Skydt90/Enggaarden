@@ -31,14 +31,25 @@
 
                             @if ($member->externalUser != null)
                                 
-                                <td>Oprettet bruger</td>
+                                <td><strong>Oprettet bruger</strong></td>
 
                             @elseif($member->invite != null)
                                 
                                 <td>Inviteret allerede</td>
                             
                             @else
-                                <td>Send invitation</td>
+                                <td>
+                                    <div id="div{{ $member->id }}">
+                                        <a class="btn btn-primary btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
+                                            Inviter
+                                        </a>
+    
+                                        <form id="{{ $member->id }}" class="invite-form" action="{{ route('invite') }}" method="POST" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name='member_id' value="{{ $member->id }}">
+                                        </form>
+                                    </div>
+                                </td>
                             @endif
 
                             <td>

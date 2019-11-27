@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Members;
 
+use App\Contracts\InviteServiceContract;
 use App\Contracts\MemberServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
+use App\Http\Requests\CreateInvitationRequest;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
     private $memberService;
+    private $inviteService;
 
-    public function __construct(MemberServiceContract $memberService)
+    public function __construct(MemberServiceContract $memberService, InviteServiceContract $inviteService)
     {
         $this->memberService = $memberService;
+        $this->inviteService = $inviteService;
     }
 
 
@@ -56,6 +60,11 @@ class MemberController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function invite(CreateInvitationRequest $request)
+    {
+            return $this->inviteService->store($request);
     }
 
    

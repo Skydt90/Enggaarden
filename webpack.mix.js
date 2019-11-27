@@ -16,7 +16,8 @@ mix.js('resources/js/app.js', 'public/js')
 
 // members
 mix.combine([
-   'resources/js/members/modals.js', 
+   'resources/js/members/modals.js',
+   'resources/js/members/invite.js',
 ], 'public/js/members.js');
 
 mix.combine([
