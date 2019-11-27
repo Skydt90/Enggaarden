@@ -24,8 +24,13 @@ class InviteService implements InviteServiceContract
     }
 
     public function store($request){
-        $invite = Invite::make($request);
-        return $this->inviteRepository->store($invite);
+        $invite = Invite::make($request->all());
+        $savedInvite = $this->inviteRepository->store($invite);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Invitation sendt',
+            'data' => $savedInvite
+        ]);
     }
 
 }

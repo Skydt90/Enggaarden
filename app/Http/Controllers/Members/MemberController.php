@@ -6,7 +6,7 @@ use App\Contracts\InviteServiceContract;
 use App\Contracts\MemberServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
-use App\Http\Requests\Requests\CreateInvitationRequest;
+use App\Http\Requests\CreateInvitationRequest;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
