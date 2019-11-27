@@ -13,6 +13,17 @@ class ExternalUser extends Authenticatable
 
     protected $guard = 'external';
 
+    public static function boot()
+    {
+        parent::boot();
+
+        // Delete invite from db when external user registers
+        static::created(function ($externalMember){
+            $externalMember->member;
+            Invite::where('member_id', $externalMember->member->id)->delete();
+        });
+    }
+
     protected $fillable = [
         'email', 'member_id', 'password'
     ];
