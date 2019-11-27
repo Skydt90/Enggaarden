@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('additional-scripts')
-<script src="{{ asset('js/members.js') }}" defer></script>
+    <script src="{{ asset('js/members.js') }}" defer></script>
 @endsection
 
 @section('content')

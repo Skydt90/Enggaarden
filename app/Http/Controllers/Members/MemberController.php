@@ -53,7 +53,7 @@ class MemberController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
+        return $this->memberService->update($request, $id);
     }
 
     

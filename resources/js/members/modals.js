@@ -1,13 +1,9 @@
-$(document).ready(function(){
+$(function() {
 
     // register member
     $('.register-form').on('submit', function(e) {
         e.preventDefault();
-        let url = 'member';
-        if(this.id=='register-company-modal')
-        {
-            url = 'member-company';
-        }
+        const url = this.id === 'register-company-modal' ? 'member-company' : 'member';
         const request = 'POST';
         const data = $(this).serialize();
 

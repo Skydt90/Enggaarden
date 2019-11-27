@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('additional-scripts')
+    <script src="{{ asset('js/members.js') }}" defer></script>
+@endsection
+
 @section('content')
 
     <div class="container">
@@ -9,7 +13,7 @@
         {{-- Member Details --}}
         <div class="row">
             <div class="col-md-8">
-                <form action="" method="POST">
+                <form class="member-form" data-id="{{ $member->id }}" action="" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -34,11 +38,17 @@
 
                         <label for="member_type" class="col-md-3"><strong>Medlemstype:</strong></label>
                         <select class="form-control col-md-9" name="member_type">
-                            @foreach (App\Models\Member::MEMBER_TYPES as $member_type)
-                                <option value="{{ $member_type }}">
-                                    {{ $member_type }}
+                            @if ($member->is_company)
+                                <option value="{{ $member->member_type }}">
+                                    {{ $member->member_type }}
                                 </option>
-                            @endforeach
+                            @else
+                                @foreach (App\Models\Member::MEMBER_TYPES as $member_type)
+                                    <option value="{{ $member_type }}">
+                                        {{ $member_type }}
+                                    </option>
+                                @endforeach
+                            @endif
                         </select>
                         <br><br>
     
@@ -58,18 +68,18 @@
                     </div>
                 </form>
 
-                <form action="" method="POST">
+                <form id="subscription-form" action="" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
                         <label for="subscription" class="col-md-3"><strong>Kontingent:</strong></label>
-                        <input type="date" class="form-control col-md-9" name="subscription" value="{{ $member->subscriptions[0]->pay_date }}">
+                        <input type="date" class="form-control col-md-9" name="subscription" value="{{ $member->subscriptions[0]->pay_date ?? null }}">
                         
                         <br><br>
                     </div>
                 </form>
 
-                <form action="" method="POST">
+                <form id="address-form" action="" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -86,11 +96,8 @@
                         <br><br>
                     </div>
                 </form>
-    
-                <p><strong>Medlem siden:</strong>{{ $member->created_at->format('j\\. F Y') }}</p>
-               {{--  <p>{{ $member->created_at->format('j\\. F Y') }}</p> --}}
             </div>
-
+            
             {{-- Payments --}}
             <div class="col md-4">            
                 <div class="card">
@@ -99,22 +106,47 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-hover table-borderless table-sm">
-                            <thead>
-                                <th>Dato:</th>
-                                <th>Beløb:</th>
-                            </thead>
-                            <tbody>
-                                @foreach ($member->subscriptions as $subscription)
-                                    <tr>
-                                        <?php $payDate = Carbon\Carbon::parse($subscription->pay_date ?? null) ?>
-                                        <td>{{ $payDate->format('j\\. M Y') }}</td>
-                                        <td>{{ $subscription->amount }} kr.</td>
-                                    </tr>
-                                @endforeach
+                            @if ($member->subscriptions->count() > 0)
+                                <thead>
+                                    <th>Dato:</th>
+                                    <th>Beløb:</th>
+                                </thead>
+                                <tbody>
+                                    @foreach ($member->subscriptions as $subscription)
+                                        <tr>
+                                            <?php $payDate = Carbon\Carbon::parse($subscription->pay_date ?? null) ?>
+                                            <td>{{ $payDate->format('j\\. M Y') }}</td>
+                                            <td>{{ $subscription->amount }} kr.</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <p class="lead text-center">Ingen betalinger endnu</p>
+                                @endif
                             </tbody>   
                         </table>
                     </div>
                 </div>
+                <br>
+
+                {{-- Infomation --}}   
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Info</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <p class="col-md-5"><strong>Medlem siden:</strong></p>
+                            <p class="col-md-7">{{ $member->created_at->format('j\\. F Y') }}</p>
+
+                            <?php Carbon\Carbon::setLocale('da'); ?>
+                            <p class="col-md-5"><strong>Oprettet for:</strong></p>
+                            <p class="col-md-7">{{ $member->created_at->diffForHumans() }}</p>
+
+                            <p class="col-md-5"><strong>Har en bruger:</strong></p>
+                            <p class="col-md-7">{{ $member->externalUser ? 'Ja' : 'Nej' }}</p>
+                        </div>
+                    </div>
+                </div>      
             </div>
         </div>
         <br>
@@ -122,8 +154,7 @@
         <button type="button" id="success" data-toggle="modal" data-target="#success-modal" style="display:none"></button>
         <button type="button" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id ?? null }}" class="btn btn-danger col-md-1">Slet</button>
         
-        @include('members.modals.delete-modal')
-        @include('members.modals.success-modal')
+        @include('members.partials.member-footer')
 
     </div>    		
 @endsection
