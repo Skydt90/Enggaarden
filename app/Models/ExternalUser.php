@@ -23,7 +23,8 @@ class ExternalUser extends Authenticatable
     ];
 
     // relationships
-    public function member() {
+    public function member() 
+    {
         return $this->belongsTo(Member::class);
     }
 
