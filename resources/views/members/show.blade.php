@@ -3,39 +3,50 @@
 @section('content')
 
     <div class="container">
-
         <h2 class="text-center">Medlemsdetaljer</h2>
         <br><br><br>
 
         <div class="row">
             {{-- Member Details --}}
-            <div class="col-md-8">
-                <div class="row">
-                    <p class="col-md-3"><strong>Navn:</strong></p>
-                    <p class="col-md-9">Christian Grye Skydt</p>
-
-                    <p class="col-md-3"><strong>Adresse:</strong></p>
-                    <p class="col-md-9">Nordre Fasanvej 194 1 TV. 2000 Frederiksberg</p>
-
-                    <p class="col-md-3"><strong>Email</strong></p>
-                    <p class="col-md-9">Christian_skydt@hotmail.com</p>
-
-                    <p class="col-md-3"><strong>Medlemstype:</strong></p>
-                    <p class="col-md-9">Primær</p>
-
-                    <p class="col-md-3"><strong>Telefon:</strong></p>
-                    <p class="col-md-9">27131428</p>
-
-                    <p class="col-md-3"><strong>Kontingent:</strong></p>
-                    <p class="col-md-9">Ikke betalt</p>
-
-                    <p class="col-md-3"><strong>Medlem siden:</strong></p>
-                    <p class="col-md-9">{{ today()->subDays(30)->format('j\\. F Y') }}</p>
-
-                    <p class="col-md-3"><strong>Bestyrelsesmedlem:</strong></p>
-                    <p class="col-md-9">Nej</p>
-                </div>
-            </div>
+            <form action="" class="col-md-8" method="POST">
+                @csrf
+                @method('PUT')
+                
+                    <div class="row">
+                        
+                        <label for="name" class="col-md-3"><strong>Navn:</strong></label>
+                        <input type="text" class="form-control col-md-9" name="name" value="{{ $member->first_name . ' ' . $member->last_name ?? null }}">
+                        <br><br>
+                        <label for="address" class="col-md-3"><strong>Adresse:</strong></label>
+                        <input class="form-control col-md-9" name="address" value="{{ $member->address->street_name ?? null }} {{ $member->address->zip_code ?? null }} {{ $member->address->city ?? null}}">
+                        <br><br>
+                        <label for="email" class="col-md-3"><strong>Email:</strong></label>
+                        <input class="form-control col-md-9" name="email" value="{{ $member->email ?? '' }}">
+                        <br><br>
+                        <label for="member_type" class="col-md-3"><strong>Medlemstype:</strong></label>
+                        <select class="form-control col-md-9" name="member_type">
+                            @foreach (App\Models\Member::MEMBER_TYPES as $member_type)
+                                <option value="{{ $member_type }}">
+                                    {{ $member_type }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <br><br>
+                        <label for="phone_number" class="col-md-3"><strong>Mobil:</strong></label>
+                        <input class="form-control col-md-9" name="phone_number" value="{{ $member->phone_number ?? '' }}">
+                        <br><br>
+                        <label for="subscription" class="col-md-3"><strong>Kontingent:</strong></label>
+                        <input class="form-control col-md-9" name="phone_number" value="{{ $member->subscriptions[0]->pay_date }}">
+                        <br><br>
+    
+                        <p class="col-md-3"><strong>Medlem siden:</strong></p>
+                        <p class="col-md-9">{{ today()->subDays(30)->format('j\\. F Y') }}</p>
+    
+                        <p class="col-md-3"><strong>Bestyrelsesmedlem:</strong></p>
+                        <p class="col-md-9">Nej</p>
+                    </div>
+                
+            </form>
             {{-- Payments --}}
             <div class="col md-4">            
                 <div class="card">

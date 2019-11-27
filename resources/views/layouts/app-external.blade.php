@@ -23,10 +23,6 @@
                 
                 @if (Auth::user())
                    
-                    logik her skal udbygges efter gates er på plads.
-                    Nedenstående logik skal rykkes herind.
-                    
-                @else
                     <p class="navbar-brand mb-n1">
                         {{ config('app.name') }} - {{ $ex_user->member->first_name ?? 'Fornavn' }} {{ $ex_user->member->last_name ?? '' }}
                     </p>
@@ -47,6 +43,10 @@
                             </form>
                         </ul>
                     </div>
+                    
+                    @else
+                    logik her skal udbygges efter gates er på plads.
+                    Nedenstående logik skal rykkes herind.
                 @endif
             </div>
         </nav>

@@ -14,7 +14,7 @@ class MemberRepository implements MemberRepositoryContract
 
     public function getByID($id)
     {
-
+        return Member::withRelations()->findOrFail($id);
     }
 
     public function store($member)

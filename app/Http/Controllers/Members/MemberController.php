@@ -28,6 +28,7 @@ class MemberController extends Controller
         return $this->memberService->store($request);
     }
 
+
     public function storeCompany(CreateMemberRequest $request)
     {
         return $this->memberService->storeCompany($request);
@@ -36,7 +37,7 @@ class MemberController extends Controller
     
     public function show($id)
     {
-        //
+        return view('members.show', ['member' => $this->memberService->getByID($id)]);
     }
 
     

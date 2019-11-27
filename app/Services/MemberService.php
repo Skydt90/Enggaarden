@@ -26,7 +26,7 @@ class MemberService implements MemberServiceContract
 
     public function getByID($id)
     {
-
+        return $this->memberRepository->getByID($id);
     }
 
     public function store($request)
