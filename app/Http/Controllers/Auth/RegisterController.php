@@ -36,10 +36,10 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        // if(is_null(Auth::user()->member)) {
-        //     session()->flash('status', 'Bruger oprettet korrekt');
-        //     return route('register');
-        // }
+        if(is_null(Auth::user()->member)) {
+            session()->flash('status', 'Bruger oprettet korrekt');
+            return route('register');
+        }
         return route('ext-home', ["external_user" => Auth::user()]);
     } 
 
@@ -50,8 +50,9 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth')->only(['showRegistrationForm', 'register']);
         $this->middleware('guest:external');
+        $this->middleware('guest')->except(['showRegistrationForm', 'register']);
     }
 
 
@@ -61,6 +62,18 @@ class RegisterController extends Controller
     }
 
 
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        //$this->guard()->login($user);
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
+    }
+
     public function registerExternal(Request $request)
     {
         $this->validateExternal($request);
@@ -69,26 +82,8 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        // dd(Auth::user());
-
-        return $this->registered($request, $user) ? redirect(route('ext-home')) : dd('Du er ikke logget ind');
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
-
-    public function registered($request, $user)
-    {
-        if (Auth::user() != null){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // public function registerExternal(Request $request)
-    // {
-    //     $this->validateExternal($request);
-
-    //     $this->
-    // }
 
     /**
      * Get a validator for an incoming registration request.
@@ -98,18 +93,14 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:20', 'unique:users,username'], //username must not exist in users -> username column in db
             'user_type' => ['required', 'string', 'max:13', Rule::in(User::USER_TYPES)],
             'password' => ['required', 'string', 'min:5', 'confirmed']
         ]);
-        
-    
-
     }
 
-    protected function validateExternal (Request $request)
+    protected function validateExternal(Request $request)
     {
         $request->validate([
             'email' => 'required|string|email|unique:external_users,email',
