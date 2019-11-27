@@ -9,7 +9,7 @@ class MemberRepository implements MemberRepositoryContract
 {
     public function getAll()
     {
-        return Member::all();
+        return Member::withRelations()->get();
     }
 
     public function getByID($id)

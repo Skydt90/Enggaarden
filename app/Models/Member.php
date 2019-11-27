@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
@@ -34,6 +35,15 @@ class Member extends Model
 
     public function subscriptions() {
         return $this->hasMany(Subscription::class);
+    }
+
+    public function invite() {
+        return $this->hasOne(Invite::class);
+    }
+
+    //scopes
+    public function scopeWithRelations(Builder $query){
+       return $query->with(['address', 'subscriptions', 'invite', 'externalUser']);
     }
 
 }

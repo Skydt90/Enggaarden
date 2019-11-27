@@ -26,7 +26,14 @@
                             <td>{{ $member->first_name . ' ' . $member->last_name }}</td>
                             @endif
                             <td>{{ $member->member_type }}</td>
-                            <td>dummy data</td>
+                            @if ($member->externalUser != null)
+                            <td>Oprettet bruger</td>
+                            @elseif($member->invite != null)
+                            <td>Inviteret allerede</td>
+                            @else
+                            <td>Send invitation</td>
+                            @endif
+                            
                             <td></td>
                         </tr>
                     @endforeach

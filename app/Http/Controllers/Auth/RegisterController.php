@@ -112,7 +112,7 @@ class RegisterController extends Controller
     protected function validateExternal (Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'email' => 'required|string|email|unique:external_users,email',
             'password' => 'required|string|confirmed',
         ]);
     }
