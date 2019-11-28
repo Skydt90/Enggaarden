@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-    // register member
     $('.btn-invite-form').on('click', function(e) {
         e.preventDefault();
         let id = $(this).attr('data-id');

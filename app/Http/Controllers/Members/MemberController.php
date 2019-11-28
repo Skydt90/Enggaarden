@@ -7,7 +7,8 @@ use App\Contracts\MemberServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateMemberRequest;
+use Exception;
 
 class MemberController extends Controller
 {
@@ -27,12 +28,19 @@ class MemberController extends Controller
 
     public function store(CreateMemberRequest $request)
     {
-        return $this->memberService->store($request);
-    }
-
-    public function storeCompany(CreateMemberRequest $request)
-    {
-        return $this->memberService->storeCompany($request);
+        try {
+            $member = $this->memberService->store($request);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Medlem tilføjet korrekt',
+            'data' => $member
+        ]);
     }
     
     public function show($id)
@@ -40,10 +48,21 @@ class MemberController extends Controller
         return view('members.show', ['member' => $this->memberService->getByID($id)]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateMemberRequest $request, $id)
     {
-        dd($request->request);
-        return $this->memberService->update($request, $id);
+        try {
+            $member = $this->memberService->update($request, $id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ]);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Medlem opdateret',
+            'data' => $member
+        ]);
     }
 
     public function destroy($id)

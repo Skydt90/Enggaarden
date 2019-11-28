@@ -10,6 +10,7 @@
             <div class="modal-body">
             <form action="{{ route('member.store') }}" method="POST" class="register-form">
                     @csrf
+                    <input type="hidden" name="type" value="member">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="first_name">Fornavn*</label>

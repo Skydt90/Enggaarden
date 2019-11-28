@@ -3,7 +3,7 @@ $(function() {
     // register member
     $('.register-form').on('submit', function(e) {
         e.preventDefault();
-        const url = this.id === 'register-company-modal' ? 'member-company' : 'member';
+        const url = 'member';
         const request = 'POST';
         const data = $(this).serialize();
 

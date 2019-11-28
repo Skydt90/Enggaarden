@@ -13,31 +13,32 @@
         {{-- Member Details --}}
         <div class="row">
             <div class="col-md-8">
-                <form class="member-form" data-id="{{ $member->id }}" action="" method="POST">
+                <form class="member-form" autocomplete="off" data-id="{{ $member->id }}" action="" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
+                        <input type="hidden" name="type" value="member">
                         
                         @if (!$member->is_company)
                             <label for="first_name" class="col-md-3"><strong>Fornavn:</strong></label>
                         @else
                             <label for="first_name" class="col-md-3"><strong>Firmanavn:</strong></label>    
                         @endif                   
-                        <input type="text" class="form-control col-md-9" name="first_name" value="{{ $member->first_name }}"> 
+                        <input type="text" autocomplete="off" class="form-control col-md-9 input" name="first_name" value="{{ $member->first_name }}"> 
                         <br><br>
                         
                         @if (!$member->is_company)
                             <label for="last_name" class="col-md-3"><strong>Efternavn:</strong></label>
-                            <input type="text" class="form-control col-md-9" name="last_name" value="{{ $member->last_name ?? null }}">
+                            <input type="text" autocomplete="off" class="form-control col-md-9 input" name="last_name" value="{{ $member->last_name ?? null }}">
                             <br><br>
                         @endif
 
                         <label for="email" class="col-md-3"><strong>Email:</strong></label>
-                        <input type="email" class="form-control col-md-9" name="email" value="{{ $member->email ?? '' }}">
+                        <input type="email" autocomplete="off" class="form-control col-md-9 input" name="email" value="{{ $member->email ?? '' }}">
                         <br><br>
 
                         <label for="member_type" class="col-md-3"><strong>Medlemstype:</strong></label>
-                        <select class="form-control col-md-9" name="member_type">
+                        <select class="form-control col-md-9 member-type" name="member_type">
                             @if ($member->is_company)
                                 <option value="{{ $member->member_type }}">
                                     {{ $member->member_type }}
@@ -52,8 +53,8 @@
                         </select>
                         <br><br>
     
-                        <label for="member_type" class="col-md-3"><strong>Bestyrelsesmedlem:</strong></label>
-                        <select class="form-control col-md-9" name="member_type">
+                        <label for="is_board" class="col-md-3"><strong>Bestyrelsesmedlem:</strong></label>
+                        <select class="form-control col-md-9 is-board" name="is_board">
                             @foreach (App\Models\Member::IS_BOARD as $is_board)
                                 <option value="{{ $is_board }}">
                                     {{ $is_board }}
@@ -63,36 +64,38 @@
                         <br><br>
     
                         <label for="phone_number" class="col-md-3"><strong>Mobil:</strong></label>
-                        <input type="number" class="form-control col-md-9" name="phone_number" value="{{ $member->phone_number ?? '' }}">                       
+                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="phone_number" value="{{ $member->phone_number ?? '' }}">                       
                         <br><br>
                     </div>
                 </form>
 
-                <form id="subscription-form" action="" method="POST">
+                <form class="subscription-form" autocomplete="off" data-id="{{ $member->id }}" action="" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <label for="subscription" class="col-md-3"><strong>Kontingent:</strong></label>
-                        <input type="date" class="form-control col-md-9" name="subscription" value="{{ $member->subscriptions[0]->pay_date ?? null }}">
+                        <input type="hidden" name="type" value="subscription">
+                        <label for="pay_date" class="col-md-3"><strong>Kontingent:</strong></label>
+                        <input type="date" autocomplete="off" class="form-control col-md-9 input" name="pay_date" value="{{ $member->subscriptions[0]->pay_date ?? null }}">
                         
                         <br><br>
                     </div>
                 </form>
 
-                <form id="address-form" action="" method="POST">
+                <form class="address-form" autocomplete="off" data-id="{{ $member->id }}" action="" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
+                        <input type="hidden" name="type" value="address">
                         <label for="street_name" class="col-md-3"><strong>Vejnavn og nummer:</strong></label>
-                        <input type="text" class="form-control col-md-9" name="street_name" value="{{ $member->address->street_name ?? null }}">
+                        <input type="text" autocomplete="off" class="form-control col-md-9 input" name="street_name" value="{{ $member->address->street_name ?? null }}">
                         <br><br>
     
                         <label for="zip_code" class="col-md-3"><strong>Postnummer:</strong></label>
-                        <input type="number" class="form-control col-md-9" name="zip_code" value="{{ $member->address->zip_code ?? null }}">
+                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="zip_code" value="{{ $member->address->zip_code ?? null }}">
                         <br><br>
                         
                         <label for="city" class="col-md-3"><strong>By:</strong></label>
-                        <input type="text" class="form-control col-md-9" name="city" value="{{ $member->address->city ?? null}}">
+                        <input type="text" autocomplete="off" class="form-control col-md-9 input" name="city" value="{{ $member->address->city ?? null}}">
                         <br><br>
                     </div>
                 </form>

@@ -2,20 +2,26 @@
 
 namespace App\Services;
 
+use App\Contracts\AddressRepositoryContract;
 use App\Contracts\MemberRepositoryContract;
 use App\Contracts\MemberServiceContract;
-use App\Models\Address;
-use App\Models\Member;
-use App\Models\Subscription;
+use App\Contracts\SubscriptionRepositoryContract;
 
 class MemberService implements MemberServiceContract
 {
 
     private $memberRepository;
+    private $addressRepository;
+    private $subscriptionRepository;
 
-    public function __construct(MemberRepositoryContract $memberRepository)
+    public function __construct(
+        MemberRepositoryContract $memberRepository, 
+        AddressRepositoryContract $addressRepository, 
+        SubscriptionRepositoryContract $subscriptionRepository)
     {
         $this->memberRepository = $memberRepository;
+        $this->addressRepository = $addressRepository;
+        $this->subscriptionRepository = $subscriptionRepository;
     }
 
     public function getAll()
@@ -30,51 +36,48 @@ class MemberService implements MemberServiceContract
 
     public function store($request)
     {
-        return $this->makeMember($request);
-    }
+        $type = $request->type;
 
-    public function storeCompany($request)
-    {
-        $request->merge([
-            'is_board' => 'Nej',
-            'is_company' => true,
-            'member_type' => 'Ekstern'
-        ]);
-        return $this->makeMember($request);
+        switch($type) {
+            case 'member':
+                $member = $this->memberRepository->create($request);
+                $amount = 100;
+                break;
+            case 'company':
+                $request->merge(['is_board' => 'Nej', 'is_company' => true, 'member_type' => 'Ekstern']);
+                $member = $this->memberRepository->create($request);
+                $amount = 300;
+                break;
+            default: 
+                break;
+        }
+        $request->merge(['amount' => $amount]);
+             
+        if($this->hasAddress($request)) {
+            $member = $this->addressRepository->createOnMember($member, $request);
+        }
+        $member = $this->subscriptionRepository->createOnMember($member, $request);
+        return $member;
     }
 
     public function update($request, $id)
     {
+        $type = $request->type;
         
+        switch($type) {
+            case 'member':
+                return $this->memberRepository->updateByID($request, $id);
+            case 'address':
+                return $this->addressRepository->updateByMemberID($request, $id);
+            case 'subscription':
+                return $this->subscriptionRepository->updateByMemberID($request, $id);
+            default:
+                break;
+        }
     }
 
-    private function makeMember($request)
+    private function hasAddress($request) : bool
     {
-        $member = Member::make($request->all());
-
-        $savedMember = $this->memberRepository->store($member);
-
-        if($request->filled('street_name')) {
-            $address = Address::make($request->all());
-            $this->memberRepository->storeAddressOnMember($savedMember, $address);
-            $savedMember->address = $address;
-        }
-        $amount = 100;
-        if ($savedMember->is_company){
-            $amount = 300;
-        }
-
-        $subscription = Subscription::make([
-            'amount' => $amount,
-            'pay_date' => null
-        ]);
-
-        $this->memberRepository->storeSubscriptionOnMember($savedMember, $subscription);
-
-        return response()->json([
-                    'status' => 200,
-                    'message' => 'Medlem tilføjet korrekt',
-                    'data' => $savedMember
-                ]);
+        return $request->filled('street_name') || $request->filled('zip_code') || $request->filled('city');
     }
 }

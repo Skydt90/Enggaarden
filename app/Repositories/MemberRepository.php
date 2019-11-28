@@ -17,17 +17,12 @@ class MemberRepository implements MemberRepositoryContract
         return Member::withRelations()->findOrFail($id);
     }
 
-    public function store($member)
+    public function create($request)
     {
-        // if($member->save()){
-        //     return response()->json([
-        //         'status' => 200,
-        //         'message' => 'Medlem tilføjet korrekt',
-        //         'data' => $member
-        //     ]);
-        // };
-        $member->save();
+        $member = Member::create($request->all());
         return $member;
+       /*  $member->save();
+        return $member; */
     }
 
     public function storeAddressOnMember($member, $address)
@@ -42,5 +37,11 @@ class MemberRepository implements MemberRepositoryContract
         return $member;
     }
 
-    /* public function update($member) */
+    public function updateByID($request, $id)
+    {
+        $member = Member::findOrFail($id);
+        $member->fill($request->validated());
+        $member->save();
+        return $member;
+    }
 }

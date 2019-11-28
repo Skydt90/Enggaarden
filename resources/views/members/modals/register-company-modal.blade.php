@@ -8,8 +8,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="POST" class="register-form" id="register-company-modal">
+                <form action="{{ route('member.store') }}" method="POST" class="register-form" id="register-company-modal">
                     @csrf
+                    <input type="hidden" name="type" value="company">
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="company_name">Firmanavn*</label>

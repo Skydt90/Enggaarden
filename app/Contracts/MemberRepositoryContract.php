@@ -8,5 +8,7 @@ interface MemberRepositoryContract
 
     public function getByID($id);
 
-    public function store($member);
+    public function create($request);
+
+    public function updateByID($request, $id);
 }
