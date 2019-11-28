@@ -13,6 +13,10 @@ class Invite extends Model
         'member_id', 'expires_at'
     ];
 
+    protected $dates = [
+        'expires_at'
+    ];
+
     public static function boot()
     {
         parent::boot();

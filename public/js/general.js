@@ -80,7 +80,7 @@ function ajax_requests(url, request, data, showSuccess, callback) {
                 $.toastr.error.show('Noget gik galt under håndteringen af din forespørgsel. En log er blevet oprettet hvor vi kan se hvad der gik galt. Vi undskylder ulejligheden.');
             }
             if(error.status === 419) { //Csrf token expired, brugeren er blevet automatisk logget ud
-                $.toastr.warning.show('Du har været inaktiv for længe, så du er blevet automatisk logget ud. Du bliver desværre nødt til at logge ind igen, og starte forfra med registreringen.')
+                $.toastr.warning.show('Du har været inaktiv for længe, så du er blevet automatisk logget ud. Du bliver desværre nødt til at logge ind igen, og starte forfra.')
             }
             if(callback !== undefined) {
                 callback(returnData);
