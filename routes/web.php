@@ -23,7 +23,7 @@ Route::post('login-external', 'Auth\LoginController@externalLogin')->name('login
 
 
 // Members
-Route::resource('member', 'Members\MemberController')->except(['edit']);
+Route::resource('member', 'Members\MemberController')->except(['edit'])->middleware('auth');
 Route::post('member-company', 'Members\MemberController@storeCompany')->name('storeCompany');
 Route::post('invite', 'Members\MemberController@invite')->name('invite');
 
@@ -33,6 +33,7 @@ Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('
 // TestController
 Route::group(['prefix' => 'test'], function () {
     Route::get('show', 'TestController@testPage');
+    Route::get('error', 'TestController@error');
     Route::delete('delete/{id}', 'TestController@destroyTest');
     Route::post('member-create', 'TestController@postFormTest');
     Route::get('mail', 'TestController@sendMail');
