@@ -20,43 +20,32 @@ class MemberController extends Controller
         $this->inviteService = $inviteService;
     }
 
-
     public function index()
     {
         return view('members.index', ['members' => $this->memberService->getAll()]);
     }
-
 
     public function store(CreateMemberRequest $request)
     {
         return $this->memberService->store($request);
     }
 
-
     public function storeCompany(CreateMemberRequest $request)
     {
         return $this->memberService->storeCompany($request);
     }
-
     
     public function show($id)
     {
         return view('members.show', ['member' => $this->memberService->getByID($id)]);
     }
 
-    
-    public function edit($id)
-    {
-        //
-    }
-
-    
     public function update(Request $request, $id)
     {
-        //
+        dd($request->request);
+        return $this->memberService->update($request, $id);
     }
 
-    
     public function destroy($id)
     {
         //
@@ -64,8 +53,7 @@ class MemberController extends Controller
 
     public function invite(CreateInvitationRequest $request)
     {
-            return $this->inviteService->store($request);
+        return $this->inviteService->store($request);
     }
-
    
 }

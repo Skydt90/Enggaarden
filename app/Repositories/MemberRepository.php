@@ -41,4 +41,6 @@ class MemberRepository implements MemberRepositoryContract
         $member->subscriptions()->save($subscription);
         return $member;
     }
+
+    /* public function update($member) */
 }

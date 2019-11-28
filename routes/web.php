@@ -23,7 +23,7 @@ Route::post('login-external', 'Auth\LoginController@externalLogin')->name('login
 
 
 // Members
-Route::resource('member', 'Members\MemberController');
+Route::resource('member', 'Members\MemberController')->except(['edit']);
 Route::post('member-company', 'Members\MemberController@storeCompany')->name('storeCompany');
 Route::post('invite', 'Members\MemberController@invite')->name('invite');
 

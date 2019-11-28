@@ -18,7 +18,6 @@ class MemberService implements MemberServiceContract
         $this->memberRepository = $memberRepository;
     }
 
-
     public function getAll()
     {
         return $this->memberRepository->getAll();
@@ -42,6 +41,11 @@ class MemberService implements MemberServiceContract
             'member_type' => 'Ekstern'
         ]);
         return $this->makeMember($request);
+    }
+
+    public function update($request, $id)
+    {
+        
     }
 
     private function makeMember($request)
