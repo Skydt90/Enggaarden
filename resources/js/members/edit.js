@@ -3,7 +3,7 @@ $(function() {
     let events = [];
 
     // this is for updating members
-    $('.member-form').on('keyup change', '.form-control', function(e) {
+    $('.member-form').on('keyup', '.form-control', function(e) {
         if(e.keyCode === 9) { return; } // tab key
         
         const element = $(this);
