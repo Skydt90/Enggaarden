@@ -58,6 +58,7 @@ class RegisterController extends Controller
 
     public function showExternalRegistrationForm()
     {
+        //Burde muligvis refactores med service og repo lag
         $test = ExternalUser::where('email', $_GET['email'])->get();
         if ($test->isNotEmpty()){
             return redirect(route('login-ext'));
