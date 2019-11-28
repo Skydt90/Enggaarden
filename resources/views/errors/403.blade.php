@@ -51,11 +51,13 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div class="code">
-                440            
+                403            
             </div>
 
             <div class="message" style="padding: 10px;">
-                Session udløbet <br>Du er blevet logget ud grundet inaktivitet
+                <strong> Ingen adgang </strong> <br> Du har ikke adgang til denne side, <br> 
+                muligvis fordi du er blevet logget ud grundet inaktivitet  <br> <br>
+                <a href="{{ route('login') }}" class="btn btn-primary">Login for at fortsætte</a> 
             </div>
         </div>
     </body>

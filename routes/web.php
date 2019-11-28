@@ -20,6 +20,7 @@ Route::get('register-external', 'Auth\RegisterController@showExternalRegistratio
 Route::post('register-external', 'Auth\RegisterController@registerExternal')->name('reg-ext')->middleware('signed');
 Route::get('login-external', 'Auth\LoginController@showExternalLogin')->name('login-ext');
 Route::post('login-external', 'Auth\LoginController@externalLogin')->name('login-ext');
+Route::get('unauthenticated', 'Errors\ErrorController@unauthenticated')->name('unauthenticated');
 
 
 // Members
