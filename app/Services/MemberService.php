@@ -18,24 +18,20 @@ class MemberService implements MemberServiceContract
         $this->memberRepository = $memberRepository;
     }
 
-
     public function getAll()
     {
         return $this->memberRepository->getAll();
     }
-
 
     public function getByID($id)
     {
         return $this->memberRepository->getByID($id);
     }
 
-
     public function store($request)
     {
         return $this->makeMember($request);
     }
-
 
     public function storeCompany($request)
     {
@@ -47,7 +43,6 @@ class MemberService implements MemberServiceContract
         return $this->makeMember($request);
     }
 
-    
     public function update($request, $id)
     {
         

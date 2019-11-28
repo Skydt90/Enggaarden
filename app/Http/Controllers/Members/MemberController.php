@@ -7,6 +7,7 @@ use App\Contracts\MemberServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -20,43 +21,37 @@ class MemberController extends Controller
         $this->inviteService = $inviteService;
     }
 
-
     public function index()
     {
         return view('members.index', ['members' => $this->memberService->getAll()]);
     }
-
 
     public function store(CreateMemberRequest $request)
     {
         return $this->memberService->store($request);
     }
 
-
     public function storeCompany(CreateMemberRequest $request)
     {
         return $this->memberService->storeCompany($request);
     }
-
     
-    public function show($id)
+    public function show(Member $member)
     {
+        dd($member);
         return view('members.show', ['member' => $this->memberService->getByID($id)]);
     }
-
     
     public function edit($id)
     {
         //
     }
 
-    
     public function update(Request $request, $id)
     {
         return $this->memberService->update($request, $id);
     }
 
-    
     public function destroy($id)
     {
         //
@@ -64,8 +59,7 @@ class MemberController extends Controller
 
     public function invite(CreateInvitationRequest $request)
     {
-            return $this->inviteService->store($request);
+        return $this->inviteService->store($request);
     }
-
    
 }

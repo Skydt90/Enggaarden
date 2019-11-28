@@ -7,16 +7,18 @@ use App\Models\Invite;
 
 class InviteRepository implements InviteRepositoryContract
 {
-
-    public function getAll(){
+    public function getAll()
+    {
         return Invite::all();
     }
 
-    public function getByMemberID($id){
+    public function getByMemberID($id) 
+    {
         return Invite::findorfail($id);
     }
 
-    public function store($invite){
+    public function store($invite) 
+    {
         $invite->save();
 
         return $invite;

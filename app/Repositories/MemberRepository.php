@@ -12,12 +12,10 @@ class MemberRepository implements MemberRepositoryContract
         return Member::withRelations()->get();
     }
 
-
     public function getByID($id)
     {
         return Member::withRelations()->findOrFail($id);
     }
-
 
     public function store($member)
     {
@@ -32,13 +30,11 @@ class MemberRepository implements MemberRepositoryContract
         return $member;
     }
 
-
     public function storeAddressOnMember($member, $address)
     {
         $member->address()->save($address);
         return $member;
     }
-
 
     public function storeSubscriptionOnMember($member, $subscription)
     {
@@ -46,5 +42,5 @@ class MemberRepository implements MemberRepositoryContract
         return $member;
     }
 
-    public function update($member)
+    /* public function update($member) */
 }
