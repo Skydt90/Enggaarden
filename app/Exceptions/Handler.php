@@ -58,6 +58,6 @@ class Handler extends ExceptionHandler
         if ($request->is('external-user')) {
             return redirect()->guest('/login-external');
         }
-        return redirect()->guest(route('login'));
+        return redirect()->guest(route('unauthenticated'));
     }
 }

@@ -58,6 +58,7 @@ class RegisterController extends Controller
 
     public function showExternalRegistrationForm()
     {
+        //Burde muligvis refactores med service og repo lag
         $test = ExternalUser::where('email', $_GET['email'])->get();
         if ($test->isNotEmpty()){
             return redirect(route('login-ext'));
@@ -72,7 +73,10 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        //$this->guard()->login($user);
+        // Man kan kun registrere brugere som admin, derfor skal
+        // en nyligt registreret bruger ikke logges ind
+        //
+        // $this->guard()->login($user);
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
