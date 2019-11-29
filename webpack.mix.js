@@ -24,5 +24,6 @@ mix.combine([
 mix.combine([
    'resources/js/general/toastr.js',
    'resources/js/general/ajax.js',
+   'resources/js/general/ckeditor.js',
 ], 'public/js/general.js');
 

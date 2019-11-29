@@ -1,5 +1,5 @@
 $(function() {
-
+    $('[data-toggle="tooltip"]').tooltip();
     // register member
     $('.register-form').on('submit', function(e) {
         e.preventDefault();
@@ -35,7 +35,7 @@ $(document).ready(function(){
         ajax_requests(url, request, data, true, function(result) {
             
             if(result.status === 200) {
-                $('#div' + id).replaceWith('Inviteret allerede');
+                $('#div' + id).replaceWith('<i class="fas fa-hourglass-half"></i> Afventer</td>');
             }
         });
     });
@@ -92,26 +92,19 @@ $(function() {
             ajax_requests(url, 'PUT', data, false, function(result) {
                 console.log(result.status);
             });
-        }, 1500);
+        }, 1000);
     });
 
     $('.subscription-form').on('change', '.input', function(e) {
         if(e.keyCode === 9) { return; }
         
-        const element = $(this);
         const id = $('.subscription-form').attr('data-id');
         const url = '/member/' + id;
         const data = $('.subscription-form').serialize();
         
-        events[element.attr('name')];
-        
-        clearTimeout(events[element.attr('name')]);
-        
-        events[element.attr('name')] = setTimeout(function() {
-            ajax_requests(url, 'PUT', data, false, function(result) {
-                console.log(result.status);
-            });
-        }, 1500);
+        ajax_requests(url, 'PUT', data, false, function(result) {
+            console.log(result.status);
+        });
     });
 
 });

@@ -112,3 +112,8 @@ function handleBadRequestMessage(returnData)
 
     $.toastr.error.show(message);
 }
+ClassicEditor
+        .create( document.querySelector( '#body' ) )
+        .catch( error => {
+            console.error( error );
+        } );

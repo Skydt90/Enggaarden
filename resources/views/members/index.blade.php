@@ -6,18 +6,31 @@
 
 @section('content')
     <div class="container">
-
+        <h2 class="text-center">Medlemskartotek</h2>
+        <br>
         <div class="row">
-            <table class="table table-hover table-border">
+            <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-user-plus"></i> Opret Medlem</button>
+            <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1 mr-auto"><i class="far fa-building"></i> Opret Firma</button>
+        </div>
+        <div class="row mt-2">  
+            <label for="show">
+                Vis
+                <select name="" id="" value="10" class="col-md-6s form-control-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+                Medlemmer
+            </label>
+            <table class="table table-hover table-sm">
                 <thead>
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
                     <th>Kontigent:</th>
+                    <th>Seneste Betaling:</th>
                     <th>Bruger:</th>
                     <th>Valgmuligheder:</th>
                 </thead>
-                <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-success col-md-2">Opret Medlem</button>
-                <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-success col-md-2">Opret Firma</button>
                 <tbody>
                     @foreach ($members as $member)
                         <tr>
@@ -27,21 +40,18 @@
                                 <td>{{ $member->first_name . ' ' . $member->last_name }}</td>
                             @endif
                                 <td>{{ $member->member_type }}</td>
-                                <td>Betalings status</td>
+                                <td>{!! $member->subscriptions[0]->pay_date ?? null ? '<i data-toggle="tooltip" data-placement="right" title="Betalt" class="fas fa-check" style="color: green"></i>' : '<i data-toggle="tooltip" data-placement="right" title="Ikke Betalt" class="fas fa-times" style="color: red"></i>' !!}</td>
+                                <td>{{ $member->subscriptions[0]->amount ?? null ? $member->subscriptions[0]->amount .' kr.' : 0 .' kr.'}}</td>
 
                             @if ($member->externalUser != null)
-                                
-                                <td><strong>Oprettet bruger</strong></td>
-
-                            @elseif($member->invite != null)
-                                
-                                <td>Inviteret allerede</td>
-                            
+                                <td><i style="color: green" class="fas fa-user-check"></i> Oprettet</td>
+                            @elseif($member->invite != null)         
+                                <td><i class="fas fa-hourglass-half"></i> Afventer</td>
                             @else
                                 <td>
                                     <div id="div{{ $member->id }}">
-                                        <a class="btn btn-primary btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
-                                            Inviter
+                                        <a class="btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
+                                            <i class="fas fa-user-plus"></i> Inviter
                                         </a>
     
                                         <form id="{{ $member->id }}" class="invite-form" action="{{ route('invite') }}" method="POST" style="display: none;">
@@ -53,7 +63,9 @@
                             @endif
 
                             <td>
-                                <a class="btn btn-primary" href="{{ route('member.show', ['member' => $member]) }}">Rediger</a>
+                                <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => $member]) }}"><i class="far fa-edit"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('mail') }}" style="color:orange"><i class="far fa-envelope"></i></a>
+                                <a class="ml-2" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id}}"><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     @endforeach

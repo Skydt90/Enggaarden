@@ -11346,3 +11346,7 @@ button.toast-close-button {
   font-weight: 600;
 }
 
+.ck-editor__editable_inline {
+  min-height: 400px;
+}
+

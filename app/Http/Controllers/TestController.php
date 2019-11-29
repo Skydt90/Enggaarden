@@ -59,6 +59,11 @@ class TestController extends Controller
         return new ExternalUserInvitation($member, 'link', $expire);
     }
 
+    public function writeMail()
+    {
+        return view('emails.show');
+    }
+
     public function error()
     {
         return view('errors.440');

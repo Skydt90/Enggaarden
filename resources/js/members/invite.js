@@ -12,7 +12,7 @@ $(document).ready(function(){
         ajax_requests(url, request, data, true, function(result) {
             
             if(result.status === 200) {
-                $('#div' + id).replaceWith('Inviteret allerede');
+                $('#div' + id).replaceWith('<i class="fas fa-hourglass-half"></i> Afventer</td>');
             }
         });
     });

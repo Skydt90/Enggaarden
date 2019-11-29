@@ -38,5 +38,6 @@ Route::group(['prefix' => 'test'], function () {
     Route::post('member-create', 'TestController@postFormTest');
     Route::get('mail', 'TestController@sendMail');
     Route::get('view-mail', 'TestController@viewMail');
+    Route::get('write-mail', 'TestController@writeMail')->name('mail');
 });
 

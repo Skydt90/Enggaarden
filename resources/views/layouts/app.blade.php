@@ -12,6 +12,9 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/general.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/32f168cce8.js" crossorigin="anonymous"></script> {{-- DOWNLOAD THESE AND INCLUDE IN PROJECT INSTEAD!!!! --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script> {{-- DOWNLOAD THESE AND INCLUDE IN PROJECT INSTEAD!!!! --}}
+
     @yield('additional-scripts')
     
     <!-- Fonts -->
@@ -23,19 +26,24 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar sticky-top navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                {{-- Toggle button on small screens --}}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
+                
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                    
+                        <li class="nav-item">
+                            <a href="{{ route('member.index') }}" class="nav-link"><i class="fas fa-users"></i> Medlemmer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('mail') }}" class="nav-link"><i class="far fa-envelope"></i> Email</a>
+                        </li>
+            
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -55,8 +63,8 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
