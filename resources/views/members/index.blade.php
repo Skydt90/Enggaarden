@@ -63,9 +63,9 @@
                             @endif
 
                             <td>
-                                <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => $member]) }}"><i class="far fa-edit"></i></a>
-                                <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('mail') }}" style="color:orange"><i class="far fa-envelope"></i></a>
-                                <a class="ml-2" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id}}"><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="far fa-trash-alt"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('mail') }}" style="color:orange"><i class="fas fa-envelope"></i></a>
+                                <a class="ml-2" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id}}"><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     @endforeach

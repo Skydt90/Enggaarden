@@ -34,13 +34,13 @@ class MemberController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
-            ]);
+            ], 500);
         }
         return response()->json([
             'status' => 200,
             'message' => 'Medlem tilføjet korrekt',
             'data' => $member
-        ]);
+        ], 200);
     }
     
     public function show($id)
@@ -56,13 +56,13 @@ class MemberController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
-            ]);
+            ], 500);
         }
         return response()->json([
             'status' => 200,
             'message' => 'Medlem opdateret',
             'data' => $member
-        ]);
+        ], 200);
     }
 
     public function destroy($id)
