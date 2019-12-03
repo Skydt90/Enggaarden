@@ -17,10 +17,9 @@ class InviteRepository implements InviteRepositoryContract
         return Invite::findorfail($id);
     }
 
-    public function store($invite) 
+    public function store($request) 
     {
-        $invite->save();
-
+        $invite = Invite::create($request->all());
         return $invite;
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Address;
+use App\Models\Invite;
 use App\Models\Member;
 use App\Models\Subscription;
 use Illuminate\Database\Seeder;
@@ -18,6 +19,7 @@ class MembersTableSeeder extends Seeder
         Member::query()->truncate();
         Address::query()->truncate();
         Subscription::query()->truncate();
+        Invite::query()->truncate();
 
         $memberCount = (int) $this->command->ask('How many members should be created?', 50);
 

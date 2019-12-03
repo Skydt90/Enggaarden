@@ -30,6 +30,9 @@ Route::post('invite', 'Members\MemberController@invite')->name('invite');
 // External users
 Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('ext-home')->middleware('auth:external');
 
+// Contributions
+Route::resource('contribution', 'Contributions\ContributionController');
+
 // TestController
 Route::group(['prefix' => 'test'], function () {
     Route::get('show', 'TestController@testPage');

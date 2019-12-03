@@ -12,6 +12,6 @@ class ActivityType extends Model
 
     public function contributions()
     {
-        return $this->belongsTo(Contribution::class);
+        return $this->hasMany(Contribution::class);
     }
 }

@@ -12,6 +12,10 @@ class Subscription extends Model
         'pay_date', 'amount', 'member_id'
     ];
 
+    protected $dates = [
+        'pay_date'
+    ];
+
     
     // relationships
     public function member() {
