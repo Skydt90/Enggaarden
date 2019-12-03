@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="container">
-    <h2 class="text-center">Medlemsdetaljer for {{ $member->first_name }}</h2>
+        <h2 class="text-center">Medlemsdetaljer for {{ $member->first_name }}</h2>
         <br><br>
 
         {{-- Member Details --}}
@@ -158,9 +158,5 @@
         <br>
         <a href="{{ route('member.index') }}" class="btn btn-warning col-md-1">Tilbage</a>
         <button type="button" id="success" data-toggle="modal" data-target="#success-modal" style="display:none"></button>
-        <button type="button" id="delete-button" data-toggle="modal" data-target="#delete-modal" data-id="{{ $member->id ?? null }}" class="btn btn-danger col-md-1">Slet</button>
-        
-        @include('members.partials.member-footer')
-
     </div>    		
 @endsection

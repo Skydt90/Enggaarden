@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('additional-scripts')
+    <script src="{{ asset('js/ckeditor.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -26,7 +30,5 @@
         </div> 
         </div>
     </div>
-
-    
 
 @endsection

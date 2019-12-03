@@ -11,7 +11,6 @@ $(function() {
         const data = $(this).serialize();
 
         ajax_requests(url, request, data, true, function(result) {
-            console.log(result.data);
             if(result.status === 200) {
                 $('.register-modal').modal('hide');
                 $(`<tr>
