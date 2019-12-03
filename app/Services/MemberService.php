@@ -76,6 +76,11 @@ class MemberService implements MemberServiceContract
         }
     }
 
+    public function deleteByID($id) : bool
+    {
+        return $this->memberRepository->deleteByID($id);
+    }
+
     private function hasAddress($request) : bool
     {
         return $request->filled('street_name') || $request->filled('zip_code') || $request->filled('city');

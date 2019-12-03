@@ -17,6 +17,7 @@ class Invite extends Model
         'expires_at'
     ];
 
+    // Bør flyttes til en InviteObserver for consistency - chr
     public static function boot()
     {
         parent::boot();

@@ -7,7 +7,7 @@
                 </div>
             </div>
             <div class="modal-body text-center">
-                <p class="lead">Ønsker du virkelig at slette {{ $member->name ?? '' }} ?</p>
+                <p class="lead">Ønsker du virkelig at slette {{ $member->first_name ?? '' }} ?</p>
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-danger col-md-2 mr-2 mt-2" data-dismiss="modal">Nej</button>

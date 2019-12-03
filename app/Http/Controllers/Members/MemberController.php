@@ -67,7 +67,19 @@ class MemberController extends Controller
 
     public function destroy($id)
     {
-        //
+        try {
+            $deleted = $this->memberService->deleteByID($id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Medlem slettet',
+            'data' => $deleted
+        ], 200);
     }
 
     public function invite(CreateInvitationRequest $request)

@@ -11,4 +11,6 @@ interface MemberRepositoryContract
     public function create($request);
 
     public function updateByID($request, $id);
+
+    public function deleteByID($id);
 }

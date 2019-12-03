@@ -44,4 +44,10 @@ class MemberRepository implements MemberRepositoryContract
         $member->save();
         return $member;
     }
+
+    public function deleteByID($id) : bool
+    {
+        $deleted = Member::destroy($id);
+        return $deleted;
+    }
 }

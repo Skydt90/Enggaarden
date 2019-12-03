@@ -13,4 +13,6 @@ interface MemberServiceContract
     /* public function storeCompany($request); */
 
     public function update($request, $id);
+
+    public function deleteByID($id);
 }
