@@ -61,7 +61,7 @@ $(function() {
             ajax_requests(url, 'PUT', data, false, function(result) {
                 console.log(result.status);
             });
-        }, 1500);
+        }, 1000);
     });
 
     $('.member-form').on('change', '.is-board, .member-type', function(e) {
