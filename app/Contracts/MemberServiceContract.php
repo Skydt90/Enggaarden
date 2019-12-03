@@ -10,8 +10,6 @@ interface MemberServiceContract
 
     public function store($request);
 
-    /* public function storeCompany($request); */
-
     public function update($request, $id);
 
     public function deleteByID($id);

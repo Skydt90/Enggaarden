@@ -117,8 +117,12 @@
                                 <tbody>
                                     @foreach ($member->subscriptions as $subscription)
                                         <tr>
-                                            <td>{{ $subscription->pay_date->format('j\\. M Y') }}</td>
-                                            <td>{{ $subscription->amount }} kr.</td>
+                                            @if (is_null($subscription->pay_date))
+                                                <?php continue; ?>      
+                                            @else
+                                                <td>{{ $subscription->pay_date->format('j\\. M Y') }}</td>
+                                                <td>{{ $subscription->amount }} kr.</td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 @else

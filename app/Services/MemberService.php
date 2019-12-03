@@ -51,7 +51,7 @@ class MemberService implements MemberServiceContract
             default: 
                 break;
         }
-        $request->merge(['amount' => $amount]);
+        $request->merge(['amount' => $amount, 'pay_date' => null]);
              
         if($this->hasAddress($request)) {
             $member = $this->addressRepository->createOnMember($member, $request);

@@ -1,5 +1,8 @@
-ClassicEditor
-        .create( document.querySelector( '#body' ) )
+document.addEventListener("DOMContentLoaded", function() {
+    
+    ClassicEditor.create( document
+        .querySelector('#body'))
         .catch( error => {
-            //console.error( error );
-        } );
+            console.error(error);
+        });
+});

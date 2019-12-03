@@ -21,8 +21,6 @@ class MemberRepository implements MemberRepositoryContract
     {
         $member = Member::create($request->all());
         return $member;
-       /*  $member->save();
-        return $member; */
     }
 
     public function storeAddressOnMember($member, $address)
@@ -47,7 +45,6 @@ class MemberRepository implements MemberRepositoryContract
 
     public function deleteByID($id) : bool
     {
-        $deleted = Member::destroy($id);
-        return $deleted;
+        return Member::findOrFail($id)->destroy($id);
     }
 }

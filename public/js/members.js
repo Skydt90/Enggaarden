@@ -11,14 +11,20 @@ $(function() {
         const data = $(this).serialize();
 
         ajax_requests(url, request, data, true, function(result) {
-            
+            console.log(result.data);
             if(result.status === 200) {
                 $('.register-modal').modal('hide');
                 $(`<tr>
                         <td> ${result.data.first_name} ${result.data.last_name || ''} </td>
                         <td> ${result.data.member_type}</td>
-                        <td> dummy data </td>
-                        <td></td>
+                        <td><i data-toggle="tooltip" data-placement="right" title="Ikke Betalt" class="fas fa-times" style="color: red"></i></td>
+                        <td> 0 kr. </td>
+                        <td><i class="fas fa-hourglass-half"></i> Afventer</td>
+                        <td>
+                            <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => ${result.data.id}]) }}"><i class="fas fa-edit"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('mail') }}" style="color:orange"><i class="fas fa-envelope"></i></a>
+                            <a class="ml-2 delete-button" data-id="${result.data.id}" data-name="${result.data.first_name}"><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
+                        </td>
                     </tr>`).insertBefore('table > tbody > tr:first');
             }
         });
@@ -62,7 +68,7 @@ function deleteMember(id) {
     
     ajax_requests(url, request, memberID, true, function(result) {
         if(result.status === 200) {
-            row.fadeOut('fast', function() {
+            row.fadeOut('slow', function() {
                 $(this).remove();
             });
             console.log(result.status);
