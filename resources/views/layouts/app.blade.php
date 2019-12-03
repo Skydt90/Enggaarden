@@ -12,7 +12,6 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/general.js') }}" defer></script>
-    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script> --}} {{-- DOWNLOAD THESE AND INCLUDE IN PROJECT INSTEAD!!!! --}}
 
     @yield('additional-scripts')
     
