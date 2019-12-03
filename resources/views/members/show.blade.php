@@ -117,8 +117,7 @@
                                 <tbody>
                                     @foreach ($member->subscriptions as $subscription)
                                         <tr>
-                                            <?php $payDate = Carbon\Carbon::parse($subscription->pay_date ?? null) ?>
-                                            <td>{{ $payDate->format('j\\. M Y') }}</td>
+                                            <td>{{ $subscription->pay_date->format('j\\. M Y') }}</td>
                                             <td>{{ $subscription->amount }} kr.</td>
                                         </tr>
                                     @endforeach

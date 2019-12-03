@@ -84,7 +84,19 @@ class MemberController extends Controller
 
     public function invite(CreateInvitationRequest $request)
     {
-        return $this->inviteService->store($request);
+        try {
+            $savedInvite = $this->inviteService->store($request);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Invitation sendt',
+            'data' => $savedInvite
+        ]);
     }
    
 }

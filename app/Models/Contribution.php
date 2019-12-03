@@ -10,8 +10,12 @@ class Contribution extends Model
         'activity_type_id', 'amount', 'payment_date'
     ];
 
+    protected $dates = [
+        'payment_date'
+    ];
+
     public function activityType()
     {
-        return $this->hasOne(ActivityType::class);
+        return $this->belongsTo(ActivityType::class);
     }
 }

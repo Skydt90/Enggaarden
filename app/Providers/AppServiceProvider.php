@@ -10,6 +10,8 @@ use App\Services\InviteService;
 use App\Repositories\MemberRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Services\MemberService;
+use App\Repositories\ContributionRepository;
+use App\Services\ContributionService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,6 +49,14 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('App\Contracts\InviteServiceContract', function($app) {
             return new InviteService($app->make('App\Contracts\InviteRepositoryContract'));
+        }); 
+
+        $this->app->singleton('App\Contracts\ContributionRepositoryContract', function($app) {
+            return new ContributionRepository();
+        });
+
+        $this->app->singleton('App\Contracts\ContributionServiceContract', function($app) {
+            return new ContributionService($app->make('App\Contracts\ContributionRepositoryContract'));
         }); 
     }
 
