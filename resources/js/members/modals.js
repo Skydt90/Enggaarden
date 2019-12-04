@@ -20,7 +20,7 @@ $(function() {
                         <td> 0 kr. </td>
                         <td><i class="fas fa-hourglass-half"></i> Afventer</td>
                         <td>
-                            <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => ${result.data.id}]) }}"><i class="fas fa-edit"></i></a>
+                            <a data-toggle="tooltip" data-placement="top" title="Rediger" href="http://enggaarden.local/member/${result.data.id}"><i class="fas fa-edit"></i></a>
                             <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('mail') }}" style="color:orange"><i class="fas fa-envelope"></i></a>
                             <a class="ml-2 delete-button" data-id="${result.data.id}" data-name="${result.data.first_name}"><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
                         </td>

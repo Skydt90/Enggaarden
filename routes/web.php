@@ -33,6 +33,10 @@ Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('
 // Contributions
 Route::resource('contribution', 'Contributions\ContributionController');
 
+Route::group(['prefix' => 'email'], function() {
+    Route::get('show/{id?}', 'Emails\EmailController@show')->name('mail.show');
+});
+
 // TestController
 Route::group(['prefix' => 'test'], function () {
     Route::get('show', 'TestController@testPage');
