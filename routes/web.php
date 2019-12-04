@@ -34,7 +34,8 @@ Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('
 Route::resource('contribution', 'Contributions\ContributionController');
 
 Route::group(['prefix' => 'email'], function() {
-    Route::get('show/{id?}', 'Emails\EmailController@show')->name('mail.show');
+    Route::get('{id?}', 'Emails\EmailController@show')->name('mail.show');
+    Route::post('', 'Emails\EmailController@send')->name('mail.send');
 });
 
 // TestController
