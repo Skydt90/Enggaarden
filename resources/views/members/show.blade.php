@@ -75,7 +75,7 @@
                     <div class="row">
                         <input type="hidden" name="type" value="subscription">
                         <label for="pay_date" class="col-md-3"><strong>Kontingent:</strong></label>
-                        <input type="date" autocomplete="off" class="form-control col-md-9 input" name="pay_date" value="{{ $member->subscriptions[0]->pay_date ?? null }}">
+                        <input type="date" autocomplete="off" class="form-control col-md-9 input" name="pay_date" value="{{ empty($member->subscriptions[0]->pay_date) ? null : $member->subscriptions[0]->pay_date->toDateString() }}">
                         
                         <br><br>
                     </div>

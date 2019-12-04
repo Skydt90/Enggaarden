@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Contributions;
 
 use App\Contracts\ContributionServiceContract;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateContributionRequest;
+use App\Models\ActivityType;
 use App\Models\Contribution;
+use Exception;
 use Illuminate\Http\Request;
 
 class ContributionController extends Controller
@@ -25,17 +28,10 @@ class ContributionController extends Controller
     public function index()
     {
         //dd($this->contributionService->getAll());
-        return view('contributions.index', ['contributions' => $this->contributionService->getAll()]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('contributions.index', [
+            'contributions' => $this->contributionService->getAll(),
+            'activity_types' => ActivityType::all()//$this->contributionService->getAllActivities()
+            ]);
     }
 
     /**
@@ -44,9 +40,21 @@ class ContributionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateContributionRequest $request)
     {
-        //
+        try{
+            $contribution = $this->contributionService->store($request);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Medlem tilføjet korrekt',
+            'data' => $contribution
+        ], 200);
     }
 
     /**

@@ -24,7 +24,7 @@ class CreateInvitationRequest extends FormRequest
     public function rules()
     {
         return [
-            'member_id' => 'exists:members,id'
+            'member_id' => 'required|exists:members,id'
         ];
     }
 }

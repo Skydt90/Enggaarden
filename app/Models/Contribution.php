@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Contribution extends Model
 {
     protected $fillable = [
-        'activity_type_id', 'amount', 'payment_date'
+        'activity_type_id', 'amount', 'pay_date'
     ];
 
     protected $dates = [
-        'payment_date'
+        'pay_date'
     ];
 
     public function activityType()

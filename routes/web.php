@@ -24,14 +24,14 @@ Route::get('unauthenticated', 'Errors\ErrorController@unauthenticated')->name('u
 
 
 // Members
-Route::resource('member', 'Members\MemberController')->except(['edit']);
+Route::resource('member', 'Members\MemberController')->except(['edit', 'create']);
 Route::post('invite', 'Members\MemberController@invite')->name('invite');
 
 // External users
 Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('ext-home')->middleware('auth:external');
 
 // Contributions
-Route::resource('contribution', 'Contributions\ContributionController');
+Route::resource('contribution', 'Contributions\ContributionController')->except(['create']);
 
 // TestController
 Route::group(['prefix' => 'test'], function () {

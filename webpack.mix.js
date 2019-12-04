@@ -33,3 +33,8 @@ mix.combine([
    'resources/js/general/ajax.js',
 ], 'public/js/general.js');
 
+//contributions
+mix.combine([
+   'resources/js/contributions/modals.js'
+], 'public/js/contributions.js');
+

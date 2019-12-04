@@ -16,7 +16,7 @@ class RefactorContributionsTable extends Migration
         Schema::table('contributions', function (Blueprint $table) {
             $table->renameColumn('contributionId', 'id');
             $table->renameColumn('activityType', 'activity_type');
-            $table->renameColumn('paymentDate', 'payment_date');
+            $table->renameColumn('paymentDate', 'pay_date');
             $table->timestamps();
         });
 
@@ -35,7 +35,7 @@ class RefactorContributionsTable extends Migration
         Schema::table('contributions', function (Blueprint $table) {
             $table->renameColumn('id', 'contributionId');
             $table->renameColumn('activity_type', 'activityType');
-            $table->renameColumn('payment_date', 'paymentDate');
+            $table->renameColumn('pay_date', 'paymentDate');
             $table->dropTimestamps();
         });
         
