@@ -2,33 +2,45 @@
 
 @section('additional-scripts')
     <script src="{{ asset('js/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/email.js') }}"></script>
 @endsection
 
 @section('content')
     <div class="container">
+        <h2 class="text-center">Send Email</h2>
+        
+        @include('layouts.partials.flash-span')
+        
+        <br>
+
         <div class="row">
             <div class="col-md-12">
-                <form role="form" action="" method="post" id="login-form" autocomplete="off">
+                <form action="{{ route('mail.send') }}" method="POST" autocomplete="off">
+                    @csrf
+                    @if (isset($email))
+                        <div class="form-group">
+                            <label for="reciever">Modtager:</label>
+                            <input type="email" name="reciever" class="form-control" readonly value="{{ $email ?? '' }}">
+                        </div>
+                    @else
                         
+                    @endif
+                    
                     <div class="form-group">
-                        <label for="email" class="sr-only">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" value="{{ $email ?? '' }}">
+                        <label for="subject">Emne:</label>
+                        <input type="text" name="subject" class="form-control" placeholder="Indtast emne">
                     </div>
                     
                     <div class="form-group">
-                        <label for="subject" class="sr-only">Subject</label>
-                        <input type="text" name="subject" id="subject" class="form-control" placeholder="Enter subject">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="Comment">Your Comment</label>
-                        <textarea class="form-control" id="body" name="comment_content"></textarea>
+                        <label for="message">Besked:</label>
+                        <textarea class="form-control ck-editor" name="message"></textarea>
                     </div>
 
-                    <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Submit"> 
+                    <input type="submit" class="btn btn-primary btn-block"> 
                 </form>     
             </div> 
         </div>
     </div>
+    
 
 @endsection
