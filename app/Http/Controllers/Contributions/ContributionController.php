@@ -97,8 +97,20 @@ class ContributionController extends Controller
      * @param  \App\Models\Contribution  $contribution
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contribution $contribution)
+    public function destroy($id)
     {
-        //
+        try{
+            $contribution = $this->contributionService->delete($id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Bidrag slettet korrekt',
+            'data' => $contribution
+        ], 200);
     }
 }

@@ -35,8 +35,12 @@ class ContributionService implements ContributionServiceContract
 
     public function store($request)
     {
+        // Gets the correct activity based on the activity_type string 
+        // and merges its id into the request
+
         $activity = $this->activityTypeRepository->getByActivityType($request->activity_type);
         $request->merge(['activity_type_id' => $activity->id]);
+        
         $contribution = $this->contributionRepository->store($request);
         return $contribution;
     }
@@ -48,7 +52,7 @@ class ContributionService implements ContributionServiceContract
 
     public function delete($id)
     {
-        //
+        return $this->contributionRepository->delete($id);
     }
 
 }

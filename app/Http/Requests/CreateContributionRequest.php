@@ -24,7 +24,7 @@ class CreateContributionRequest extends FormRequest
     public function rules()
     {
         return [
-            'activity_type' => 'required|exists:activity_types,activity_type|different:"Gammel data"',
+            'activity_type' => 'required|exists:activity_types,activity_type|not_in:["Gammel data"]',
             'amount' => 'required|numeric|min:1',
             'pay_date' => 'required'
         ];

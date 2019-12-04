@@ -30,7 +30,8 @@ $(function() {
     });
 
     // trigger the modal based on member cridentials
-    $('.delete-button').on('click', function() {
+    $('.delete-button').on('click', function(e) {
+        e.preventDefault();
         const id = $(this).data('id');
         const name = $(this).data('name');
         const modal = `<div id="delete-modal" class="modal fade">

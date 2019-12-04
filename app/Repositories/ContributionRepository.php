@@ -21,6 +21,7 @@ class ContributionRepository implements ContributionRepositoryContract
     public function store($request)
     {
         $contribution = Contribution::create($request->all());
+        $contribution->activityType;
         return $contribution;
     }
 
@@ -31,7 +32,8 @@ class ContributionRepository implements ContributionRepositoryContract
 
     public function delete($id)
     {
-        return Contribution::destroy($id);
+        $contribution = Contribution::findorfail($id);
+        return $contribution->delete();
     }
 
 }
