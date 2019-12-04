@@ -12,6 +12,8 @@ use App\Repositories\SubscriptionRepository;
 use App\Services\MemberService;
 use App\Repositories\ContributionRepository;
 use App\Services\ContributionService;
+use App\Repositories\EmailRepository;
+use App\Services\EmailService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // dependency injections
+
+        // Members
         $this->app->singleton('App\Contracts\MemberRepositoryContract', function($app) {
             return new MemberRepository();
         });
@@ -41,8 +45,18 @@ class AppServiceProvider extends ServiceProvider
                 $app->make('App\Contracts\MemberRepositoryContract'), 
                 $app->make('App\Contracts\AddressRepositoryContract'), 
                 $app->make('App\Contracts\SubscriptionRepositoryContract'));
-        }); 
+        });
+        
+        // Emails
+        $this->app->singleton('App\Contracts\EmailRepositoryContract', function($app) {
+            return new EmailRepository();
+        });
 
+        $this->app->singleton('App\Contracts\EmailServiceContract', function($app) {
+            return new EmailService($app->make('App\Contracts\EmailRepositoryContract'));
+        });
+
+        // Invites
         $this->app->singleton('App\Contracts\InviteRepositoryContract', function($app) {
             return new InviteRepository();
         });
@@ -51,6 +65,8 @@ class AppServiceProvider extends ServiceProvider
             return new InviteService($app->make('App\Contracts\InviteRepositoryContract'));
         }); 
 
+
+        // Contributions
         $this->app->singleton('App\Contracts\ContributionRepositoryContract', function($app) {
             return new ContributionRepository();
         });
