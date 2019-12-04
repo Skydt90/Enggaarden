@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Member;
 use App\Observers\MemberObserver;
+use App\Repositories\ActivityTypeRepository;
 use App\Repositories\AddressRepository;
 use App\Repositories\InviteRepository;
 use App\Services\InviteService;
@@ -72,8 +73,16 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('App\Contracts\ContributionServiceContract', function($app) {
-            return new ContributionService($app->make('App\Contracts\ContributionRepositoryContract'));
+            return new ContributionService(
+                $app->make('App\Contracts\ContributionRepositoryContract'),
+                $app->make('App\Contracts\ActivityTypeRepositoryContract')
+            );
         }); 
+
+        // ActivityTypes
+        $this->app->singleton('App\Contracts\ActivityTypeRepositoryContract', function($app) {
+            return new ActivityTypeRepository();
+        });
     }
 
     /**

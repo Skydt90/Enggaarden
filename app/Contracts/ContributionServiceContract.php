@@ -6,6 +6,8 @@ interface ContributionServiceContract
 {
     public function getAll();
 
+    public function getAllActivities($withOld = false);
+
     public function getById($id);
 
     public function store($request);

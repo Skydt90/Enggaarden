@@ -4,7 +4,7 @@ namespace App\Contracts;
 
 interface ActivityTypeRepositoryContract
 {
-    public function getAll();
+    public function getAll($withOld = false);
 
     public function getById($id);
 

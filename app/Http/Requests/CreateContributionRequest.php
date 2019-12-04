@@ -24,7 +24,7 @@ class CreateContributionRequest extends FormRequest
     public function rules()
     {
         return [
-            'activity_type' => 'required|exists:activity_types,activity_type',
+            'activity_type' => 'required|exists:activity_types,activity_type|different:"Gammel data"',
             'amount' => 'required|numeric|min:1',
             'pay_date' => 'required'
         ];
@@ -34,8 +34,11 @@ class CreateContributionRequest extends FormRequest
     {
         return [
             'activity_type.required' => 'Du skal vælge en aktivitet. Hvis du ikke kan finde den rigtige så opret en ny, og start forfra',
+            'activity_type.different' => 'Du kan ikke vælge gammel data, da det kun bruges til forældet data',
+            'activity_type.exists' => 'Din hacker ;)',
+            'amount.required' => 'Du skal vælge et beløb',
             'amount.min' => 'Beløbet må ikke være mindre end 1 krone',
-            'pay_date.required' => 'Du skal vælge en betalingsdato'
+            'pay_date.required' => 'Du skal vælge en betalingsdato',
         ];
     }
 }

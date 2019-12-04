@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('additional-scripts')
+<!-- Scripts -->
+<script src="{{ asset('js/contributions.js') }}" defer></script>
+@endsection
+
 @section('content')
 
     <div class="container">

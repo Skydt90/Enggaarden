@@ -29,8 +29,11 @@ class ReassignIdToActivityTypesTable extends Migration
         Schema::table('contributions', function (Blueprint $table){
             $table->unsignedBigInteger('activity_type_id')->after('id');
         });
+        DB::table('activity_types')->insert([
+            'activity_type' => 'Gammel data'
+        ]);
         DB::table('contributions')->update([
-            'activity_type_id' => 1
+            'activity_type_id' => 19
         ]);
         Schema::table('contributions', function (Blueprint $table){
             $table->foreign('activity_type_id')->references('id')->on('activity_types');
@@ -51,6 +54,7 @@ class ReassignIdToActivityTypesTable extends Migration
         Schema::table('activity_types', function (Blueprint $table) {
             $table->dropColumn('id');
         });
+        DB::table('activity_types')->where('activity_type', '=', 'Gammel data')->delete();
         Schema::table('activity_types', function (Blueprint $table) {
             $table->primary('activity_type');
         });

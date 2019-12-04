@@ -30,7 +30,7 @@ class ContributionController extends Controller
         //dd($this->contributionService->getAll());
         return view('contributions.index', [
             'contributions' => $this->contributionService->getAll(),
-            'activity_types' => ActivityType::all()//$this->contributionService->getAllActivities()
+            'activity_types' => $this->contributionService->getAllActivities()
             ]);
     }
 
@@ -52,7 +52,7 @@ class ContributionController extends Controller
         }
         return response()->json([
             'status' => 200,
-            'message' => 'Medlem tilføjet korrekt',
+            'message' => 'Bidrag tilføjet korrekt',
             'data' => $contribution
         ], 200);
     }

@@ -1,4 +1,4 @@
-<div class="modal modal-fade add-contribution" id="add-contribution">
+<div class="modal fade add-contribution" id="add-contribution">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

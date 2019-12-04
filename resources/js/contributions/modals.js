@@ -9,7 +9,7 @@ $(function() {
 
         ajax_requests(url, request, data, true, function (result) {
             if (result.status === 200){
-                $('#add-contribuion').modal('hide');
+                $('.add-contribution').modal('hide');
             }
         });
     });
