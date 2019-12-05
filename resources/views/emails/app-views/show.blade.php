@@ -15,16 +15,23 @@
 
         <div class="row">
             <div class="col-md-12">
-                <form action="{{ route('mail.send') }}" method="POST" autocomplete="off">
+                <form action="{{ route('send.mail.send') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                     @csrf
-                    @if (isset($email))
-                        <div class="form-group">
-                            <label for="reciever">Modtager:</label>
-                            <input type="email" name="reciever" class="form-control" readonly value="{{ $email ?? '' }}">
-                        </div>
-                    @else
-                        
-                    @endif
+                    <div class="form-group">
+                        <label for="email">Modtager:</label>
+                        @if (isset($email))
+                            <input type="hidden" name="member_id" value="{{ $member_id }}">
+                            <input type="email" name="email" class="form-control" readonly value="{{ $email ?? '' }}">
+                        @else
+                            <select class="form-control" name="group">
+                                @foreach (App\Models\Email::MAIL_GROUPS as $group)
+                                    <option value="{{ $group }}">
+                                        {{ $group }}
+                                    </option>
+                                @endforeach
+                            </select>                       
+                        @endif
+                    </div>
                     
                     <div class="form-group">
                         <label for="subject">Emne:</label>
