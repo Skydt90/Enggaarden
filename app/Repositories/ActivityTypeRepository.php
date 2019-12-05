@@ -35,7 +35,10 @@ class ActivityTypeRepository implements ActivityTypeRepositoryContract
 
     public function updateById($request, $id)
     {
-        //later
+        $activity_type = ActivityType::findorfail($id);
+        $activity_type->fill($request->all());
+        $activity_type->save();
+        return $activity_type;
     }
 
     public function delete($id)

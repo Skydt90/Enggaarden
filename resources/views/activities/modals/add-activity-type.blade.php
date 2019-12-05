@@ -15,7 +15,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="activity_name">Aktivitetsnavn</label>
-                            <input class="form-control" type="text" name="activity_type">
+                            <input class="form-control activity_name" type="text" name="activity_type">
                         </div>
                     </div>
                     <div class="form-group row">

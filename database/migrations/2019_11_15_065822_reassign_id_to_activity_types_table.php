@@ -36,7 +36,7 @@ class ReassignIdToActivityTypesTable extends Migration
             'activity_type_id' => 19
         ]);
         Schema::table('contributions', function (Blueprint $table){
-            $table->foreign('activity_type_id')->references('id')->on('activity_types');
+            $table->foreign('activity_type_id')->references('id')->on('activity_types')->onUpdate('cascade');
         });
     }
 

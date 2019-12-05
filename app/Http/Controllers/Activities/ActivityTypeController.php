@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Activities;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateActivityTypeRequest;
 use App\models\ActivityType;
 use App\Repositories\ActivityTypeRepository;
+use Exception;
 use Illuminate\Http\Request;
 
 class ActivityTypeController extends Controller
@@ -33,9 +35,21 @@ class ActivityTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateActivityTypeRequest $request)
     {
-        //
+        try{
+            $activityType = $this->activityTypeRepository->store($request);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => "Aktivitet tilføjet korrekt",
+            'data' => $activityType
+        ], 200);
     }
 
 
@@ -46,12 +60,20 @@ class ActivityTypeController extends Controller
      * @param  \App\models\ActivityType  $activityType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateActivityTypeRequest $request, $id)
     {
+        try{
+            $activityType = $this->activityTypeRepository->updateById($request, $id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
         return response()->json([
             'status' => 200,
-            'message' => "Let's fucking go!",
-            'data' => $request->all()
+            'message' => "Aktivitet opdateret korrekt",
+            'data' => $activityType
         ], 200);
     }
 
