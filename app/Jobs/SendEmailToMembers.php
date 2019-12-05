@@ -14,14 +14,12 @@ class SendEmailToMembers implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $email;
     private $emails;
     private $message;
     private $subject;
 
-    public function __construct($email = null, $emails = null, $message, $subject)
+    public function __construct($emails, $message, $subject)
     {
-        $this->email = $email;
         $this->emails = $emails;
         $this->message = $message;
         $this->subject = $subject;
@@ -34,12 +32,11 @@ class SendEmailToMembers implements ShouldQueue
      */
     public function handle()
     {
-        if(isset($this->email)) {
-            Mail::to($this->email)->queue(new MailToMember($this->message, $this->subject));
-        } else {
-            $this->emails->each(function($receiver) {
-                Mail::to($receiver)->later(now()->addSeconds(10), new MailToMember($this->message, $this->subject));
-            });
-        }
+        $when = 8;
+        
+        $this->emails->each(function($receiver, $index) use($when) {
+            $when *= $index;
+            Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject));
+        }); 
     }
 }

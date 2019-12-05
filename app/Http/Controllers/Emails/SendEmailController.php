@@ -6,10 +6,12 @@ use App\Contracts\EmailServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailRequest;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class SendEmailController extends Controller
 {
     private $emailService;
+    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
     public function __construct(EmailServiceContract $emailService)
     {
@@ -23,8 +25,8 @@ class SendEmailController extends Controller
                 $email = $this->emailService->getByID($id);
                 return view('emails.app-views.show', ['email' => $email, 'member_id' => $id]);
             } catch (Exception $e) {
-                //lav en bedre håndtering her
-                dd($e);
+                Log::error('SendEmailController@show: ' . $e);
+                return redirect()->back()->withErrors($this->error);
             }
         } else {
             return view('emails.app-views.show');
@@ -33,7 +35,12 @@ class SendEmailController extends Controller
 
     public function send(EmailRequest $request)
     {
-        $this->emailService->sendEmail($request);
+        try {
+            $this->emailService->sendEmail($request);
+        } catch (Exception $e) {
+            Log::error('SendEmailController@send: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
         return redirect()->back()->withStatus('Email Afsendt');
     }
 }

@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
    .sass('resources/sass/app.scss', 'public/css');
-mix.combine(['resources/js/email/handlers.js'], 'public/js/email.js');
+
 // ckeditor   
 mix.combine([
    'resources/js/general/ckeditor.js',
@@ -31,6 +31,7 @@ mix.combine([
 mix.combine([
    'resources/js/general/toastr.js',
    'resources/js/general/ajax.js',
+   'resources/js/general/error-handlers.js'
 ], 'public/js/general.js');
 
 // contributions

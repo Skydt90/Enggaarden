@@ -7,7 +7,11 @@
 @section('content')
     <div class="container">
         <h2 class="text-center">Medlemskartotek</h2>
+        
         <br>
+
+        @include('layouts.partials.flash-span')
+        
         <div class="row">
             <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-user-plus"></i> Opret Medlem</button>
             <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1 mr-auto"><i class="far fa-building"></i> Opret Firma</button>
