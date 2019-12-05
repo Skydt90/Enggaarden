@@ -4,5 +4,7 @@ namespace App\Contracts;
 
 interface EmailServiceContract
 {
-    function getByID($id);
+    public function getByID($id);
+    
+    public function sendEmail($request);
 }

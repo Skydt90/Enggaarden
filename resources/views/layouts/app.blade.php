@@ -39,7 +39,7 @@
                             <a href="{{ route('member.index') }}" class="nav-link"><i class="fas fa-users"></i> Medlemmer</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('mail.show') }}" class="nav-link"><i class="far fa-envelope"></i> Email</a>
+                            <a href="{{ route('send.mail.show') }}" class="nav-link"><i class="far fa-envelope"></i> Email</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('contribution.index') }}" class="nav-link"><i class="fas fa-money-bill-wave"></i></i> Støttebidrag</a>
