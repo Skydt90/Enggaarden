@@ -5,5 +5,6 @@
     "/js/ckeditor.js": "/js/ckeditor.js",
     "/js/members.js": "/js/members.js",
     "/js/general.js": "/js/general.js",
-    "/js/contributions.js": "/js/contributions.js"
+    "/js/contributions.js": "/js/contributions.js",
+    "/js/activities.js": "/js/activities.js"
 }

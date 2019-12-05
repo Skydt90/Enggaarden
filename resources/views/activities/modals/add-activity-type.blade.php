@@ -1,4 +1,4 @@
-<div class="modal modal-fade add-activity-type" id="add-activity-type">
+<div class="modal fade add-activity-type" id="add-activity-type">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="#" method="post">
+                <form action="#" method="post" class="activity-type-form">
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">

@@ -47,7 +47,13 @@ class ContributionService implements ContributionServiceContract
 
     public function update($request, $id)
     {
-        //
+        // If the activity_type has not been changed the id will be null
+        if ($request->activity_type != null){
+            $activity = $this->activityTypeRepository->getByActivityType($request->activity_type);
+            $request->merge(['activity_type_id' => $activity->id]);
+        }
+
+        return $this->contributionRepository->updateById($request, $id);
     }
 
     public function delete($id)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Contributions;
 use App\Contracts\ContributionServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateContributionRequest;
+use App\Http\Requests\UpdateContributionRequest;
 use App\Models\ActivityType;
 use App\Models\Contribution;
 use Exception;
@@ -63,20 +64,12 @@ class ContributionController extends Controller
      * @param  \App\Models\Contribution  $contribution
      * @return \Illuminate\Http\Response
      */
-    public function show(Contribution $contribution)
+    public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Contribution  $contribution
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Contribution $contribution)
-    {
-        //
+        return view('contributions.show', [
+            'contribution' => $this->contributionService->getById($id),
+            'activities' => $this->contributionService->getAllActivities()
+            ]);
     }
 
     /**
@@ -86,9 +79,21 @@ class ContributionController extends Controller
      * @param  \App\Models\Contribution  $contribution
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contribution $contribution)
+    public function update(UpdateContributionRequest $request, $id)
     {
-        //
+        try{
+            $contribution = $this->contributionService->update($request, $id);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Opdateret korrekt',
+            'data' => $contribution
+        ], 200);
     }
 
     /**

@@ -10,7 +10,7 @@ class ContributionRepository implements ContributionRepositoryContract
 
     public function getAll()
     {
-        return Contribution::with('activityType')->get();
+        return Contribution::with('activity_type')->get();
     }
 
     public function getByID($id)
@@ -21,13 +21,16 @@ class ContributionRepository implements ContributionRepositoryContract
     public function store($request)
     {
         $contribution = Contribution::create($request->all());
-        $contribution->activityType;
+        $contribution->activity_type;
         return $contribution;
     }
 
     public function updateById($request, $id)
     {
-        //later
+        $contribution = Contribution::findOrFail($id);
+        $contribution->fill($request->all());
+        $contribution->save();
+        return $contribution;
     }
 
     public function delete($id)

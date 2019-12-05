@@ -44,6 +44,7 @@
                                     {{ $member->member_type }}
                                 </option>
                             @else
+                                <option value="" selected disabled hidden>{{ $member->member_type }}</option>
                                 @foreach (App\Models\Member::MEMBER_TYPES as $member_type)
                                     <option value="{{ $member_type }}">
                                         {{ $member_type }}

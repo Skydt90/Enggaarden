@@ -12,6 +12,8 @@
 */
 
 // Home
+
+
 Route::get('/', 'HomeController@index')->name('/');
 
 // Authentication routes
@@ -31,8 +33,12 @@ Route::post('invite', 'Members\MemberController@invite')->name('invite');
 Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('ext-home')->middleware('auth:external');
 
 // Contributions
-Route::resource('contribution', 'Contributions\ContributionController')->except(['create']);
+Route::resource('contribution', 'Contributions\ContributionController')->except(['create', 'edit']);
 
+// Activities
+Route::resource('activity', 'Activities\ActivityTypeController')->only(['index', 'update', 'store']);
+
+// Emails
 Route::group(['prefix' => 'email'], function() {
     Route::get('{id?}', 'Emails\EmailController@show')->name('mail.show');
     Route::post('', 'Emails\EmailController@send')->name('mail.send');

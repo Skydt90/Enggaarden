@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Contribution extends Model
@@ -14,7 +15,16 @@ class Contribution extends Model
         'pay_date'
     ];
 
-    public function activityType()
+    public static function boot ()
+    {
+        parent::boot();
+
+        static::addGlobalScope(function (Builder $builder) {
+            return $builder->with('activity_type');
+        });
+    }
+
+    public function activity_type()
     {
         return $this->belongsTo(ActivityType::class);
     }
