@@ -39,4 +39,14 @@ class EmailRepository implements EmailRepositoryContract
     {
         return Email::withRelations()->get();
     }
+
+    public function getByIDWithRelations($id)
+    {
+        return Email::withRelations()->findOrFail($id);
+    }
+
+    public function deleteByID($id)
+    {
+        return Email::findOrFail($id)->destroy($id);
+    }
 }

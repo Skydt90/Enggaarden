@@ -75,10 +75,14 @@
                     @method('PUT')
                     <div class="row">
                         <input type="hidden" name="type" value="subscription">
-                        <label for="pay_date" class="col-md-3"><strong>Kontingent:</strong></label>
-                        <input type="date" autocomplete="off" class="form-control col-md-9 input" name="pay_date" value="{{ empty($member->subscriptions[0]->pay_date) ? null : $member->subscriptions[0]->pay_date->toDateString() }}">
-                        
+                        <label for="pay_date" class="col-md-3"><strong>Kontingent betalt den:</strong></label>
+                        <input type="date" autocomplete="off" class="form-control col-md-9 input pay-date" name="pay_date" value="{{ empty($member->subscriptions[0]->pay_date) ? null : $member->subscriptions[0]->pay_date->toDateString() }}">
                         <br><br>
+
+                        <label for="amount" class="col-md-3"><strong>Beløb i dkk:</strong></label>
+                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="amount" value="{{ empty($member->subscriptions[0]->pay_date) ? 0 : $member->subscriptions[0]->amount }}">
+                        <br><br>
+
                     </div>
                 </form>
 
@@ -106,7 +110,7 @@
             <div class="col md-4">            
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="text-center">Betalingsoversigt</h4>
+                        <h4 class="text-center">Kontingentoversigt</h4>
                     </div>
                     <div class="card-body">
                         <table class="table table-hover table-borderless table-sm">

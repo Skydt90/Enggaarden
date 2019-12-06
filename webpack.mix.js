@@ -27,6 +27,11 @@ mix.combine([
    'resources/js/members/edit.js',
 ], 'public/js/members.js');
 
+// emails
+mix.combine([
+   'resources/js/emails/modals.js',
+], 'public/js/email.js');
+
 // general
 mix.combine([
    'resources/js/general/toastr.js',

@@ -56,4 +56,14 @@ class Member extends Model
        return $query->with(['address', 'subscriptions', 'invite', 'externalUser']);
     }
 
+    // adding global scope to sort by newest entry
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(function(Builder $query) {
+            return $query->orderBy('first_name', 'asc');
+        });
+    }
+
 }
