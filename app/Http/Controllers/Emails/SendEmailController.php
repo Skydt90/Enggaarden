@@ -23,13 +23,13 @@ class SendEmailController extends Controller
         if(isset($id)) {
             try {
                 $email = $this->emailService->getByID($id);
-                return view('emails.app-views.show', ['email' => $email, 'member_id' => $id]);
+                return view('emails.app-views.send-show', ['email' => $email, 'member_id' => $id]);
             } catch (Exception $e) {
                 Log::error('SendEmailController@show: ' . $e);
                 return redirect()->back()->withErrors($this->error);
             }
         } else {
-            return view('emails.app-views.show');
+            return view('emails.app-views.send-show');
         }
     }
 

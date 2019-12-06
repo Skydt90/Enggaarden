@@ -34,4 +34,9 @@ class EmailRepository implements EmailRepositoryContract
     {
         return Email::create($request->all());
     }
+
+    public function getAllWithRelations()
+    {
+        return Email::withRelations()->get();
+    }
 }

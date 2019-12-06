@@ -25,24 +25,34 @@ class Member extends Model
 
 
     // relationships
-    public function address() {
+    public function address() 
+    {
         return $this->hasOne(Address::class);
     }
 
-    public function externalUser() {
+    public function externalUser() 
+    {
         return $this->hasOne(ExternalUser::class);
     }
 
-    public function subscriptions() {
+    public function subscriptions() 
+    {
         return $this->hasMany(Subscription::class);
     }
 
-    public function invite() {
+    public function invite() 
+    {
         return $this->hasOne(Invite::class);
     }
 
+    public function emails() 
+    {
+        return $this->hasMany(Email::class);
+    }
+
     //scopes
-    public function scopeWithRelations(Builder $query){
+    public function scopeWithRelations(Builder $query)
+    {
        return $query->with(['address', 'subscriptions', 'invite', 'externalUser']);
     }
 

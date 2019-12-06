@@ -48,7 +48,7 @@ class EmailService implements EmailServiceContract
             case('Alle'):
                 return $this->emailRepository->getAll();
             default:
-                throw new Exception('getEmailAddresses default');
+                throw new Exception('**getEmailAddresses default** Request = ' . json_encode($request->all()));
         }
     }
 

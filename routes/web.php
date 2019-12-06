@@ -39,19 +39,17 @@ Route::resource('contribution', 'Contributions\ContributionController')->except(
 // Activities
 Route::resource('activity', 'Activities\ActivityTypeController')->only(['index', 'update', 'store']);
 
+// Emails
 Route::group(['prefix' => 'email/send'], function() {
     Route::get('{id?}', 'Emails\SendEmailController@show')->name('send.mail.show');
     Route::post('', 'Emails\SendEmailController@send')->name('send.mail.send');
 });
+Route::resource('email', 'Emails\EmailController')->only(['index', 'show', 'destroy']);
 
 // TestController
 Route::group(['prefix' => 'test'], function () {
     Route::get('show', 'TestController@testPage');
     Route::get('error', 'TestController@error');
     Route::delete('delete/{id}', 'TestController@destroyTest');
-    Route::post('member-create', 'TestController@postFormTest');
-    Route::get('mail', 'TestController@sendMail');
-    Route::get('view-mail', 'TestController@viewMail');
-    Route::get('write-mail', 'TestController@writeMail')->name('mail');
 });
 
