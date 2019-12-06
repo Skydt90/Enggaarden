@@ -16,13 +16,7 @@
                             <label for="username" class="col-md-4 col-form-label text-md-right">Brugernavn</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
                             </div>
                         </div>
 
@@ -38,11 +32,6 @@
                                     @endforeach
                                 </select>
                                 
-                                @error('user_type')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 
@@ -50,13 +39,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">Kodeord</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <input id="password" type="password" class="form-control" name="password" required autocomplete="new-password">
                             </div>
                         </div>
 
@@ -73,6 +56,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Opret') }}
                                 </button>
+                                <a href="{{ route('user.index') }}" class="btn btn-warning ml-2{{-- offset-md-6 --}}">
+                                    Tilbage
+                                </a>
                             </div>
                         </div>
                     </form>

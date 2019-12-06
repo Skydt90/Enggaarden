@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateUserRequest;
 use App\Models\ExternalUser;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -67,9 +68,9 @@ class RegisterController extends Controller
     }
 
 
-    public function register(Request $request)
+    public function register(CreateUserRequest $request)
     {
-        $this->validator($request->all())->validate();
+        //$this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
