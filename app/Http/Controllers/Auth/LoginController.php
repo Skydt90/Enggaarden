@@ -72,4 +72,24 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
     }
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Request $request)
+    {
+        if (isset($this->guard()->user()->user_type)){
+            $link = '/login';
+        } else {
+            $link = '/login-external';
+        }
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect($link);
+    }
 }
