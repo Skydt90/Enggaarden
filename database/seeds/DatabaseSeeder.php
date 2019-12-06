@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
             ExternalUsersTableSeeder::class,
             ActivityTypesTableSeeder::class,
             ContributionsTableSeeder::class,
-            InvitationsTableSeeder::class   
+            InvitationsTableSeeder::class,
+            EmailTableSeeder::class   
         ]);
         
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;'); 
