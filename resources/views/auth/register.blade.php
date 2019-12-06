@@ -5,17 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             
-            @if (session()->has('status'))
-                <p class="lead text-center" style="color:green">{{ session()->get('status') }}</p>
-            @endif
+            @include('layouts.partials.flash-span')
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Opret bruger') }}</div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="username" class="col-md-4 col-form-label text-md-right">Username</label>
+                            <label for="username" class="col-md-4 col-form-label text-md-right">Brugernavn</label>
 
                             <div class="col-md-6">
                                 <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
@@ -29,7 +27,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="user_type" class="col-md-4 col-form-label text-md-right">User Type</label>
+                            <label for="user_type" class="col-md-4 col-form-label text-md-right">Bruger type</label>
 
                             <div class="col-md-6">
                                 <select name="user_type" class="form-control">
@@ -49,7 +47,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Kodeord</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -63,7 +61,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Bekræft kodeord') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -73,7 +71,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('Opret') }}
                                 </button>
                             </div>
                         </div>

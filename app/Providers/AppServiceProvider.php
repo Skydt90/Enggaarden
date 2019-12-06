@@ -14,6 +14,7 @@ use App\Services\MemberService;
 use App\Repositories\ContributionRepository;
 use App\Services\ContributionService;
 use App\Repositories\EmailRepository;
+use App\Repositories\UserRepository;
 use App\Services\EmailService;
 use Illuminate\Support\ServiceProvider;
 
@@ -82,6 +83,11 @@ class AppServiceProvider extends ServiceProvider
         // ActivityTypes
         $this->app->singleton('App\Contracts\ActivityTypeRepositoryContract', function($app) {
             return new ActivityTypeRepository();
+        });
+
+        // Users
+        $this->app->singleton('App\Contracts\UserRepositoryContract', function($app) {
+            return new UserRepository();
         });
     }
 

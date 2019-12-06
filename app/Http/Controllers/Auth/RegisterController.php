@@ -50,7 +50,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only(['showRegistrationForm', 'register']);
+        $this->middleware('can:administrate')->only(['showRegistrationForm', 'register']);
         $this->middleware('guest:external');
         $this->middleware('guest')->except(['showRegistrationForm', 'register']);
     }
@@ -111,7 +111,7 @@ class RegisterController extends Controller
     protected function validateExternal(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email|unique:external_users,email',
+            'email' => 'required|string|email|unique:external_users,email|exists:members,email',
             'password' => 'required|string|confirmed',
         ]);
     }

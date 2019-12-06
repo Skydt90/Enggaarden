@@ -23,6 +23,7 @@ Route::post('register-external', 'Auth\RegisterController@registerExternal')->na
 Route::get('login-external', 'Auth\LoginController@showExternalLogin')->name('login-ext');
 Route::post('login-external', 'Auth\LoginController@externalLogin')->name('login-ext');
 Route::get('unauthenticated', 'Errors\ErrorController@unauthenticated')->name('unauthenticated');
+Route::resource('user', 'Users\UserController')->only(['index', 'destroy'])->middleware('can:administrate');
 
 
 // Members

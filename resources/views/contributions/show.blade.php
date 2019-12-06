@@ -33,24 +33,11 @@
                         <input type="date" class="form-control col-md-9 pay_date input" name ="pay_date" value="{{ $contribution->pay_date->toDateString() }}">
                         <br><br>
                     </div>
-                 
-                    
-
-
-
-
-
-
-
-
-
-                </form>            
+                </form>
             </div>
         </div>
-
-
-
-
+        <br>
+        <a href="{{ route('contribution.index') }}" class="btn btn-warning col-md-1">Tilbage</a>            
     </div>
     
 @endsection

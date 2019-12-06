@@ -13,7 +13,7 @@
         </h2>
         <div class="row mt-2">
             <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add-activity-type"><i class="fas fa-plus-circle"></i> Tilføj aktivitet</button>
-            <a href="{{ route('contribution.index') }}" class="btn btn-sm btn-danger ml-1 ml-auto">Tilbage</a>
+            <a href="{{ route('contribution.index') }}" class="btn btn-sm btn-warning ml-1 ml-auto">Tilbage</a>
             <table class="table table-hover table-sm mt-2 activities">
                 <thead class="thead-light">
                     <th>Aktivitetsnavn</th>

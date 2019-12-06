@@ -41,9 +41,9 @@ class ActivityTypeRepository implements ActivityTypeRepositoryContract
         return $activity_type;
     }
 
-    public function delete($id)
-    {
-        return ActivityType::destroy($id);
-    }
+    // public function delete($id)
+    // {
+    //     return ActivityType::destroy($id);
+    // }
 
 }

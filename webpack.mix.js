@@ -46,3 +46,6 @@ mix.combine([
    'resources/js/activities/edit.js'
 ], 'public/js/activities.js');
 
+mix.combine([
+   'resources/js/users/delete.js'
+], 'public/js/users.js');
