@@ -76,7 +76,7 @@ class MemberService implements MemberServiceContract
         }
     }
 
-    public function deleteByID($id) : bool
+    public function deleteByID($id)
     {
         return $this->memberRepository->deleteByID($id);
     }

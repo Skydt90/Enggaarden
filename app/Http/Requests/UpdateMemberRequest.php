@@ -35,7 +35,8 @@ class UpdateMemberRequest extends FormRequest
             'street_name' => 'sometimes|nullable|max:50',
             'zip_code' => 'sometimes|nullable|numeric|min:1000|max:9999',
             'city' => 'sometimes|nullable|max:30|string',
-            'pay_date' => 'sometimes|nullable|date'
+            'pay_date' => 'sometimes|nullable|date',
+            'amount' => 'sometimes|numeric'
         ];
     }
 
