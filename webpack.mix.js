@@ -36,7 +36,9 @@ mix.combine([
 mix.combine([
    'resources/js/general/toastr.js',
    'resources/js/general/ajax.js',
-   'resources/js/general/error-handlers.js'
+   'resources/js/general/error-handlers.js',
+   'resources/js/general/pagination.js',
+   'resources/js/general/search.js',
 ], 'public/js/general.js');
 
 // contributions

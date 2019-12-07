@@ -24,9 +24,9 @@ class MemberService implements MemberServiceContract
         $this->subscriptionRepository = $subscriptionRepository;
     }
 
-    public function getAll()
+    public function getAll($amount)
     {
-        return $this->memberRepository->getAll();
+        return $this->memberRepository->getAll($amount);
     }
 
     public function getByID($id)

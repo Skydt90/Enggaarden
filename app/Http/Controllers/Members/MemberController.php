@@ -23,7 +23,14 @@ class MemberController extends Controller
 
     public function index()
     {
-        return view('members.index', ['members' => $this->memberService->getAll()]);
+        isset($_GET['page']) ? $page = $_GET['page'] : $page = 1;
+        isset($_GET['amount']) ? $amount = $_GET['amount'] : $amount = 25;
+
+        return view('members.index', [
+            'members' => $this->memberService->getAll($amount), 
+            'page' => $page,
+            'amount' => $amount
+        ]);
     }
 
     public function store(CreateMemberRequest $request)

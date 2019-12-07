@@ -6,34 +6,35 @@
 
 @section('content')
     <div class="container">
-        <h2 class="text-center">Medlemskartotek</h2>
-        
+        <h2 class="text-center">Medlemskartotek</h2> 
         <br>
-
         @include('layouts.partials.flash-span')
-        
+       
         <div class="row">
             <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-user-plus"></i> Opret Medlem</button>
-            <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1 mr-auto"><i class="far fa-building"></i> Opret Firma</button>
+            <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1"><i class="far fa-building"></i> Opret Firma</button> 
         </div>
+
+        <div class="row mt-1">
+            <input type="text" id="search" onkeyup="searchTable('members')" placeholder="Søg efter navn..">
+            <select class="col-md-6s form-control-sm paginate" data-url-id="member">
+                <option value="25" {{ $amount == 25 ? 'selected' : '' }}>25</option>
+                <option value="50" {{ $amount == 50 ? 'selected' : '' }}>50</option>
+                <option value="75" {{ $amount == 75 ? 'selected' : '' }}>75</option>
+                <option value="100" {{ $amount == 100 ? 'selected' : '' }}>100</option>
+            </select>
+            <p class="ml-auto mb-n1"><strong>Antal Medlemmer:</strong> {{ $members->total() }}</p>
+        </div>
+
         <div class="row mt-2">  
-            <label for="show">
-                Vis
-                <select name="" id="" value="10" class="col-md-6s form-control-sm">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                </select>
-                Medlemmer
-            </label>
-            <table class="table table-hover table-sm">
+            <table id="members" class="table table-hover table-sm">
                 <thead>
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
                     <th>Kontigent:</th>
                     <th>Seneste Betaling:</th>
                     <th>Bruger:</th>
-                    <th>Valgmuligheder:</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     @foreach ($members as $member)
@@ -68,17 +69,27 @@
 
                             <td>
                                 <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
-                                
                                 @if ($member->email)
                                     <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('send.mail.show', ['id' => $member->id]) }}" style="color:orange"><i class="fas fa-envelope"></i></a>
                                 @endif
-                                
                                 <a class="ml-2 delete-button" data-id="{{$member->id}}" data-name="{{$member->first_name}}" href=""><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>   
             </table>
+            {{-- Pagination --}}
+            <nav>
+                <ul class="pagination pagination-sm">
+                    <?php $i = 1; ?>
+                    @while ($i <= $members->lastPage())
+                        <li class="page-item {{ $page == $i ? 'active' : '' }}">
+                        <a href="{{ route('member.index') . '?page=' . $i . '&amount=' . $amount }}" class="page-link">{{ $i }}</a> 
+                        </li>
+                    <?php $i++; ?>
+                    @endwhile
+                </ul>
+            </nav>
         </div>
     </div>
     @include('members.partials.member-footer')

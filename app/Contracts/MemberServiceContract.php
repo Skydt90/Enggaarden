@@ -4,7 +4,7 @@ namespace App\Contracts;
 
 interface MemberServiceContract
 {
-    public function getAll();
+    public function getAll($amount);
 
     public function getByID($id);
 

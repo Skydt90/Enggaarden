@@ -7,9 +7,9 @@ use App\Models\Member;
 
 class MemberRepository implements MemberRepositoryContract
 {
-    public function getAll()
+    public function getAll($amount)
     {
-        return Member::withRelations()->get();
+        return Member::withRelations()->paginate($amount);
     }
 
     public function getByID($id)
