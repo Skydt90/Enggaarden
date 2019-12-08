@@ -50,16 +50,6 @@ class EmailService implements EmailServiceContract
         $this->emailRepository->create($request);
     }
 
-    public function getPageParams()
-    {
-        $params = collect();
-
-        isset($_GET['page']) ? $params->put('page', $_GET['page']) : $params->put('page', 1);
-        isset($_GET['amount']) ? $params->put('amount', $_GET['amount']) : $params->put('amount', 25);
-
-        return $params; 
-    }
-
     private function getEmailAddresses($request)
     {
         $group = $request->group;

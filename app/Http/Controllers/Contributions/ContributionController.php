@@ -3,49 +3,48 @@
 namespace App\Http\Controllers\Contributions;
 
 use App\Contracts\ContributionServiceContract;
+use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateContributionRequest;
 use App\Http\Requests\UpdateContributionRequest;
-use App\Models\ActivityType;
-use App\Models\Contribution;
 use Exception;
-use Illuminate\Http\Request;
 
 class ContributionController extends Controller
 {
-
+    private $paginationService;
     private $contributionService;
+    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(ContributionServiceContract $contributionService)
+    public function __construct(ContributionServiceContract $contributionService, PaginationServiceContract $paginationService)
     {
         $this->contributionService = $contributionService;
+        $this->paginationService = $paginationService;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //dd($this->contributionService->getAll());
+        try {
+            $pageParams = $this->paginationService->getPaginationParams();
+            $activityTypes = $this->contributionService->getAllActivities(false, $pageParams->get('amount'));
+            $contributions = $this->contributionService->getAll($pageParams->get('amount'));
+        } catch (Exception $e) {
+            Log::error('ContributionController@index: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
         return view('contributions.index', [
-            'contributions' => $this->contributionService->getAll(),
-            'activity_types' => $this->contributionService->getAllActivities()
-            ]);
+            'contributions' => $contributions,
+            'activity_types' => $activityTypes, 
+            'page' => $pageParams->get('page'),
+            'amount' => $pageParams->get('amount')
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateContributionRequest $request)
     {
         try{
             $contribution = $this->contributionService->store($request);
         } catch (Exception $e) {
+            Log::error('ContributionController@store: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -58,32 +57,27 @@ class ContributionController extends Controller
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Contribution  $contribution
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
+        try {
+            $activities = $this->contributionService->getAllActivities(false, 5000); // amount is not optional. Hence big num hardcode here for now
+            $contribution = $this->contributionService->getByID($id);
+        } catch (Exception $e) {
+            Log::error('ContributionController@show: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
         return view('contributions.show', [
-            'contribution' => $this->contributionService->getById($id),
-            'activities' => $this->contributionService->getAllActivities()
-            ]);
+            'contribution' => $contribution,
+            'activities' => $activities,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Contribution  $contribution
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateContributionRequest $request, $id)
     {
         try{
             $contribution = $this->contributionService->update($request, $id);
         } catch (Exception $e) {
+            Log::error('ContributionController@update: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -96,17 +90,12 @@ class ContributionController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Contribution  $contribution
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         try{
             $contribution = $this->contributionService->delete($id);
         } catch (Exception $e) {
+            Log::error('ContributionController@destroy: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())

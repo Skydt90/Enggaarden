@@ -8,8 +8,13 @@
 
     <div class="container">
         <h2 class="text-center">Medlemsdetaljer for {{ $member->first_name }}</h2>
-        <br><br>
-
+        <br>
+        @empty($member->email)
+            <div class="alert alert-danger text-center" role="alert">
+               <strong>OBS! Ændringer fortaget her, gemmes ikke før der er tilføjet en email!</strong>
+            </div>    
+        @endempty
+        <br>
         {{-- Member Details --}}
         <div class="row">
             <div class="col-md-8">
@@ -38,19 +43,18 @@
                         <br><br>
 
                         <label for="member_type" class="col-md-3"><strong>Medlemstype:</strong></label>
-                        <select class="form-control col-md-9 member-type" name="member_type">
-                            @if ($member->is_company)
-                                <option value="{{ $member->member_type }}">
-                                    {{ $member->member_type }}
-                                </option>
-                            @else
+                        @if ($member->is_company)
+                            <input type="text" class="form-control col-md-9 input" readonly value="{{ $member->member_type }}">                            
+                        @else
+                            <select class="form-control col-md-9 member-type" name="member_type">
                                 <option value="" selected disabled hidden>{{ $member->member_type }}</option>
                                 @foreach (App\Models\Member::MEMBER_TYPES as $member_type)
                                     <option value="{{ $member_type }}">
                                         {{ $member_type }}
                                     </option>
                                 @endforeach
-                            @endif
+                            </select>
+                        @endif
                         </select>
                         <br><br>
     

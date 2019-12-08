@@ -2,44 +2,48 @@
 
 namespace App\Http\Controllers\Activities;
 
+use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateActivityTypeRequest;
 use App\models\ActivityType;
 use App\Repositories\ActivityTypeRepository;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ActivityTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     private $activityTypeRepository;
+    private $paginationService;
+    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(ActivityTypeRepository $activitiTypeRepository)
+    public function __construct(ActivityTypeRepository $activitiTypeRepository, PaginationServiceContract $paginationService)
     {
-        $this->activityTypeRepository = $activitiTypeRepository;        
+        $this->activityTypeRepository = $activitiTypeRepository;
+        $this->paginationService = $paginationService;        
     }
 
     public function index()
     {
-        return view('activities.index', ['activities' => $this->activityTypeRepository->getAll()]);
+        try {
+            $pageParams = $this->paginationService->getPaginationParams();
+            $activities = $this->activityTypeRepository->getAll(false, $pageParams->get('amount'));
+        } catch (Exception $e) {
+            Log::error('ActivityTypeController@index: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
+        return view('activities.index', [
+            'activities' => $activities, 
+            'page' => $pageParams->get('page'),
+            'amount' => $pageParams->get('amount')
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(CreateActivityTypeRequest $request)
     {
-        try{
+        try {
             $activityType = $this->activityTypeRepository->store($request);
         } catch (Exception $e) {
+            Log::error('ActivityTypeController@store: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -52,19 +56,12 @@ class ActivityTypeController extends Controller
         ], 200);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\ActivityType  $activityType
-     * @return \Illuminate\Http\Response
-     */
     public function update(CreateActivityTypeRequest $request, $id)
     {
-        try{
+        try {
             $activityType = $this->activityTypeRepository->updateById($request, $id);
         } catch (Exception $e) {
+            Log::error('ActivityTypeController@update: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -77,12 +74,6 @@ class ActivityTypeController extends Controller
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\models\ActivityType  $activityType
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ActivityType $activityType)
     {
         //

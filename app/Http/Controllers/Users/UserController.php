@@ -4,40 +4,36 @@ namespace App\Http\Controllers\Users;
 
 use App\Contracts\UserRepositoryContract;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
     private $userRepository;
+    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
     public function __construct(UserRepositoryContract $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return view('users.index', ['users' => $this->userRepository->getAll()]);
+        try {
+            $users = $this->userRepository->getAll();
+        } catch (Exception $e) {
+            Log::error('UserController@index' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
+        return view('users.index', ['users' => $users]);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        try{
+        try {
             $user = $this->userRepository->delete($id);
         } catch (Exception $e) {
+            Log::error('UserController@destroy');
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())

@@ -11,21 +11,20 @@ class ContributionService implements ContributionServiceContract
     private $contributionRepository;
     private $activityTypeRepository;
 
-    public function __construct(ContributionRepositoryContract $contributionRepository, 
-    ActivityTypeRepositoryContract $activityTypeRepository)
+    public function __construct(ContributionRepositoryContract $contributionRepository, ActivityTypeRepositoryContract $activityTypeRepository)
     {
         $this->contributionRepository = $contributionRepository;
         $this->activityTypeRepository = $activityTypeRepository;
     }
 
-    public function getAll()
+    public function getAll($amount)
     {
-        return $this->contributionRepository->getAll();
+        return $this->contributionRepository->getAll($amount);
     }
 
-    public function getAllActivities($withOld = false)
+    public function getAllActivities($withOld = false, $amount)
     {
-        return $this->activityTypeRepository->getAll($withOld);
+        return $this->activityTypeRepository->getAll($withOld, $amount);
     }
 
     public function getByID($id)
@@ -37,7 +36,6 @@ class ContributionService implements ContributionServiceContract
     {
         // Gets the correct activity based on the activity_type string 
         // and merges its id into the request
-
         $activity = $this->activityTypeRepository->getByActivityType($request->activity_type);
         $request->merge(['activity_type_id' => $activity->id]);
         
@@ -48,7 +46,7 @@ class ContributionService implements ContributionServiceContract
     public function update($request, $id)
     {
         // If the activity_type has not been changed the id will be null
-        if ($request->activity_type != null){
+        if ($request->activity_type != null) {
             $activity = $this->activityTypeRepository->getByActivityType($request->activity_type);
             $request->merge(['activity_type_id' => $activity->id]);
         }

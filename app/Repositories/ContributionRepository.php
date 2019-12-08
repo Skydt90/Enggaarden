@@ -8,9 +8,9 @@ use App\Models\Contribution;
 class ContributionRepository implements ContributionRepositoryContract
 {
 
-    public function getAll()
+    public function getAll($amount)
     {
-        return Contribution::with('activity_type')->get();
+        return Contribution::with('activity_type')->paginate($amount);
     }
 
     public function getByID($id)

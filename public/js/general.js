@@ -151,6 +151,12 @@ function getUrl(name) {
         case 'email':
             url = '/email?';
         break;
+        case 'activity':
+            url = '/activity?'
+        break;
+        case 'contribution':
+            url = '/contribution?'
+        break;
     }
     return url;
 }

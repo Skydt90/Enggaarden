@@ -10,7 +10,7 @@
         <br>
         @toast @endtoast
         <div class="row">
-            <a href="{{ route('send.mail.show') }}" class="btn btn-warning btn-sm col-md-1">Tilbage</a> 
+            <a href="{{ route('send.mail.show') }}" class="btn btn-sm btn-warning ml-1 ml-auto">Tilbage</a> 
         </div>
         
         <div class="row mt-1">

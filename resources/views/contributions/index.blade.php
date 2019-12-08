@@ -1,20 +1,28 @@
 @extends('layouts.app')
 
 @section('additional-scripts')
-<!-- Scripts -->
-<script src="{{ asset('js/contributions.js') }}" defer></script>
+    <script src="{{ asset('js/contributions.js') }}" defer></script>
 @endsection
 
 @section('content')
-
     <div class="container">
-        <h2 class="text-center">
-            Støttebidrag
-        </h2>
-        <div class="row mt-2">
+        <h2 class="text-center">Støttebidrag</h2>
+        <br>
+        @toast @endtoast
+        <div class="row">
             <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#add-contribution"><i class="fas fa-plus-circle"></i> Opret bidrag</button>
-            <a href="{{ route('activity.index') }}" class="btn btn-sm btn-primary ml-1 ml-auto "><i class="fas fa-running"></i> Aktiviteter</a>
-            <table class="table table-hover table-sm mt-2">
+            <a href="{{ route('activity.index') }}" class="btn btn-sm btn-primary ml-1 ml-auto "><i class="fas fa-running"></i> Aktiviteter</a> 
+        </div>
+        
+        <div class="row mt-1">
+            <input type="text" id="search" onkeyup="searchTable('contributions')" placeholder="Søg efter modtager..">  
+            @amount(['urlID' => 'contribution', 'amount' => $amount]) 
+            @endamount
+            <p class="ml-auto mb-n1"><strong>Antal Støttebidrag:</strong> {{ $contributions->total() }}</p>
+        </div>
+
+        <div class="row mt-2">
+            <table id="contributions" class="table table-hover table-sm">
                 <thead class="thead-light">
                     <th>Aktivitet</th>
                     <th>Beløb</th>
@@ -36,14 +44,11 @@
                     @endforeach
                 </tbody>
             </table>
+            @pagination([
+                'paginated' => $contributions, 'index' => 'contribution.index', 
+                'page' => $page, 'amount' => $amount])
+            @endpagination
         </div>
-
-
-
-
-
     </div>
-
     @include('contributions.modals.add-contribution')
-
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Members;
 
 use App\Contracts\InviteServiceContract;
 use App\Contracts\MemberServiceContract;
+use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
@@ -15,18 +16,23 @@ class MemberController extends Controller
 {
     private $memberService;
     private $inviteService;
+    private $paginationService;
     private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(MemberServiceContract $memberService, InviteServiceContract $inviteService)
+    public function __construct(
+        MemberServiceContract $memberService, 
+        InviteServiceContract $inviteService, 
+        PaginationServiceContract $paginationService)
     {
         $this->memberService = $memberService;
         $this->inviteService = $inviteService;
+        $this->paginationService = $paginationService;
     }
 
     public function index()
     {
         try {
-            $pageParams = $this->memberService->getPageParams();
+            $pageParams = $this->paginationService->getPaginationParams();
             $members = $this->memberService->getAll($pageParams->get('amount'));
         } catch (Exception $e) {
             Log::error('MemberController@index: ' . $e);
@@ -44,6 +50,7 @@ class MemberController extends Controller
         try {
             $member = $this->memberService->store($request);
         } catch (Exception $e) {
+            Log::error('MemberController@store: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -72,6 +79,7 @@ class MemberController extends Controller
         try {
             $member = $this->memberService->update($request, $id);
         } catch (Exception $e) {
+            Log::error('MemberController@update: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -89,6 +97,7 @@ class MemberController extends Controller
         try {
             $deleted = $this->memberService->deleteByID($id);
         } catch (Exception $e) {
+            Log::error('MemberController@destroy: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -106,6 +115,7 @@ class MemberController extends Controller
         try {
             $savedInvite = $this->inviteService->store($request);
         } catch (Exception $e) {
+            Log::error('MemberController@invite: ' . $e);
             return response()->json([
                 'status' => 500,
                 'message' => json_encode($e->__toString())
@@ -117,5 +127,4 @@ class MemberController extends Controller
             'data' => $savedInvite
         ]);
     }
-   
 }
