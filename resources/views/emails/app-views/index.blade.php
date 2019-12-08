@@ -37,7 +37,7 @@
                             @else
                                 <td>{{ $email->member->email }}</td>
                             @endif
-                            <td>{{ $email->user->username }}</td>
+                            <td>{{ $email->user->username ?? null }}</td>
                             <td>{{ $email->subject }}</td>
                             <?php Carbon\Carbon::setLocale('da'); ?>
                             <td>{{ $email->created_at->format('j\\. M Y') }}</td>

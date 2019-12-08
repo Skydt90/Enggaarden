@@ -17,7 +17,7 @@
                     <p class="col-md-9">{{ $email->member->email }}</p>
                 @endif
                 <p class="col-md-3"><strong>Afsender:</strong></p>
-                <p class="col-md-9">{{ $email->user->username }}</p>
+                <p class="col-md-9">{{ $email->user->username ?? null }}</p>
 
                 <p class="col-md-3"><strong>Emne</strong></p>
                 <p class="col-md-9">{{ $email->subject }}</p>

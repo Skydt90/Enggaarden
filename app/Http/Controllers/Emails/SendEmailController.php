@@ -22,7 +22,7 @@ class SendEmailController extends Controller
     {
         if(isset($id)) {
             try {
-                $email = $this->emailService->getByID($id);
+                $email = $this->emailService->getEmailByID($id);
                 return view('emails.app-views.send-show', ['email' => $email, 'member_id' => $id]);
             } catch (Exception $e) {
                 Log::error('SendEmailController@show: ' . $e);
