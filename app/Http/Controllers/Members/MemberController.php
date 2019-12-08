@@ -9,11 +9,13 @@ use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class MemberController extends Controller
 {
     private $memberService;
     private $inviteService;
+    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
     public function __construct(MemberServiceContract $memberService, InviteServiceContract $inviteService)
     {
@@ -23,13 +25,17 @@ class MemberController extends Controller
 
     public function index()
     {
-        isset($_GET['page']) ? $page = $_GET['page'] : $page = 1;
-        isset($_GET['amount']) ? $amount = $_GET['amount'] : $amount = 25;
-
+        try {
+            $pageParams = $this->memberService->getPageParams();
+            $members = $this->memberService->getAll($pageParams->get('amount'));
+        } catch (Exception $e) {
+            Log::error('MemberController@index: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
         return view('members.index', [
-            'members' => $this->memberService->getAll($amount), 
-            'page' => $page,
-            'amount' => $amount
+            'members' => $members, 
+            'page' => $pageParams->get('page'),
+            'amount' => $pageParams->get('amount')
         ]);
     }
 
@@ -52,7 +58,13 @@ class MemberController extends Controller
     
     public function show($id)
     {
-        return view('members.show', ['member' => $this->memberService->getByID($id)]);
+        try {
+            $member = $this->memberService->getByID($id);
+        } catch (Exception $e) {
+            Log::error('MemberController@show: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
+        return view('members.show', ['member' => $member]);
     }
 
     public function update(UpdateMemberRequest $request, $id)

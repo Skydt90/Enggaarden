@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             
-            @include('layouts.partials.flash-span')
+            @toast @endtoast
             <div class="card">
                 <div class="card-header">{{ __('Opret bruger') }}</div>
                 <div class="card-body">

@@ -47,4 +47,25 @@ class MemberRepository implements MemberRepositoryContract
     {
         return Member::findOrFail($id)->destroy($id);
     }
+
+    public function getAllEmails()
+    {
+        return Member::all()->where('email', '<>', null)->pluck('email');
+    }
+
+    public function getEmailsByBoard()
+    {
+        return Member::all()->where('is_board', '==', 'Ja')->pluck('email');
+    }
+
+    public function getEmailsByMemberType($type)
+    {
+        return Member::all()->where('member_type', '==', $type)->pluck('email');
+    }
+
+    public function getEmailByID($id)
+    {        
+        $member = Member::findOrFail($id);    
+        return $member->email;
+    }
 }

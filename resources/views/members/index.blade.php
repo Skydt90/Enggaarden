@@ -8,21 +8,16 @@
     <div class="container">
         <h2 class="text-center">Medlemskartotek</h2> 
         <br>
-        @include('layouts.partials.flash-span')
-       
+        @toast @endtoast
         <div class="row">
             <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-user-plus"></i> Opret Medlem</button>
             <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1"><i class="far fa-building"></i> Opret Firma</button> 
         </div>
 
         <div class="row mt-1">
-            <input type="text" id="search" onkeyup="searchTable('members')" placeholder="Søg efter navn..">
-            <select class="col-md-6s form-control-sm paginate" data-url-id="member">
-                <option value="25" {{ $amount == 25 ? 'selected' : '' }}>25</option>
-                <option value="50" {{ $amount == 50 ? 'selected' : '' }}>50</option>
-                <option value="75" {{ $amount == 75 ? 'selected' : '' }}>75</option>
-                <option value="100" {{ $amount == 100 ? 'selected' : '' }}>100</option>
-            </select>
+            <input type="text" id="search" onkeyup="searchTable('members')" placeholder="Søg efter navn..">  
+            @amount(['urlID' => 'member', 'amount' => $amount]) 
+            @endamount
             <p class="ml-auto mb-n1"><strong>Antal Medlemmer:</strong> {{ $members->total() }}</p>
         </div>
 
@@ -78,18 +73,10 @@
                     @endforeach
                 </tbody>   
             </table>
-            {{-- Pagination --}}
-            <nav>
-                <ul class="pagination pagination-sm">
-                    <?php $i = 1; ?>
-                    @while ($i <= $members->lastPage())
-                        <li class="page-item {{ $page == $i ? 'active' : '' }}">
-                        <a href="{{ route('member.index') . '?page=' . $i . '&amount=' . $amount }}" class="page-link">{{ $i }}</a> 
-                        </li>
-                    <?php $i++; ?>
-                    @endwhile
-                </ul>
-            </nav>
+            @pagination([
+                'paginated' => $members, 'index' => 'member.index', 
+                'page' => $page, 'amount' => $amount])
+            @endpagination
         </div>
     </div>
     @include('members.partials.member-footer')

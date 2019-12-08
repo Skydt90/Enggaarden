@@ -16,6 +16,7 @@ use App\Services\ContributionService;
 use App\Repositories\EmailRepository;
 use App\Repositories\UserRepository;
 use App\Services\EmailService;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -55,7 +56,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('App\Contracts\EmailServiceContract', function($app) {
-            return new EmailService($app->make('App\Contracts\EmailRepositoryContract'));
+            return new EmailService(
+                $app->make('App\Contracts\EmailRepositoryContract'),
+                $app->make('App\Contracts\MemberRepositoryContract'));
         });
 
         // Invites
@@ -100,5 +103,10 @@ class AppServiceProvider extends ServiceProvider
     {
         // model observers
         Member::observe(MemberObserver::class);
+
+         // blade components
+         Blade::component('components.pagination.pages', 'pagination');
+         Blade::component('components.pagination.amount', 'amount');
+         Blade::component('components.toastr', 'toast');
     }
 }

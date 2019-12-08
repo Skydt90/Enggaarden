@@ -9,7 +9,7 @@
     <div class="container">
         <h2 class="text-center">Email</h2>
         
-        @include('layouts.partials.flash-span')
+        @toast @endtoast
         
         <br>
         <br>

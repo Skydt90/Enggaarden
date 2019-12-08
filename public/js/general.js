@@ -147,7 +147,10 @@ function getUrl(name) {
     switch (name) {
         case 'member':
             url = '/member?';
-            break;
+        break;
+        case 'email':
+            url = '/email?';
+        break;
     }
     return url;
 }
