@@ -24,6 +24,9 @@ class RefactorAddressesTable extends Migration
         //drop foreign and primary
         Schema::table('addresses', function (Blueprint $table) {
             $table->dropForeign(['member_id']);
+        });
+
+        Schema::table('addresses', function (Blueprint $table) {
             $table->dropPrimary('member_id');
         });
         

@@ -12,7 +12,7 @@ class PaginationService implements PaginationServiceContract
         $params = collect();
 
         isset($_GET['page']) ? $params->put('page', $_GET['page']) : $params->put('page', 1);
-        isset($_GET['amount']) ? $params->put('amount', $_GET['amount']) : $params->put('amount', 25);
+        isset($_GET['amount']) ? $params->put('amount', $_GET['amount']) : $params->put('amount', 100);
 
         return $params; 
     }
