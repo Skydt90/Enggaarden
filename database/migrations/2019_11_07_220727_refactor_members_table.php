@@ -3,6 +3,7 @@
 use Carbon\Traits\Timestamp;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class RefactorMembersTable extends Migration
@@ -14,6 +15,8 @@ class RefactorMembersTable extends Migration
      */
     public function up()
     {
+        DB::statement("UPDATE members SET mail=null WHERE mail=''");
+        DB::statement("UPDATE members SET mail=null WHERE memberId=158");
         Schema::table('members', function (Blueprint $table) {
             $table->renameColumn('memberId', 'id');
             $table->renameColumn('firstName', 'first_name');
