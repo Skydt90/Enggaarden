@@ -26,7 +26,7 @@
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->user_type }}</td>
                             <?php Carbon\Carbon::setLocale('da'); ?>
-                            <td>{{ $user->created_at->diffForHumans() }}</td>
+                            <td>{{ $user->created_at ?? null ? $user->created_at->diffForHumans() : null }}</td>
                             <td>
                                 <a class="ml-2 delete-button" data-id="{{$user->id}}" data-username="{{ $user->username }}" href=""><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
                             </td>
