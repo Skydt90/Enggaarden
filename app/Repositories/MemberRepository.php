@@ -17,6 +17,11 @@ class MemberRepository implements MemberRepositoryContract
         return Member::withRelations()->findOrFail($id);
     }
 
+    public function getWithSubscriptions()
+    {
+        return Member::with(['subscriptions'])->get();
+    }
+
     public function create($request)
     {
         $member = Member::create($request->all());
@@ -38,7 +43,7 @@ class MemberRepository implements MemberRepositoryContract
     public function updateByID($request, $id)
     {
         $member = Member::findOrFail($id);
-        $member->fill($request->validated());
+        $member->fill($request->all());
         $member->save();
         return $member;
     }

@@ -56,6 +56,17 @@ class Member extends Model
        return $query->with(['address', 'subscriptions', 'invite', 'externalUser']);
     }
 
+    public function latestPayment()
+    {
+        foreach($this->subscriptions as $subscription) {
+            if (isset($subscription->pay_date)) {
+                // dd($subscription->pay_date);
+                return $subscription;
+            }
+        }
+        return null;
+    }
+
     // adding global scope to sort by newest entry
     protected static function boot()
     {

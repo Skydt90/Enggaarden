@@ -60,6 +60,7 @@
     
                         <label for="is_board" class="col-md-3"><strong>Bestyrelsesmedlem:</strong></label>
                         <select class="form-control col-md-9 is-board" name="is_board">
+                            <option value="" selected disabled hidden>{{ $member->is_board }}</option>
                             @foreach (App\Models\Member::IS_BOARD as $is_board)
                                 <option value="{{ $is_board }}">
                                     {{ $is_board }}
@@ -116,7 +117,7 @@
                     <div class="card-header">
                         <h4 class="text-center">Kontingentoversigt</h4>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body scroll">
                         <table class="table table-hover table-borderless table-sm">
                             @if ($member->subscriptions->count() > 0)
                                 <thead>

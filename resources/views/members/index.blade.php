@@ -41,7 +41,7 @@
                             @endif
                                 <td>{{ $member->member_type }}</td>
                                 <td>{!! $member->subscriptions[0]->pay_date ?? null ? '<i data-toggle="tooltip" data-placement="right" title="Betalt" class="fas fa-check" style="color: green"></i>' : '<i data-toggle="tooltip" data-placement="right" title="Ikke Betalt" class="fas fa-times" style="color: red"></i>' !!}</td>
-                                <td>{{ $member->subscriptions[0]->amount ?? null ? $member->subscriptions[0]->amount .' kr.' : 0 .' kr.'}}</td>
+                                <td>{{ $member->latestPayment() ? $member->latestPayment()->amount .' kr.' : 0 .' kr.'}}</td>
 
                             @if ($member->externalUser != null)
                                 <td><i style="color: green" class="fas fa-user-check"></i> Oprettet</td>

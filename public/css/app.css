@@ -11610,3 +11610,8 @@ button.toast-close-button {
   min-height: 250px;
 }
 
+.scroll {
+  max-height: 197px;
+  overflow-y: auto;
+}
+

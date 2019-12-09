@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ExternalUserInvitation extends Mailable// this interface will make Laravel automatically put this in the queue
 {
@@ -29,5 +30,10 @@ class ExternalUserInvitation extends Mailable// this interface will make Laravel
         $subject = "Invitation til Enggaardens Venners nye it-system";
 
         return $this->subject($subject)->markdown('emails.external-user-invitation');
+    }
+
+    public function failed(Exception $e)
+    {
+        Log::error('EMAIL FAIL: FEJLHÅNDTERING BYGGES HER!');
     }
 }

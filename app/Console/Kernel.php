@@ -2,9 +2,15 @@
 
 namespace App\Console;
 
-use App\Models\Invite;
+use App\Mail\ExpiredNotification;
+use App\Models\Subscription;
+use App\Repositories\InviteRepository;
+use App\Repositories\MemberRepository;
+use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,16 +31,41 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // clear expired urls from db
         $schedule->call(function () {
-            $invites = Invite::all();
-            foreach ($invites as $invite) {
-                if ($invite->expires_at->isPast()){
-                    $invite->delete();
+            try {
+                $inviteRepository = new InviteRepository();
+                $invites = $inviteRepository->getAll();
+                
+                foreach ($invites as $invite) {
+                    if ($invite->expires_at->isPast()) {
+                        $invite->delete();
+                    }
                 }
+            } catch(Exception $e) {
+                Log::error('Kernel@urls: ' . $e);
             }
         })->everyMinute();//->daily();
+
+        // check if memberships are valid
+        $schedule->call(function() {
+            try { 
+                $memberRepository = new MemberRepository();
+                $members = $memberRepository->getWithSubscriptions();
+
+                foreach($members as $member) {
+                    if($member->subscriptions[0]->pay_date && $member->subscriptions[0]->pay_date->addYear()->isPast()) {
+                        $member->is_company ? $amount = 300 : $amount = 100;
+                        $memberRepository->storeSubscriptionOnMember($member, new Subscription(['amount' => $amount]));
+                        Mail::to($member->email)->queue(new ExpiredNotification($member));
+    
+                        echo($member->first_name . ' har sidst betalt ' . $member->subscriptions[0]->pay_date->diffForHumans());
+                    }
+                }
+            } catch(Exception $e) {
+                Log::error('Kernel@memberships: ' . $e);
+            }
+        })->everyMinute(); // ->daily();
     }
 
     /**
