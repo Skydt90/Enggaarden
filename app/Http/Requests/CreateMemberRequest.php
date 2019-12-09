@@ -27,7 +27,7 @@ class CreateMemberRequest extends FormRequest
     {
         return [
             'first_name' => 'required|max:50',
-            'email' => 'required|max:100|email|unique:members,email',
+            'email' => 'required|max:100|email|unique:members,email|regex:/^\S*$/u',
             'phone_number' => 'required|numeric|min:10000000|max:99999999',
             'member_type' => Rule::in(Member::MEMBER_TYPES),
             'street_name' => 'max:50',
@@ -42,6 +42,8 @@ class CreateMemberRequest extends FormRequest
             'first_name.required' => 'Fornavn er påkrævet',
             'email.required' => 'Email er påkrævet',
             'email.unique' => 'Email er allerede i brug',
+            'email.email' => 'Email skal være et gyldigt format',
+            'email.regex' => 'Email skal være et gyldigt format',
             'phone_number.required' => 'Mobilnummer er påkrævet',
             'phone_number.max' => 'Mobilnummer er for langt',
             'phone_number.min' => 'Mobilnummer er for kort',

@@ -3,11 +3,13 @@
 namespace App\Jobs;
 
 use App\Mail\MailToMember;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmailToMembers implements ShouldQueue
@@ -38,5 +40,10 @@ class SendEmailToMembers implements ShouldQueue
             $when *= $index;
             Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject));
         }); 
+    }
+
+    public function failed(Exception $e)
+    {
+        Log::error('JOB FAIL: FEJLHÅNDTERING HER!');
     }
 }

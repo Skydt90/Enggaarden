@@ -28,7 +28,7 @@ class UpdateMemberRequest extends FormRequest
         return [
             'first_name' => 'sometimes|required|max:50|string',
             'last_name' => 'sometimes|nullable|max:40:|string',
-            'email' => 'sometimes|required|max:100|email',
+            'email' => 'required|max:100|email|regex:/^\S*$/u',
             'member_type' => Rule::in(Member::MEMBER_TYPES),
             'is_board' => Rule::in(Member::IS_BOARD),
             'phone_number' => 'sometimes|required|numeric|min:10000000|max:99999999',
@@ -46,6 +46,7 @@ class UpdateMemberRequest extends FormRequest
             'first_name.required' => 'Fornavn er påkrævet',
             'email.required' => 'Email er påkrævet',
             'email.email' => 'Email skal være et gyldigt format',
+            'email.regex' => 'Email skal være et gyldigt format',
             'phone_number.required' => 'Mobilnummer er påkrævet',
             'phone_number.max' => 'Mobilnummer er for langt',
             'phone_number.min' => 'Mobilnummer er for kort',
