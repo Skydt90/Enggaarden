@@ -95,6 +95,13 @@ class DependencyServiceProvider extends ServiceProvider
         $this->app->singleton('App\Contracts\PaginationServiceContract', function($app) {
             return new PaginationService();
         });
+
+        // Statistics
+        $this->app->singleton('App\Contracts\StatisticsServiceContract', function($app) {
+            return new StatisticsService(
+                $app->make('App\Contracts\ContributionServiceContract')
+            );
+        });
     }
 
     /**

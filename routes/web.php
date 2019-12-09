@@ -39,6 +39,9 @@ Route::resource('contribution', 'Contributions\ContributionController')->except(
 // Activities
 Route::resource('activity', 'Activities\ActivityTypeController')->only(['index', 'update', 'store']);
 
+// Statistics
+Route::get('statistics', 'Statistics\StatisticsController@index')->name('statistics');
+
 // Emails
 Route::group(['prefix' => 'email/send'], function() {
     Route::get('{id?}', 'Emails\SendEmailController@show')->name('send.mail.show');

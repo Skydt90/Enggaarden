@@ -44,6 +44,9 @@
                         <li class="nav-item">
                             <a href="{{ route('contribution.index') }}" class="nav-link"><i class="fas fa-money-bill-wave"></i></i> Støttebidrag</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('statistics') }}" class="nav-link"><i class="fas fa-chart-pie"></i> Statistik</a>
+                        </li>
                         @can('administrate')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-shield-alt"></i> Brugere</a>

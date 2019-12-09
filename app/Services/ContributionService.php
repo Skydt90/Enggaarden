@@ -17,7 +17,7 @@ class ContributionService implements ContributionServiceContract
         $this->activityTypeRepository = $activityTypeRepository;
     }
 
-    public function getAll($amount)
+    public function getAll($amount = null)
     {
         return $this->contributionRepository->getAll($amount);
     }
