@@ -11615,7 +11615,8 @@ button.toast-close-button {
   overflow-y: auto;
 }
 
-.pink-item:hover {
+.nav-link,
+.navbar-nav .nav-item:hover .nav-link {
   color: #d61c59;
 }
 
