@@ -1,8 +1,5 @@
 $(function() {
     
-    // bootstrap tooltips
-    $('[data-toggle="tooltip"]').tooltip();
-    
     // register member
     $('.register-form').on('submit', function(e) {
         e.preventDefault();

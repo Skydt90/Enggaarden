@@ -41,6 +41,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('member', 'Members\MemberController')->except(['edit', 'create']);
     Route::post('invite', 'Members\MemberController@invite')->name('invite');
     
+    // Notifications
+    Route::get('notifications', 'Users\UserController@notifications')->name('notifications.index');
+    Route::post('notifications', 'Users\UserController@markAsRead')->name('notifications.mark');
+    
     // Contributions
     Route::resource('contribution', 'Contributions\ContributionController')->except(['create', 'edit']);
     

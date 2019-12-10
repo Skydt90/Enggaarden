@@ -60,7 +60,6 @@ class Member extends Model
     {
         foreach($this->subscriptions as $subscription) {
             if (isset($subscription->pay_date)) {
-                // dd($subscription->pay_date);
                 return $subscription;
             }
         }

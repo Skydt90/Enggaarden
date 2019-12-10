@@ -4,12 +4,14 @@ namespace App\Repositories;
 
 use App\Contracts\EmailRepositoryContract;
 use App\Models\Email;
+use Illuminate\Support\Facades\Auth;
 
 class EmailRepository implements EmailRepositoryContract
 {
 
     public function create($request)
     {
+        $request->merge(['user_id' => Auth::user()->id]);
         return Email::create($request->all());
     }
 

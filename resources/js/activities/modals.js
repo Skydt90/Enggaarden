@@ -1,8 +1,5 @@
 $(function() {
 
-    // bootstrap tooltips
-    $('[data-toggle="tooltip"]').tooltip();
-
     // Focus the only input field on the show of add modal
     $('.add-activity-type').on('shown.bs.modal', function () {
         $(".activity_name").focus();
