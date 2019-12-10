@@ -25,11 +25,9 @@
                             <p class="card-text">
                                 {!! $email->message !!}
                             </p>
+                            <br>
+                            <p class="text-muted">Sendt {{ $email->created_at }}</p>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <?php Carbon\Carbon::setLocale('da'); ?>
-                            <li class="list-group-item text-muted">Sendt {{ $email->created_at }}</li>
-                        </ul>
                         
                     </div>
                 </div>
