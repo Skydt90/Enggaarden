@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
@@ -25,5 +27,17 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/login-external';
+
+    // fetch our custom password rules
+    public function broker()
+    {
+        return Password::broker('externals');
+    }
+
+    // use our custom guard to login the external user
+    protected function guard()
+    {
+        return Auth::guard('external');
+    }
 }
