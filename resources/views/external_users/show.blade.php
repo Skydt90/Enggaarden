@@ -52,7 +52,7 @@
                             <tbody>
                                 @foreach ($ex_user->member->subscriptions as $subscription)
                                     <tr>
-                                        <td>{{ $subscription->pay_date->toDateString() }}</td>
+                                        <td>{{ $subscription->pay_date ?? null ? $subscription->pay_date->toDateString() : null }}</td>
                                         <td>{{ $subscription->amount }}</td>
                                     </tr>
                                 @endforeach
