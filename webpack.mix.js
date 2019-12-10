@@ -53,6 +53,12 @@ mix.combine([
    'resources/js/activities/edit.js'
 ], 'public/js/activities.js');
 
+// images
+mix.copy(
+   'resources/views/img/enggaarden_logo.png',
+   'public/img/logo.png'
+   );
+
 mix.combine([
    'resources/js/users/delete.js'
 ], 'public/js/users.js');

@@ -33,25 +33,23 @@
                 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    <img src="{{ asset('img/logo.png') }}" alt="" style="height: 25px">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav_item">
-                           <img src="img/enggaarden_logo.pnfdsafdg" alt="">
+                        <li class="nav-item">
+                            <a href="{{ route('member.index') }}" class="nav-link pink-item"><i class="fas fa-users"></i> Medlemmer</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('member.index') }}" class="nav-link"><i class="fas fa-users"></i> Medlemmer</a>
+                            <a href="{{ route('send.mail.show') }}" class="nav-link pink-item"><i class="far fa-envelope"></i> Email</a>
+                        </li>
+                        <li class="nav-item" style="hover: ">
+                            <a href="{{ route('contribution.index') }}" class="nav-link pink-item"><i class="fas fa-money-bill-wave"></i></i> Støttebidrag</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('send.mail.show') }}" class="nav-link"><i class="far fa-envelope"></i> Email</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('contribution.index') }}" class="nav-link"><i class="fas fa-money-bill-wave"></i></i> Støttebidrag</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('statistics') }}" class="nav-link"><i class="fas fa-chart-pie"></i> Statistik</a>
+                            <a href="{{ route('statistics') }}" class="nav-link pink-item"><i class="fas fa-chart-pie"></i> Statistik</a>
                         </li>
                         @can('administrate')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-shield-alt"></i> Brugere</a>
+                                <a class="nav-link pink-item" href="{{ route('user.index') }}"><i class="fas fa-shield-alt"></i> Brugere</a>
                             </li>
                         @endcan
             
@@ -84,6 +82,7 @@
                                 </div>
                             </li>
                         @endguest
+                        
                     </ul>
                 </div>
             </div>

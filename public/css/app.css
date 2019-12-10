@@ -11615,3 +11615,7 @@ button.toast-close-button {
   overflow-y: auto;
 }
 
+.pink-item:hover {
+  color: #d61c59;
+}
+
