@@ -34,7 +34,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                    
+                        <li class="nav_item">
+                           <img src="img/enggaarden_logo.pnfdsafdg" alt="">
+                        </li>
                         <li class="nav-item">
                             <a href="{{ route('member.index') }}" class="nav-link"><i class="fas fa-users"></i> Medlemmer</a>
                         </li>
