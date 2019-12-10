@@ -36,7 +36,7 @@
     overflow-y: auto;
 }
 
-.pink-item:hover
-{
-	color: #d61c59;
+.nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: #d61c59;
 }
