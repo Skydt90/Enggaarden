@@ -9,6 +9,7 @@
     <div class="container">
         <h2 class="text-center">Medlemsdetaljer for {{ $member->first_name }}</h2>
         <br>
+        @toast @endtoast
         @empty($member->email)
             <div class="alert alert-danger text-center" role="alert">
                <strong>OBS! Ændringer fortaget her, gemmes ikke før der er tilføjet en email!</strong>
@@ -160,6 +161,16 @@
 
                             <p class="col-md-5"><strong>Har en bruger:</strong></p>
                             <p class="col-md-7">{{ $member->externalUser ? 'Ja' : 'Nej' }}</p>
+                            @if ($member->invite)
+                                <p class="col-md-5"><strong>Invitation sendt: </strong></p>
+                                <p class="col-md-7"><a href="" class="btn btn-danger" onclick="event.preventDefault();
+                                    document.getElementById('delete-invite').submit();"> Slet </a></p>
+
+                                <form id="delete-invite" action="{{ route('invite.delete', ['id' => $member->id]) }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>      

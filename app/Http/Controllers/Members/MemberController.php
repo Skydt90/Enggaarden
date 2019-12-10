@@ -127,4 +127,15 @@ class MemberController extends Controller
             'data' => $savedInvite
         ]);
     }
+
+    public function deleteInvite($id)
+    {
+        try {
+            $this->inviteService->destroyByMemberId($id);
+        } catch (Exception $e) {
+            Log::error('MemberController@deleteInvite: ' . $e);
+            return redirect()->back()->withErrors($this->error);
+        }
+        return redirect(route('member.show', ['member' => $id]));
+    }
 }

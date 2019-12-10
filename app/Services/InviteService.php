@@ -31,4 +31,9 @@ class InviteService implements InviteServiceContract
         return $savedInvite;
     }
 
+    public function destroyByMemberId($id)
+    {
+        return $this->inviteRepository->destroyByMemberId($id);
+    }
+
 }

@@ -9,4 +9,6 @@ interface InviteRepositoryContract
     public function getByMemberID($id);
 
     public function store($invite);
+
+    public function destroyByMemberId($id);
 }

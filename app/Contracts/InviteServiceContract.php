@@ -9,4 +9,6 @@ interface InviteServiceContract
     public function getByMemberID($id);
 
     public function store($request);
+    
+    public function destroyByMemberId($id);
 }

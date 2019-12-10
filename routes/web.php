@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function() {
     // Members
     Route::resource('member', 'Members\MemberController')->except(['edit', 'create']);
     Route::post('invite', 'Members\MemberController@invite')->name('invite');
+    Route::delete('member/{id}/invite', 'Members\MemberController@deleteInvite')->name('invite.delete');
     
     // Contributions
     Route::resource('contribution', 'Contributions\ContributionController')->except(['create', 'edit']);
