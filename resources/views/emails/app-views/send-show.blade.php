@@ -47,7 +47,7 @@
                     
                     <div class="form-group">
                         <label for="message">Besked:</label>
-                        <textarea class="form-control ck-editor" name="message"></textarea>
+                        <textarea class="form-control ck-editor" name="message" {{-- value="{{ old('message') }}" --}}></textarea>
                     </div>
 
                     <input type="submit" class="btn btn-primary btn-block" value="Afsend"> 

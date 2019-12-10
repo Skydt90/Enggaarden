@@ -22,8 +22,8 @@
         </div>
 
         <div class="row mt-2">
-            <table id="contributions" class="table table-hover table-sm">
-                <thead class="thead-light">
+            <table id="contributions" class="table table-hover table-sm table-striped">
+                <thead class="thead-dark">
                     <th>Aktivitet</th>
                     <th>Beløb</th>
                     <th>Betalingsdato</th>

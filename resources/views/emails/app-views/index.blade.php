@@ -21,8 +21,8 @@
         </div>
 
         <div class="row mt-2">
-            <table id="emails" class="table table-hover table-sm">
-                <thead class="thead-light">
+            <table id="emails" class="table table-hover table-sm table-striped">
+                <thead class="thead-dark">
                     <th>Modtager:</th>
                     <th>Afsender:</th>
                     <th>Emne:</th>

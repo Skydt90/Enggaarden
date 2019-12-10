@@ -27,8 +27,8 @@
         </div>
 
         <div class="row mt-2">  
-            <table id="members" class="table table-hover table-sm">
-                <thead>
+            <table id="members" class="table table-hover table-sm table-striped">
+                <thead class="thead-dark">
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
                     <th>Kontigent:</th>

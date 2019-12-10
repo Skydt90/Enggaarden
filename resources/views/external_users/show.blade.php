@@ -26,8 +26,8 @@
                     <p class="col-md-3"><strong>Telefon:</strong></p>
                     <p class="col-md-9">{{ $ex_user->member->phone_number ?? '' }}</p>
 
-                    <p class="col-md-3"><strong>Kontingent:</strong></p>
-                    <p class="col-md-9">{{ $ex_user->member->subscriptions[0]->pay_date ?? 'Ikke betalt' }}</p>
+                    <p class="col-md-3"><strong>Kontingent betalt:</strong></p>
+                    <p class="col-md-9">{{ $ex_user->member->subscriptions[0]->pay_date ?? null ? $ex_user->member->subscriptions[0]->pay_date->toDateString() : 'Ikke betalt' }}</p>
                     
                     <p class="col-md-3"><strong>Medlem siden:</strong></p>
                     <p class="col-md-9">{{ $ex_user->member->created_at->format('j\\. F Y') }}</p>
@@ -52,7 +52,7 @@
                             <tbody>
                                 @foreach ($ex_user->member->subscriptions as $subscription)
                                     <tr>
-                                        <td>{{ $subscription->pay_date }}</td>
+                                        <td>{{ $subscription->pay_date->toDateString() }}</td>
                                         <td>{{ $subscription->amount }}</td>
                                     </tr>
                                 @endforeach
