@@ -19,12 +19,14 @@ class SendEmailToMembers implements ShouldQueue
     private $emails;
     private $message;
     private $subject;
+    private $username;
 
-    public function __construct($emails, $message, $subject)
+    public function __construct($emails, $message, $subject, $username)
     {
         $this->emails = $emails;
         $this->message = $message;
         $this->subject = $subject;
+        $this->username = $username;
     }
 
     /**
@@ -38,7 +40,7 @@ class SendEmailToMembers implements ShouldQueue
         
         $this->emails->each(function($receiver, $index) use($when) {
             $when *= $index;
-            Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject));
+            Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject, $receiver, $this->username));
         }); 
     }
 

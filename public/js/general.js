@@ -184,3 +184,5 @@ function searchTable(name) {
         }
     }
 }
+// bootstrap tooltips
+$('[data-toggle="tooltip"]').tooltip();

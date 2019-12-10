@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Emails;
 use App\Contracts\EmailServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailRequest;
+use App\Notifications\EmailFailed;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class SendEmailController extends Controller
 {
@@ -20,16 +23,18 @@ class SendEmailController extends Controller
 
     public function show($id = null)
     {
+        $userEmails = Auth::user()->emails()->withRelations()->get();
+
         if(isset($id)) {
             try {
                 $email = $this->emailService->getEmailByID($id);
-                return view('emails.app-views.send-show', ['email' => $email, 'member_id' => $id]);
+                return view('emails.app-views.send-show', ['email' => $email, 'member_id' => $id, 'user_emails' => $userEmails]);
             } catch (Exception $e) {
                 Log::error('SendEmailController@show: ' . $e);
                 return redirect()->back()->withErrors($this->error);
             }
         } else {
-            return view('emails.app-views.send-show');
+            return view('emails.app-views.send-show', ['user_emails' => $userEmails]);
         }
     }
 

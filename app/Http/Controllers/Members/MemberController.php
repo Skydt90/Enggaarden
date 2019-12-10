@@ -10,6 +10,7 @@ use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class MemberController extends Controller
@@ -41,7 +42,8 @@ class MemberController extends Controller
         return view('members.index', [
             'members' => $members, 
             'page' => $pageParams->get('page'),
-            'amount' => $pageParams->get('amount')
+            'amount' => $pageParams->get('amount'),
+            'user' => Auth::user(),
         ]);
     }
 

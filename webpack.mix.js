@@ -39,6 +39,7 @@ mix.combine([
    'resources/js/general/error-handlers.js',
    'resources/js/general/pagination.js',
    'resources/js/general/search.js',
+   'resources/js/general/tooltip.js',
 ], 'public/js/general.js');
 
 // contributions

@@ -7,6 +7,7 @@ use App\Contracts\EmailServiceContract;
 use App\Contracts\MemberRepositoryContract;
 use App\Jobs\SendEmailToMembers;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class EmailService implements EmailServiceContract
 {
@@ -46,8 +47,8 @@ class EmailService implements EmailServiceContract
         } else {
             $emails = collect($request->email);
         }
-        SendEmailToMembers::dispatch($emails, $request->message, $request->subject);
-        $this->emailRepository->create($request);
+        SendEmailToMembers::dispatch($emails, $request->message, $request->subject, Auth::user()->username);
+        return $this->emailRepository->create($request);
     }
 
     private function getEmailAddresses($request)

@@ -1,8 +1,4 @@
 $(function() {
-
-    // bootstrap tooltips
-    $('[data-toggle="tooltip"]').tooltip();
-
     // on contribution create
     $('.contribution-form').on('submit', function (e){
         e.preventDefault();

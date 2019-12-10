@@ -1,8 +1,5 @@
 $(function () {
 
-    // bootstrap tooltips
-    $('[data-toggle="tooltip"]').tooltip();
-
     // trigger the modal based on member cridentials
     $('.delete-button').on('click', function(e) {
         e.preventDefault();

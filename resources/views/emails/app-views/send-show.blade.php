@@ -61,10 +61,20 @@
                     <thead class="thead-light">
                         <th>Til:</th>
                         <th>Emne:</th>
+                        <th></th>
                     </thead>
                     <tbody>
-                        <td>Mail.dk</td>
-                        <td>lort</td>
+                        @foreach ($user_emails as $email)
+                        <tr>
+                            @if ($email->group)
+                                <td>{{ $email->group }}</td>
+                            @else
+                                <td>{{ $email->member->email }}</td>
+                            @endif        
+                            <td>{{ $email->subject }}</td>
+                            <td><a data-toggle="tooltip" data-placement="top" title="Vis" href="{{ route('email.show', ['email' => $email]) }}"><i class="fas fa-eye"></i></a></td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>    
             </div> 
