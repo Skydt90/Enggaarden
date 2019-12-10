@@ -70,7 +70,7 @@
                         <br><br>
     
                         <label for="phone_number" class="col-md-3"><strong>Mobil:</strong></label>
-                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="phone_number" value="{{ $member->phone_number ?? '' }}">                       
+                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="phone_number" value="{{ $member->phone_number === 0 ? '' : $member->phone_number }}">                       
                         <br><br>
                     </div>
                 </form>
