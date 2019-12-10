@@ -6,30 +6,34 @@
 
     <h2 class="text-center">Emaildetaljer</h2>
     <br><br><br>
-    <div class="row">
-        {{-- Member Details --}}
+    <div class="row justify-content-center">
         <div class="col-md-8">
+            {{-- Member Details --}}
             <div class="row">
-                <p class="col-md-3"><strong>Modtager:</strong></p>
-                @if($email->group)
-                    <p class="col-md-9">{{ $email->group }}</p>
-                @else
-                    <p class="col-md-9">{{ $email->member->email }}</p>
-                @endif
-                <p class="col-md-3"><strong>Afsender:</strong></p>
-                <p class="col-md-9">{{ $email->user->username ?? null }}</p>
-
-                <p class="col-md-3"><strong>Emne</strong></p>
-                <p class="col-md-9">{{ $email->subject }}</p>
-
-                <p class="col-md-3"><strong>Besked:</strong></p>
-                <p class="col-md-9">{{ $email->message }}</p>
-
-                <p class="col-md-3"><strong>Afsendt:</strong></p>
-                <?php Carbon\Carbon::setLocale('da'); ?>
-                <p class="col-md-9">{{ $email->created_at->format('j\\. M Y') }}</p>
+                <div class="card">
+                    <div class="card-header">
+                            <p class="float-left"> Fra: {{ $email->user->username ?? null }} </p>
+                            @if($email->group)
+                            <p class="float-right"> Til: {{ $email->group }} </p>
+                            @else
+                            <p class="float-right"> Til: {{ $email->member->email }} </p>
+                            @endif
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title"> Emne: {{ $email->subject }} </h4>
+                        <p class="card-text">
+                            {{ $email->message }}
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <?php Carbon\Carbon::setLocale('da'); ?>
+                        <li class="list-group-item text-muted">Sendt {{ $email->created_at }}</li>
+                    </ul>
+                    
+                </div>
+                <div class="col-md-12"><br><br></div>
+                <a href="{{ route('email.index') }}" class="btn btn-warning btn-sm col-md-1">Tilbage</a>
             </div>
-            <a href="{{ route('email.index') }}" class="btn btn-warning btn-sm col-md-1">Tilbage</a>
         </div>
     </div>
 </div>
