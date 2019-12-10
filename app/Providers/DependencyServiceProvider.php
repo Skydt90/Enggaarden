@@ -16,6 +16,7 @@ use App\Repositories\EmailRepository;
 use App\Repositories\UserRepository;
 use App\Services\EmailService;
 use App\Services\PaginationService;
+use App\Services\StatisticsRepository;
 
 class DependencyServiceProvider extends ServiceProvider
 {
@@ -97,8 +98,8 @@ class DependencyServiceProvider extends ServiceProvider
         });
 
         // Statistics
-        $this->app->singleton('App\Contracts\StatisticsServiceContract', function($app) {
-            return new StatisticsService(
+        $this->app->singleton('App\Contracts\StatisticsRepositoryContract', function($app) {
+            return new StatisticsRepository(
                 $app->make('App\Contracts\ContributionServiceContract')
             );
         });

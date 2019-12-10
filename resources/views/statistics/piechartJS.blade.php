@@ -24,10 +24,10 @@ Highcharts.chart('container', {
         type: 'pie'
     },
     title: {
-        text: 'Kroner udbetalt til aktiviteter'
+        text: ''
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: 'Procentdel : <b>{point.percentage:.1f}%</b>'
     },
     plotOptions: {
         pie: {
@@ -44,8 +44,68 @@ Highcharts.chart('container', {
         name: 'Kroner',
         data: [
             @foreach($contributions as $contribution)
-                { name: '{{ $contribution->activity_type->activity_type }}', y: {{ $contribution->amount }} },
+                { name: '{{ $contribution->activity_type }}', y: {{ $contribution->total_amount }} },
             @endforeach
         ]
     }],
+});
+
+Highcharts.chart('container2', {
+    chart: {
+        type: 'area'
+    },
+    accessibility: {
+        description: 'En graf der viser tilkomsten af medlemmer for foreningen Enggaardens venner gennem tiden'
+    },
+    title: {
+        text: ''
+    },
+    subtitle: {
+        text: 'Antal nyankomne medlemmer i Enggaardens venner gennem tiden'
+    },
+    xAxis: {
+        title: {
+            text: 'Tidspunkt'
+        },
+        categories: [
+            @foreach ($memberData as $entry)
+                '{{ $entry->month }}',
+            @endforeach
+        ]
+    },
+    yAxis: {
+        title: {
+            text: 'Antal medlemmer'
+        },
+        labels: {
+            formatter: function () {
+                return this.value;
+            }
+        }
+    },
+    tooltip: {
+        pointFormat: 'Enggaardens venner fik <b>{point.y}</b><br/> nye medlemmer i denne måned'
+    },
+    plotOptions: {
+        area: {
+            marker: {
+                enabled: false,
+                symbol: 'circle',
+                radius: 2,
+                states: {
+                    hover: {
+                        enabled: true
+                    }
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Enggaardens venner',
+        data: [
+            @foreach ($memberData as $point)
+                {{ $point->number }},
+            @endforeach
+        ]
+    }]
 });

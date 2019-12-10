@@ -15,7 +15,7 @@
         </div>
         
         <div class="row mt-1">
-            <input type="text" id="search" onkeyup="searchTable('contributions')" placeholder="Søg efter modtager..">  
+            <input type="text" id="search" onkeyup="searchTable('contributions')" placeholder="Søg efter aktivitet..">  
             @amount(['urlID' => 'contribution', 'amount' => $amount]) 
             @endamount
             <p class="ml-auto mb-n1"><strong>Antal Støttebidrag:</strong> {{ $contributions->total() }}</p>
