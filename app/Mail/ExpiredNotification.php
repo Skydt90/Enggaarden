@@ -3,11 +3,13 @@
 namespace App\Mail;
 
 use App\Models\Member;
+use App\Models\User;
+use App\Notifications\EmailFailed;
+use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class ExpiredNotification extends Mailable
 {
@@ -38,6 +40,6 @@ class ExpiredNotification extends Mailable
 
     public function failed(Exception $e)
     {
-        Log::error('EMAIL FAIL: FEJLHÅNDTERING BYGGES HER!');
+        Notification::send(User::all(), new EmailFailed($this->member->email));
     }
 }

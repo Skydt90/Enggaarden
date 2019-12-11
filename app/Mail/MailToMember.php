@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Notifications\EmailFailed;
 use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
@@ -19,14 +18,12 @@ class MailToMember extends Mailable
     public $message;
     public $subject;
     public $receiver;
-    public $username;
     
-    public function __construct($message, $subject, $receiver, $username)
+    public function __construct($message, $subject, $receiver)
     {
         $this->message = $message;
         $this->subject = $subject;
         $this->receiver = $receiver;
-        $this->username = $username;
     }
 
     public function build()
@@ -36,7 +33,7 @@ class MailToMember extends Mailable
 
     public function failed(Exception $e)
     {
-        Notification::send(User::all(), new EmailFailed(null, $this->receiver, $this->username));
+        Notification::send(User::all(), new EmailFailed($this->receiver));
         Log::error('MailToMember@failed: ' . $e);
     }
 }
