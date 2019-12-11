@@ -49,18 +49,22 @@
                             @elseif($member->invite != null)         
                                 <td><i class="fas fa-hourglass-half"></i> Afventer</td>
                             @else
-                                <td>
-                                    <div id="div{{ $member->id }}">
-                                        <a class="btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
-                                            <i class="fas fa-user-plus"></i> Inviter
-                                        </a>
-    
-                                        <form id="{{ $member->id }}" class="invite-form" action="{{ route('invite') }}" method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name='member_id' value="{{ $member->id }}">
-                                        </form>
-                                    </div>
-                                </td>
+                                @if (!empty($member->email))
+                                    <td>
+                                        <div id="div{{ $member->id }}">
+                                            <a class="btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
+                                                <i class="fas fa-user-plus"></i> Inviter
+                                            </a>
+        
+                                            <form id="{{ $member->id }}" class="invite-form" action="{{ route('invite') }}" method="POST" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name='member_id' value="{{ $member->id }}">
+                                            </form>
+                                        </div>
+                                    </td>
+                                @else
+                                    <td class="text-muted">Ingen email</td>
+                                @endif
                             @endif
 
                             <td>
