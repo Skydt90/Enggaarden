@@ -16,10 +16,17 @@
         </div>
         
         <div class="row mt-1">
-            <input type="text" id="search" onkeyup="searchTable('members')" placeholder="Søg efter navn..">  
+            <div class="col-md-4">
+                <input type="text" id="search" onkeyup="searchTable('members')" class="float-left" placeholder="Søg efter navn..">  
+            </div>
            {{--  @amount(['urlID' => 'member', 'amount' => $amount]) 
             @endamount --}}
-            <p class="ml-auto mb-n1"><strong>Antal Medlemmer:</strong> {{ $members->total() }}</p>
+            <div class="col-md-4 ml-4">
+                <p><strong>Samlet kontingent: </strong>{{ $sum->sum }}</p>
+            </div>
+            <div class="col-md-3">
+                <p class="ml-auto mb-n1 float-right"><strong>Antal Medlemmer:</strong> {{ $members->total() }}</p>
+            </div>
         </div>
 
         <div class="row mt-2">  

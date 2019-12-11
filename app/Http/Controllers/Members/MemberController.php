@@ -35,15 +35,18 @@ class MemberController extends Controller
         try {
             $pageParams = $this->paginationService->getPaginationParams();
             $members = $this->memberService->getAll($pageParams->get('amount'));
+            $sum = $this->memberService->getSubscriptionSum();
         } catch (Exception $e) {
             Log::error('MemberController@index: ' . $e);
             return redirect()->back()->withErrors($this->error);
         }
+        
         return view('members.index', [
             'members' => $members, 
             'page' => $pageParams->get('page'),
             'amount' => $pageParams->get('amount'),
             'user' => Auth::user(),
+            'sum' => $sum,
         ]);
     }
 

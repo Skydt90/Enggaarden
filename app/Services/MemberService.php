@@ -91,6 +91,11 @@ class MemberService implements MemberServiceContract
         return $params; 
     }
 
+    public function getSubscriptionSum()
+    {
+        return $this->subscriptionRepository->getSum();
+    }
+
     private function hasAddress($request) : bool
     {
         return $request->filled('street_name') || $request->filled('zip_code') || $request->filled('city');

@@ -7,4 +7,6 @@ interface SubscriptionRepositoryContract
     public function createOnMember($member, $request);
 
     public function updateByMemberID($request, $id);
+
+    public function getSum();
 }    
