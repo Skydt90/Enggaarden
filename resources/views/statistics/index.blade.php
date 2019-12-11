@@ -14,17 +14,33 @@
 @section('content')
 
     <div class="container">
-        <div class="card">
-            <div class="card-header">
-                    <h4 class="text-center">Kroner udbetalt til aktiviteter</h4>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                            <h4 class="text-center">Kroner udbetalt til aktiviteter</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="container">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div id="container">
-                    
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-center">Info</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Antal medlemmer: </strong>{{ $memberCount }}</p>
+                        <p><strong>Samlet kontingent: </strong>{{ $subscriptionSum->sum }} kr</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card">
+        
+        <div class="card mt-3">
             <div class="card-header">
                 <h4 class="text-center">Tilkomne medlemmer</h4>
             </div>
@@ -33,6 +49,7 @@
                 </div>
             </div>
         </div>
+        
 
         </div>
     </div>

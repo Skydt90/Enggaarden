@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Contracts\MemberRepositoryContract;
 use App\Models\Member;
+use Illuminate\Support\Facades\DB;
 
 class MemberRepository implements MemberRepositoryContract
 {
@@ -72,5 +73,10 @@ class MemberRepository implements MemberRepositoryContract
     {        
         $member = Member::findOrFail($id);    
         return $member->email;
+    }
+
+    public function getMemberCount()
+    {
+        return DB::table('members')->count();
     }
 }

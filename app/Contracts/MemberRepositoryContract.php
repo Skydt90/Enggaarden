@@ -15,4 +15,5 @@ interface MemberRepositoryContract
     public function getEmailsByMemberType($type);
     public function getAllEmails();
     public function getEmailsByBoard();
+    public function getMemberCount();
 }
