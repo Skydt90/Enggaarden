@@ -4,36 +4,33 @@ namespace App\Http\Controllers\Members;
 
 use App\Contracts\InviteServiceContract;
 use App\Contracts\MemberServiceContract;
-use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Traits\PageSetup;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class MemberController extends Controller
 {
+    use PageSetup;
+
     private $memberService;
     private $inviteService;
-    private $paginationService;
     private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(
-        MemberServiceContract $memberService, 
-        InviteServiceContract $inviteService, 
-        PaginationServiceContract $paginationService)
+    public function __construct(MemberServiceContract $memberService, InviteServiceContract $inviteService)
     {
         $this->memberService = $memberService;
         $this->inviteService = $inviteService;
-        $this->paginationService = $paginationService;
     }
 
     public function index()
     {
         try {
-            $pageParams = $this->paginationService->getPaginationParams();
+            $pageParams = $this->pageSetup();
             $members = $this->memberService->getAll($pageParams->get('amount'));
             $sum = $this->memberService->getSubscriptionSum();
         } catch (Exception $e) {
@@ -45,6 +42,7 @@ class MemberController extends Controller
             'members' => $members, 
             'page' => $pageParams->get('page'),
             'amount' => $pageParams->get('amount'),
+            'type' => $pageParams->get('type'),
             'user' => Auth::user(),
             'sum' => $sum,
         ]);

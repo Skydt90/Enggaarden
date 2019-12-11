@@ -33,5 +33,6 @@ class AppServiceProvider extends ServiceProvider
          Blade::component('components.pagination.pages', 'pagination');
          Blade::component('components.pagination.amount', 'amount');
          Blade::component('components.toastr', 'toast');
+         Blade::component('components.view-only', 'view');
     }
 }

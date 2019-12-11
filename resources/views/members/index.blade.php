@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    @view(['urlID' => 'member', 'type' => $type]) @endview
     <div class="container">
         <h2 class="text-center">Medlemskartotek</h2> 
         <br>
