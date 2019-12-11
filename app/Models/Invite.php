@@ -25,7 +25,7 @@ class Invite extends Model
         static::creating(function ($invite){
             $invite->member;
 
-            $expire = now()->addMonth();
+            $expire = now()->addWeek();
             $invite->expires_at = $expire;
             $link = URL::temporarySignedRoute('reg-ext', $expire, ['id' => $invite->member->id, 'email' => $invite->member->email]);
         
