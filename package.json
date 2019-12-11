@@ -25,7 +25,5 @@
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
-    "dependencies": {
-        "highcharts": "^7.2.1"
-    }
+    "dependencies": {}
 }
