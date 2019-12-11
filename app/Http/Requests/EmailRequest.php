@@ -28,8 +28,8 @@ class EmailRequest extends FormRequest
         return [
             'receiver' => 'sometimes|required|email',
             'group' => 'sometimes|required|' . Rule::in(Email::MAIL_GROUPS),
-            'subject' => 'required|string|max:30|min:3',
-            'message' => 'required'
+            'subject' => 'required|string|max:30|min:2',
+            'message' => 'required|string|min:10'
         ];
     }
 
@@ -42,8 +42,9 @@ class EmailRequest extends FormRequest
             'group.in' => 'Modtager gruppen er ugyldig',
             'subject.required' => 'Emne er påkrævet',
             'subject.max' => 'Emnet må ikke overskride 30 bogstaver',
-            'subject.min' => 'Emnet skal være mindst 3 bogstaver langt',
+            'subject.min' => 'Emnet skal være mindst 2 bogstaver langt',
             'message.required' => 'Besked er påkrævet',
+            'message.min' => 'Din besked kan ikke være kortere end 10 bogstaver',
         ];
     }
 }

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('additional-scripts')
-    <script src="{{ asset('js/ckeditor.js') }}"></script>
-    <script src="{{ asset('js/email.js') }}"></script>
+    <script src="{{ asset('js/ckeditor.js') }}" defer></script>
+    <script src="{{ asset('js/email.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -18,9 +18,8 @@
             <div class="col-md-7">
                 <h4 class="text-center">Ny email</h4>
                 <br>
-                <form action="{{ route('send.mail.send') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                <form action="{{ route('send.mail.send') }}" method="POST" autocomplete="off" enctype="multipart/form-data" class="mail-form">
                     @csrf
-
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="email">Modtager:</label>
@@ -40,14 +39,14 @@
                         
                         <div class="form-group col-md-6">
                             <label for="subject">Emne:</label>
-                            <input type="text" name="subject" class="form-control" placeholder="Indtast emne">
+                            <input type="text" name="subject" class="form-control" placeholder="Indtast emne" required="true">
                         </div>
                         
                     </div>    
                     
                     <div class="form-group">
                         <label for="message">Besked:</label>
-                        <textarea class="form-control ck-editor" name="message" {{-- value="{{ old('message') }}" --}}></textarea>
+                        <textarea class="form-control ck-editor" id="text-editor" name="message" {{-- value="{{ old('message') }}" --}}></textarea>
                     </div>
 
                     <input type="submit" class="btn btn-primary btn-block" value="Afsend"> 
