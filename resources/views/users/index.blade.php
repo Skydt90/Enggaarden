@@ -13,7 +13,7 @@
         </h2>
         <div class="row mt-2">
             <a href="{{ route('register') }}" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> Opret bruger</a>
-            <table class="table table-hover table-sm mt-2 table-striped table-bordered">
+            <table class="table table-hover table-sm mt-2 table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Brugernavn</th>
                     <th>Brugertype</th>

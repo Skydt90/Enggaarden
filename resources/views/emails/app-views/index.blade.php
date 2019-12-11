@@ -21,7 +21,7 @@
         </div>
 
         <div class="row mt-2">
-            <table id="emails" class="table table-hover table-sm table-striped table-bordered">
+            <table id="emails" class="table table-hover table-sm table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Modtager:</th>
                     <th>Afsender:</th>

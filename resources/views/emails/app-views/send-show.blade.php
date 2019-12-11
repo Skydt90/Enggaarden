@@ -54,11 +54,11 @@
                 </form>     
             </div>
             <div class="col-md-5">
-                <h4 class="text-center">Din mail historik</h4>
+                <h4 class="text-center">Dine seneste 12 emails</h4>
                 <br>
-                <a href="{{ route('email.index') }}" class="btn btn-sm btn-primary mr-auto"><i class="fas fa-mail-bulk"></i> Alle emails</a>
-                <table class="table table-hover table-sm mt-2">
-                    <thead class="thead-light">
+                <a href="{{ route('email.index') }}" class="btn btn-sm btn-primary mr-auto mb-2"><i class="fas fa-mail-bulk"></i> Alle emails</a>
+                <table class="table table-hover table-bordered table-striped table-sm">
+                    <thead class="thead-dark">
                         <th>Til:</th>
                         <th>Emne:</th>
                         <th></th>

@@ -8,12 +8,12 @@ use App\Models\ActivityType;
 class ActivityTypeRepository implements ActivityTypeRepositoryContract
 {
 
-    public function getAll($withOld = false, $amount)
+    public function getAll($withOld = false)
     {
         if ($withOld){
-            return ActivityType::all()->paginate($amount);
+            return ActivityType::all();
         } else {
-            return ActivityType::where('activity_type', '!=', 'Gammel data')->paginate($amount);
+            return ActivityType::where('activity_type', '!=', 'Gammel data')->get();
         }
     }
 

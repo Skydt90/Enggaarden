@@ -40,6 +40,7 @@ mix.combine([
    'resources/js/general/pagination.js',
    'resources/js/general/search.js',
    'resources/js/general/tooltip.js',
+   'resources/js/general/sortable.js',
 ], 'public/js/general.js');
 
 // contributions

@@ -163,7 +163,7 @@
                             <p class="col-md-7">{{ $member->externalUser ? 'Ja' : 'Nej' }}</p>
                             @if ($member->invite)
                                 <p class="col-md-5"><strong>Invitation sendt: </strong></p>
-                                <p class="col-md-7"><a href="" class="btn btn-danger" onclick="event.preventDefault();
+                                <p class="col-md-7"><a href="" class="btn btn-danger btn-sm" onclick="event.preventDefault();
                                     document.getElementById('delete-invite').submit();"> Slet </a></p>
 
                                 <form id="delete-invite" action="{{ route('invite.delete', ['id' => $member->id]) }}" method="POST" style="display: none;">
@@ -177,7 +177,7 @@
             </div>
         </div>
         <br>
-        <a href="{{ route('member.index') }}" class="btn btn-warning col-md-1">Tilbage</a>
+        <a href="{{ route('member.index') }}" class="btn btn-warning btn-sm">Tilbage</a>
         <button type="button" id="success" data-toggle="modal" data-target="#success-modal" style="display:none"></button>
     </div>    		
 @endsection
