@@ -13,8 +13,11 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    @yield('additional-scripts')
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -43,10 +46,9 @@
                             </form>
                         </ul>
                     </div>
-                    
-                    @else
-                    logik her skal udbygges efter gates er på plads.
-                    Nedenstående logik skal rykkes herind.
+                @else
+                <img class="navbar-brand mt-n2" src="{{ asset('img/logo.png') }}" alt="" {{-- style="height: 60px width: 90px" --}}>
+                <p class="float-right mt-2">Eksternt medlemssystem</p>
                 @endif
             </div>
         </nav>

@@ -13,7 +13,7 @@
         </h2>
         <div class="row mt-2">
             <a href="{{ route('register') }}" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> Opret bruger</a>
-            <table class="table table-hover table-sm mt-2 table-striped">
+            <table class="table table-hover table-sm mt-2 table-striped table-bordered">
                 <thead class="thead-dark">
                     <th>Brugernavn</th>
                     <th>Brugertype</th>
@@ -28,9 +28,9 @@
                             <?php Carbon\Carbon::setLocale('da'); ?>
                             <td>{{ $user->created_at ?? null ? $user->created_at->diffForHumans() : null }}</td>
                             <td>
-                                @if (Auth::user()->id != $user->id)
-                                <a class="ml-2 delete-button" data-id="{{$user->id}}" data-username="{{ $user->username }}" href=""><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
-                                @endif
+                                @can('delete_user', $user->id)
+                                    <a class="ml-2 delete-button" data-id="{{$user->id}}" data-username="{{ $user->username }}" href=""><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
+                                @endcan
                             </td>
                         </tr>                  
                     @endforeach

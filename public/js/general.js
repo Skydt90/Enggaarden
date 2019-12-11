@@ -66,17 +66,17 @@ function ajax_requests(url, request, data, showSuccess, callback) {
 
                 handleBadRequestMessage(error.responseJSON);
             }
+            if(error.status === 403) { // Unauthorized
+                var returnData = JSON.parse(error.responseText);
+                returnData.status = error.status;
+
+                handleBadRequestMessage(error.responseJSON);
+                $.toastr.warning.show('Du kan ikke slette denne bruger, højst sandsynligt fordi det er dig selv');
+            }
             if(error.status === 404) { // page not found (wrong link provided)
                 $.toastr.warning.show('The link provided for the ajax call is not correct, please check it, and make correction to it.');
             }
             if(error.status === 500) {
-                /* $.post('/error/log/create', {
-                    _token:_token,
-                    error: error.responseText,
-                    function: 'ajax request',
-                }, function(result) {
-                    console.log(result);
-                }); */
                 $.toastr.error.show('Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.');
             }
             if(error.status === 419) { //Csrf token expired, brugeren er blevet automatisk logget ud

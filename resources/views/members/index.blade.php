@@ -23,7 +23,7 @@
         </div>
 
         <div class="row mt-2">  
-            <table id="members" class="table table-hover table-sm table-striped">
+            <table id="members" class="table table-hover table-sm table-striped table-bordered">
                 <thead class="thead-dark">
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
@@ -49,22 +49,26 @@
                             @elseif($member->invite != null)         
                                 <td><i class="fas fa-hourglass-half"></i> Afventer</td>
                             @else
-                                <td>
-                                    <div id="div{{ $member->id }}">
-                                        <a class="btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
-                                            <i class="fas fa-user-plus"></i> Inviter
-                                        </a>
-    
-                                        <form id="{{ $member->id }}" class="invite-form" action="{{ route('invite') }}" method="POST" style="display: none;">
-                                            @csrf
-                                            <input type="hidden" name='member_id' value="{{ $member->id }}">
-                                        </form>
-                                    </div>
-                                </td>
+                                @if (!empty($member->email))
+                                    <td>
+                                        <div id="div{{ $member->id }}">
+                                            <a class="btn-invite-form" data-id="{{ $member->id }}" href="{{ route('invite') }}">
+                                                <i class="fas fa-user-plus"></i> Inviter
+                                            </a>
+        
+                                            <form id="{{ $member->id }}" class="invite-form" action="{{ route('invite') }}" method="POST" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name='member_id' value="{{ $member->id }}">
+                                            </form>
+                                        </div>
+                                    </td>
+                                @else
+                                    <td class="text-muted">Ingen email</td>
+                                @endif
                             @endif
 
                             <td>
-                                <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Rediger/Detaljer" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
                                 @if ($member->email)
                                     <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('send.mail.show', ['id' => $member->id]) }}" style="color:orange"><i class="fas fa-envelope"></i></a>
                                 @endif

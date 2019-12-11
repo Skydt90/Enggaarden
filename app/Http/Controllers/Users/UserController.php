@@ -6,6 +6,8 @@ use App\Contracts\UserRepositoryContract;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -53,19 +55,26 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        try {
-            $user = $this->userRepository->delete($id);
-        } catch (Exception $e) {
-            Log::error('UserController@destroy');
+        if (Gate::allows('delete_user', $id)) {       
+            try {
+                $user = $this->userRepository->delete($id);
+            } catch (Exception $e) {
+                Log::error('UserController@destroy');
+                return response()->json([
+                    'status' => 500,
+                    'message' => json_encode($e->__toString())
+                ], 500);
+            }
             return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+                'status' => 200,
+                'message' => 'Bruger slettet korrekt',
+                'data' => $user
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 403,
+                'message' => 'Du kan ikke slette denne bruger, højst sandsynligt fordi det er dig selv',
+            ], 403);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Bruger slettet korrekt',
-            'data' => $user
-        ], 200);
     }
 }

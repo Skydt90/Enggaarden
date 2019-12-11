@@ -30,5 +30,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('administrate', function ($user){
             return (Auth::check() && $user->user_type == User::USER_TYPES[1]);
         });
+
+        Gate::define('delete_user', function ($user, $id) {
+            return $user->id != $id;
+        });
     }
 }
