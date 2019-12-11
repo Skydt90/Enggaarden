@@ -68,7 +68,7 @@
                             @endif
 
                             <td>
-                                <a data-toggle="tooltip" data-placement="top" title="Rediger" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
+                                <a data-toggle="tooltip" data-placement="top" title="Rediger/Detaljer" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
                                 @if ($member->email)
                                     <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('send.mail.show', ['id' => $member->id]) }}" style="color:orange"><i class="fas fa-envelope"></i></a>
                                 @endif

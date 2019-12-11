@@ -61,7 +61,7 @@ class LoginController extends Controller
             
             return redirect()->intended('/external-user');
         }
-        return back()->withInput($request->only('email', 'remember'));        
+        return $this->sendFailedLoginResponse($request);      
     }
 
     protected function validateExternalLogin(Request $request)

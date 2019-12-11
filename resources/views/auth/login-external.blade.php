@@ -1,5 +1,10 @@
 @extends('layouts.app-external')
 
+@section('additional-scripts')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/general.js') }}" defer></script>
+@endsection
+
 @section('content')
 @toast @endtoast
 <div class="container">
