@@ -17,13 +17,13 @@
         
         <div class="row mt-1">
             <input type="text" id="search" onkeyup="searchTable('members')" placeholder="Søg efter navn..">  
-            @amount(['urlID' => 'member', 'amount' => $amount]) 
-            @endamount
+           {{--  @amount(['urlID' => 'member', 'amount' => $amount]) 
+            @endamount --}}
             <p class="ml-auto mb-n1"><strong>Antal Medlemmer:</strong> {{ $members->total() }}</p>
         </div>
 
         <div class="row mt-2">  
-            <table id="members" class="table table-hover table-sm table-striped table-bordered">
+            <table id="members" class="table table-hover table-sm table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
@@ -78,10 +78,10 @@
                     @endforeach
                 </tbody>   
             </table>
-            @pagination([
+            {{-- @pagination([
                 'paginated' => $members, 'index' => 'member.index', 
                 'page' => $page, 'amount' => $amount])
-            @endpagination
+            @endpagination --}}
         </div>
     </div>
     @include('members.partials.member-footer')

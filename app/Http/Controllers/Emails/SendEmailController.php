@@ -21,7 +21,7 @@ class SendEmailController extends Controller
 
     public function show($id = null)
     {
-        $userEmails = Auth::user()->emails()->withRelations()->get();
+        $userEmails = Auth::user()->emails()->withRelations()->orderBy('id', 'desc')->take(12)->get();
 
         if(isset($id)) {
             try {
