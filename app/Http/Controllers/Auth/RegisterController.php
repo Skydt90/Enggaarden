@@ -77,7 +77,7 @@ class RegisterController extends Controller
         // $this->guard()->login($user);
 
         return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+                        ?: redirect(route('register'))->withStatus('Bruger oprettet korrekt');
     }
 
     public function registerExternal(Request $request)
