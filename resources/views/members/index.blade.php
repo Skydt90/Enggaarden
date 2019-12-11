@@ -23,7 +23,7 @@
         </div>
 
         <div class="row mt-2">  
-            <table id="members" class="table table-hover table-sm table-striped">
+            <table id="members" class="table table-hover table-sm table-striped table-bordered">
                 <thead class="thead-dark">
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
