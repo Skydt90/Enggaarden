@@ -110,8 +110,7 @@
                         <br><br>
                     </div>
                 </form>
-            </div>
-            
+            </div>           
             {{-- Payments --}}
             <div class="col md-4">            
                 <div class="card">
@@ -144,7 +143,6 @@
                     </div>
                 </div>
                 <br>
-
                 {{-- Infomation --}}   
                 <div class="card">
                     <div class="card-header">

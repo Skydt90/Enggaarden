@@ -3,28 +3,28 @@
 namespace App\Http\Controllers\Contributions;
 
 use App\Contracts\ContributionServiceContract;
-use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateContributionRequest;
 use App\Http\Requests\UpdateContributionRequest;
+use App\Traits\PageSetup;
 use Exception;
 
 class ContributionController extends Controller
 {
-    private $paginationService;
+    use PageSetup;
+
     private $contributionService;
     private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(ContributionServiceContract $contributionService, PaginationServiceContract $paginationService)
+    public function __construct(ContributionServiceContract $contributionService)
     {
         $this->contributionService = $contributionService;
-        $this->paginationService = $paginationService;
     }
 
     public function index()
     {
         try {
-            $pageParams = $this->paginationService->getPaginationParams();
+            $pageParams = $this->pageSetup();
             $activityTypes = $this->contributionService->getAllActivities(false, $pageParams->get('amount'));
             $contributions = $this->contributionService->getAll($pageParams->get('amount'));
         } catch (Exception $e) {

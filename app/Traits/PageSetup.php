@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Traits;
 
-use App\Contracts\PaginationServiceContract;
-
-class PaginationService implements PaginationServiceContract
+trait PageSetup
 {
-
-    public function getPaginationParams()
+    public function pageSetup()
     {
         $params = collect();
 

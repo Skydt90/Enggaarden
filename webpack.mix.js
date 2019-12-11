@@ -38,6 +38,7 @@ mix.combine([
    'resources/js/general/ajax.js',
    'resources/js/general/error-handlers.js',
    'resources/js/general/pagination.js',
+   'resources/js/general/view-only.js',
    'resources/js/general/search.js',
    'resources/js/general/tooltip.js',
    'resources/js/general/sortable.js',

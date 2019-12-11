@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('additional-scripts')
-    <script src="{{ asset('js/ckeditor.js') }}"></script>
-    <script src="{{ asset('js/email.js') }}"></script>
+    <script src="{{ asset('js/ckeditor.js') }}" defer></script>
+    <script src="{{ asset('js/email.js') }}" defer></script>
 @endsection
 
 @section('content')

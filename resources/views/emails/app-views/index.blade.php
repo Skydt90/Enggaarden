@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('additional-scripts')
-    <script src="{{ asset('js/email.js') }}"></script>
+    <script src="{{ asset('js/email.js') }}" defer></script>
 @endsection
 
 @section('content')

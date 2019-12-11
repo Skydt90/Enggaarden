@@ -92,6 +92,9 @@
         <main class="py-4">
             @yield('content')
         </main>
+        {{-- <footer>
+            &copy;2019 Enggården's Venner
+        </footer> --}}
     </div>
 </body>
 </html>
