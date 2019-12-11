@@ -4,6 +4,9 @@ namespace App\Console;
 
 use App\Mail\ExpiredNotification;
 use App\Models\Subscription;
+use App\Models\User;
+use App\Notifications\InviteCleanupFailed;
+use App\Notifications\SubscriptionUpdateFailed;
 use App\Repositories\InviteRepository;
 use App\Repositories\MemberRepository;
 use Exception;
@@ -11,6 +14,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class Kernel extends ConsoleKernel
 {
@@ -36,13 +40,14 @@ class Kernel extends ConsoleKernel
             try {
                 $inviteRepository = new InviteRepository();
                 $invites = $inviteRepository->getAll();
-                
+
                 foreach ($invites as $invite) {
                     if ($invite->expires_at->isPast()) {
                         $invite->delete();
                     }
                 }
             } catch(Exception $e) {
+                Notification::send(User::all(), new InviteCleanupFailed($e));
                 Log::error('Kernel@urls: ' . $e);
             }
         })->everyMinute();//->daily();
@@ -63,6 +68,7 @@ class Kernel extends ConsoleKernel
                     }
                 }
             } catch(Exception $e) {
+                Notification::send(User::all(), new SubscriptionUpdateFailed($e));
                 Log::error('Kernel@memberships: ' . $e);
             }
         })->everyMinute(); // ->daily();

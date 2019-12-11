@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Emails;
 use App\Contracts\EmailServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmailRequest;
-use App\Notifications\EmailFailed;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Notification;
 
 class SendEmailController extends Controller
 {

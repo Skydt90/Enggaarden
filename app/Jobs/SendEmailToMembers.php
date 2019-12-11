@@ -3,14 +3,16 @@
 namespace App\Jobs;
 
 use App\Mail\MailToMember;
+use App\Models\User;
+use App\Notifications\EmailToGroupFailed;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class SendEmailToMembers implements ShouldQueue
 {
@@ -19,14 +21,12 @@ class SendEmailToMembers implements ShouldQueue
     private $emails;
     private $message;
     private $subject;
-    private $username;
 
-    public function __construct($emails, $message, $subject, $username)
+    public function __construct($emails, $message, $subject)
     {
         $this->emails = $emails;
         $this->message = $message;
         $this->subject = $subject;
-        $this->username = $username;
     }
 
     /**
@@ -37,15 +37,15 @@ class SendEmailToMembers implements ShouldQueue
     public function handle()
     {
         $when = 8;
-        
+
         $this->emails->each(function($receiver, $index) use($when) {
             $when *= $index;
-            Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject, $receiver, $this->username));
+            Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject, $receiver));
         }); 
     }
 
     public function failed(Exception $e)
     {
-        Log::error('JOB FAIL: FEJLHÅNDTERING HER!');
+        Notification::send(User::all(), new EmailToGroupFailed($e));
     }
 }

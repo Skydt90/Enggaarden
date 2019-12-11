@@ -6,15 +6,15 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 
-class EmailFailed extends Notification
+class EmailToGroupFailed extends Notification
 {
     use Queueable;
 
-    private $receiver;
+    private $exception;
 
-    public function __construct($receiver = null)
+    public function __construct($exception)
     {
-        $this->receiver = $receiver;
+        $this->exception = $exception;
     }
 
     public function via($notifiable)
@@ -25,11 +25,11 @@ class EmailFailed extends Notification
     public function toDatabase()
     {
         return [
-            'to' => $this->receiver,
-            'solution' => 'Kontakt medlem for at høre om mailen er modtaget eller prøv igen. Fortsætter problemet, kontakt en udvikler.'
+            'message' => 'Noget gik galt da systemet skulle forberede afsendelsen af email',
+            'solution' => 'Fortsætter problemet, kontakt en udvikler.',
+            'exception' => $this->exception->__toString()
         ];
     }
-
     public function toArray($notifiable)
     {
         return [
