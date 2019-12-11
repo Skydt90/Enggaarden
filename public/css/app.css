@@ -11619,15 +11619,15 @@ button.toast-close-button {
   color: #d61c59;
 }
 
-.nav-item:first-child .nav-link {
-  margin-left: 125px;
+/* .nav-item:first-child .nav-link {
+	margin-left: 125px;
 }
 
 .nav-item:last-child .nav-link {
-  margin-right: 350px;
+	margin-right: 350px;
 }
 
 .navbar-nav .nav-item .dropdown-menu {
-  margin-right: 350px;
-}
+	margin-right: 350px;
+} */
 
