@@ -8,10 +8,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if(!Auth::user()) {
-            return redirect(route('login'));
-        } else {
-            return view('home');
-        }
+        return redirect(route('login'));
     }
 }
