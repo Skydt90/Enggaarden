@@ -37,10 +37,6 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        if(is_null(Auth::user()->member)) {
-            session()->flash('status', 'Bruger oprettet korrekt');
-            return route('register');
-        }
         return route('ext-home', ["external_user" => Auth::user()]);
     } 
 
@@ -70,7 +66,8 @@ class RegisterController extends Controller
 
     public function register(CreateUserRequest $request)
     {
-        //$this->validator($request->all())->validate();
+        // Because we made a custom request validation happens automatically
+        // $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
@@ -89,7 +86,7 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->createExternal($request->all())));
 
-        $this->guard()->login($user);
+        // $this->guard()->login($user);
 
         return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
