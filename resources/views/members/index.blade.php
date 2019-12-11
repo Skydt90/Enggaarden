@@ -19,10 +19,6 @@
             <input type="text" id="search" onkeyup="searchTable('members')" placeholder="Søg efter navn..">  
             @amount(['urlID' => 'member', 'amount' => $amount]) 
             @endamount
-            
-            @if ($user->unreadNotifications()->get()->count() > 0)
-                <a style="color: red"  href="{{ route('notifications.index') }}"><i class="fas fa-exclamation-triangle"></i> Notifikationer</a>
-            @endif
             <p class="ml-auto mb-n1"><strong>Antal Medlemmer:</strong> {{ $members->total() }}</p>
         </div>
 
