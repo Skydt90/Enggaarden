@@ -11615,8 +11615,19 @@ button.toast-close-button {
   overflow-y: auto;
 }
 
-.nav-link,
 .navbar-nav .nav-item:hover .nav-link {
   color: #d61c59;
+}
+
+.nav-item:first-child .nav-link {
+  margin-left: 125px;
+}
+
+.nav-item:last-child .nav-link {
+  margin-right: 350px;
+}
+
+.navbar-nav .nav-item .dropdown-menu {
+  margin-right: 350px;
 }
 

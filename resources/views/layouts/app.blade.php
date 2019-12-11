@@ -32,9 +32,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                     
-                <div class="container">
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <!-- Left Side Of Navbar -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    @auth
                         
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
@@ -47,16 +47,16 @@
                                 <a href="{{ route('contribution.index') }}" class="nav-link"><i class="fas fa-money-bill-wave"></i></i> Støttebidrag</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('statistics') }}" class="nav-link" style=" hover color: yellow; "><i class="fas fa-chart-pie"></i> Statistik</a>
+                                <a href="{{ route('statistics') }}" class="nav-link"><i class="fas fa-chart-pie"></i> Statistik</a>
                             </li>
                             @can('administrate')
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-shield-alt"></i> Brugere</a>
                                 </li>
                             @endcan
-                
                         </ul>
-
+                    @endauth
+  
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
                             <!-- Authentication Links -->
@@ -65,28 +65,27 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Log ind') }}</a>
                                 </li>
                             @else
-                            <i data-toggle="tooltip" data-placement="left" title="Ulæste notifikationer" class="fas fa-exclamation-triangle nav-link mt-1" style="color:orange"></i>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->username }} <span class="caret"></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" style="color: #d61c59"  href="{{ route('notifications.index') }}">Notifikationer</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
+                            @if(Auth::user()->unreadNotifications()->get()->count() > 0)
+                                <i data-toggle="tooltip" data-placement="left" title="Ulæste notifikationer" class="fas fa-exclamation-triangle nav-link mt-1" style="color:orange"></i>
+                                @endif
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->username }} <span class="caret"></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" style="color: #d61c59" href="{{ route('notifications.index') }}">Notifikationer</a>
+                                        <a class="dropdown-item" style="color: #d61c59" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
                                             {{ __('Log ud') }}
                                         </a>
-                                        
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </li>
-                            @endguest
-                            
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            @endguest                                    
                         </ul>
-                    </div>
                     </div>
                 </div>
             </nav>
