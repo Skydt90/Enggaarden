@@ -38,8 +38,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary col-md-3 float-right ml-2">Opret</button>
-                                <button class="btn btn-danger col-md-3 float-right" data-dismiss="modal">Annullér</button>
+                                <button type="submit" class="btn btn-primary col-md-2 float-right ml-2">Opret</button>
+                                <button class="btn btn-danger col-md-2 float-right" data-dismiss="modal">Annullér</button>
                             </div>
                         </div>
                     </form>

@@ -20,9 +20,6 @@ $(function () {
             ajax_requests(url, 'PUT', data, false, function(result) {
                 console.log(result.status);
             });
-        }, 1000);
+        }, 700);
     });
-
-
-
 });

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Activities;
 
-use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateActivityTypeRequest;
 use App\models\ActivityType;
@@ -13,29 +12,22 @@ use Illuminate\Support\Facades\Log;
 class ActivityTypeController extends Controller
 {
     private $activityTypeRepository;
-    private $paginationService;
     private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(ActivityTypeRepository $activitiTypeRepository, PaginationServiceContract $paginationService)
+    public function __construct(ActivityTypeRepository $activitiTypeRepository)
     {
-        $this->activityTypeRepository = $activitiTypeRepository;
-        $this->paginationService = $paginationService;        
+        $this->activityTypeRepository = $activitiTypeRepository;     
     }
 
     public function index()
     {
         try {
-            $pageParams = $this->paginationService->getPaginationParams();
-            $activities = $this->activityTypeRepository->getAll(false, $pageParams->get('amount'));
+            $activities = $this->activityTypeRepository->getAll();
         } catch (Exception $e) {
             Log::error('ActivityTypeController@index: ' . $e);
             return redirect()->back()->withErrors($this->error);
         }
-        return view('activities.index', [
-            'activities' => $activities, 
-            'page' => $pageParams->get('page'),
-            'amount' => $pageParams->get('amount')
-        ]);
+        return view('activities.index', ['activities' => $activities]);
     }
 
     public function store(CreateActivityTypeRequest $request)
