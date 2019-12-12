@@ -3,6 +3,6 @@
 
 {!! $message !!}
 
-Med venlig hilsen,<br>
+<br>
 {{ config('app.name') }}
 @endcomponent
