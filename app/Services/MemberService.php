@@ -6,6 +6,7 @@ use App\Contracts\AddressRepositoryContract;
 use App\Contracts\MemberRepositoryContract;
 use App\Contracts\MemberServiceContract;
 use App\Contracts\SubscriptionRepositoryContract;
+use Exception;
 
 class MemberService implements MemberServiceContract
 {
@@ -24,9 +25,9 @@ class MemberService implements MemberServiceContract
         $this->subscriptionRepository = $subscriptionRepository;
     }
 
-    public function getAll($amount)
+    public function getAll($amount, $type)
     {
-        return $this->memberRepository->getAll($amount);
+        return $this->getAllByType($amount, $type);
     }
 
     public function getByID($id)
@@ -48,7 +49,8 @@ class MemberService implements MemberServiceContract
                 $member = $this->memberRepository->create($request);
                 $amount = 300;
                 break;
-            default: 
+            default:
+                throw new Exception('Unknown type'); 
                 break;
         }
         $request->merge(['amount' => $amount, 'pay_date' => null]);
@@ -72,6 +74,7 @@ class MemberService implements MemberServiceContract
             case 'subscription':
                 return $this->subscriptionRepository->updateByMemberID($request, $id);
             default:
+                throw new Exception('Unknown type');
                 break;
         }
     }
@@ -81,8 +84,6 @@ class MemberService implements MemberServiceContract
         return $this->memberRepository->deleteByID($id);
     }
 
-
-
     public function getSubscriptionSum()
     {
         return $this->subscriptionRepository->getSum();
@@ -91,5 +92,32 @@ class MemberService implements MemberServiceContract
     private function hasAddress($request) : bool
     {
         return $request->filled('street_name') || $request->filled('zip_code') || $request->filled('city');
+    }
+
+    private function getAllByType($amount, $type)
+    {
+        switch($type) {
+            case 'all':
+                return $this->memberRepository->getAll($amount);
+            case 'companies':
+                return $this->memberRepository->getAllWhereCompany($amount, true);
+            case 'people':
+                return $this->memberRepository->getAllWhereCompany($amount, false);
+            case 'paid':
+                return $this->memberRepository->getAllPaid($amount);
+            case 'unpaid':
+                return $this->memberRepository->getAllNotPaid($amount);
+            case 'is_board':
+                return $this->memberRepository->getAllBoard($amount);
+            case 'primary':
+                return $this->memberRepository->getAllByMemberType($amount, 'Primær');
+            case 'secondary':
+                return $this->memberRepository->getAllByMemberType($amount, 'Sekundær');
+            case 'external':
+                return $this->memberRepository->getAllByMemberType($amount, 'Ekstern');
+            default: 
+                throw new Exception('Unknown type');
+            break;
+        }
     }
 }

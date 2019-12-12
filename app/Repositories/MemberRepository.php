@@ -10,7 +10,36 @@ class MemberRepository implements MemberRepositoryContract
 {
     public function getAll($amount)
     {
-        return Member::withRelations()->paginate($amount);
+        return Member::withRelations()->get();
+    }
+
+    public function getAllPaid($amount)
+    {
+        return Member::whereHas('subscriptions', function($query) {
+            $query->orderBy('member_id', 'DESC')->whereNotNull('pay_date')->limit(1);      
+        })->with(['invite', 'externalUser', 'address'])->get();
+    }
+
+    public function getAllNotPaid($amount)
+    {
+        return Member::whereHas('subscriptions', function($query) {
+            $query->orderBy('member_id', 'DESC')->whereNull('pay_date')->limit(1);      
+        })->with(['invite', 'externalUser', 'address'])->get();
+    }
+
+    public function getAllByMemberType($amount, $type)
+    {
+        return Member::withRelations()->where('member_type', '=', $type)->get();
+    }
+
+    public function getAllWhereCompany($amount, $bool)
+    {
+        return Member::withRelations()->where('is_company', '=', $bool)->get();
+    }
+
+    public function getAllBoard($amount)
+    {
+        return Member::withRelations()->where('is_board', '=', 'Ja')->get();
     }
 
     public function getByID($id)
