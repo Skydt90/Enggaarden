@@ -31,7 +31,8 @@ class StatisticsController extends Controller
             'contributions' => $contributions,
             'memberData' => $memberData,
             'subscriptionSum' => $this->subscriptionRepository->getSum(),
-            'memberCount' => $this->memberRepository->getMemberCount()
+            'memberCount' => $this->memberRepository->getMemberCount(),
+            'owed' => $this->statisticsRepository->getAmountNotPaid()
         ]);
     }
 }

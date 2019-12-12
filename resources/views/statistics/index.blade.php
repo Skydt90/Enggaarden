@@ -34,7 +34,8 @@
                     </div>
                     <div class="card-body">
                         <p><strong>Antal medlemmer: </strong>{{ $memberCount }}</p>
-                        <p><strong>Samlet kontingent: </strong>{{ $subscriptionSum->sum }} kr</p>
+                        <p><strong>Betalt kontingent i alt: </strong>{{ $subscriptionSum->sum }} kr</p>
+                        <p><strong>Ubetalt kontingent: </strong>{{ $owed->owed }}</p>
                     </div>
                 </div>
             </div>
