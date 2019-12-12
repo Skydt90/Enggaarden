@@ -11,8 +11,7 @@
 |
 */
 
-// Home Login
-Route::get('/', 'HomeController@index')->name('/');
+
 
 // Unauthenticated page
 Route::get('unauthenticated', 'Errors\ErrorController@unauthenticated')->name('unauthenticated');
@@ -37,6 +36,9 @@ Route::get('external-user', 'ExternalUsers\ExternalUserController@home')->name('
 Route::resource('user', 'Users\UserController')->only(['index', 'destroy'])->middleware('can:administrate');
 
 Route::group(['middleware' => 'auth'], function() {
+    // Home Login
+    Route::get('/', 'HomeController@index')->name('/');
+    
     // Members
     Route::resource('member', 'Members\MemberController')->except(['edit', 'create']);
     Route::post('invite', 'Members\MemberController@invite')->name('invite');

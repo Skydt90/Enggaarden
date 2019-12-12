@@ -61,6 +61,22 @@ mix.copy(
    'resources/views/img/enggaarden_logo.png',
    'public/img/logo.png'
    );
+mix.copy(
+   'resources/views/img/enggaarden_oppefra.jpg',
+   'public/img/oppefra.jpg'
+);
+mix.copy(
+   'resources/views/img/bi-kasser.jpg',
+   'public/img/bikasser.jpg'
+);
+mix.copy(
+   'resources/views/img/graeskar.jpg',
+   'public/img/graeskar.jpg'
+);
+mix.copy(
+   'resources/views/img/traktor.jpg',
+   'public/img/traktor.jpg'
+);
 
 mix.combine([
    'resources/js/users/delete.js'
