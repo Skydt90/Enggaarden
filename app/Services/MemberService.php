@@ -81,15 +81,7 @@ class MemberService implements MemberServiceContract
         return $this->memberRepository->deleteByID($id);
     }
 
-    public function getPageParams()
-    {
-        $params = collect();
 
-        isset($_GET['page']) ? $params->put('page', $_GET['page']) : $params->put('page', 1);
-        isset($_GET['amount']) ? $params->put('amount', $_GET['amount']) : $params->put('amount', 25);
-
-        return $params; 
-    }
 
     public function getSubscriptionSum()
     {

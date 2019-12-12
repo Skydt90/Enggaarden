@@ -56,6 +56,13 @@ class Member extends Model
        return $query->with(['address', 'subscriptions', 'invite', 'externalUser']);
     }
 
+    public function scopeWithRelationsWhereSubIsPaid(Builder $query)
+    {
+        return $query->with(['subscriptions' => function($query) {
+            $query->where('pay_date', '<>', null);
+        }]);
+    }
+
     public function latestPayment()
     {
         foreach($this->subscriptions as $subscription) {

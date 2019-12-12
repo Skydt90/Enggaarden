@@ -40,7 +40,7 @@ class Kernel extends ConsoleKernel
             try {
                 $inviteRepository = new InviteRepository();
                 $invites = $inviteRepository->getAll();
-
+                
                 foreach ($invites as $invite) {
                     if ($invite->expires_at->isPast()) {
                         $invite->delete();

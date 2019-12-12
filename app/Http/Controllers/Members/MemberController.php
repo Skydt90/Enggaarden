@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
 use App\Http\Requests\CreateInvitationRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Models\Member;
+use App\Models\Subscription;
 use App\Traits\PageSetup;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -29,10 +31,14 @@ class MemberController extends Controller
 
     public function index()
     {
+        /* $members = Member::whereHas('subscriptions', function($query) {
+            $query->orderBy('member_id', 'DESC')->where('pay_date', '<>', null)->limit(1);      
+        })->with(['invite', 'externalUser', 'address'])->get(); */
+        
         try {
-            $pageParams = $this->pageSetup();
-            $members = $this->memberService->getAll($pageParams->get('amount'));
-            $sum = $this->memberService->getSubscriptionSum();
+            $params = $this->pageSetup();
+           // dump($members->count());
+            $members = $this->memberService->getAll($params->get('amount'));
         } catch (Exception $e) {
             Log::error('MemberController@index: ' . $e);
             return redirect()->back()->withErrors($this->error);
@@ -40,11 +46,9 @@ class MemberController extends Controller
         
         return view('members.index', [
             'members' => $members, 
-            'page' => $pageParams->get('page'),
-            'amount' => $pageParams->get('amount'),
-            'type' => $pageParams->get('type'),
-            'user' => Auth::user(),
-            'sum' => $sum,
+            'page' => $params->get('page'),
+            'amount' => $params->get('amount'),
+            'type' => $params->get('type'),
         ]);
     }
 

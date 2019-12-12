@@ -92,11 +92,6 @@ class DependencyServiceProvider extends ServiceProvider
             return new UserRepository();
         });
 
-        // Pagination
-        $this->app->singleton('App\Contracts\PaginationServiceContract', function($app) {
-            return new PaginationService();
-        });
-
         // Statistics
         $this->app->singleton('App\Contracts\StatisticsRepositoryContract', function($app) {
             return new StatisticsRepository(

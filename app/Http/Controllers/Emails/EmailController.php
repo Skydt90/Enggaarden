@@ -3,26 +3,26 @@
 namespace App\Http\Controllers\Emails;
 
 use App\Contracts\EmailServiceContract;
-use App\Contracts\PaginationServiceContract;
 use App\Http\Controllers\Controller;
+use App\Traits\PageSetup;
 use Exception;
 
 class EmailController extends Controller
 {
+    use PageSetup;
+
     private $emailService;
-    private $paginationService;
     private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
-    public function __construct(EmailServiceContract $emailService, PaginationServiceContract $paginationService)
+    public function __construct(EmailServiceContract $emailService)
     {
         $this->emailService = $emailService;
-        $this->paginationService = $paginationService;
     }
 
     public function index()
     {
         try {
-            $pageParams = $this->paginationService->getPaginationParams();
+            $pageParams = $this->pageSetup();
             $emails = $this->emailService->getAllWithRelations($pageParams->get('amount'));
         } catch (Exception $e) {
             Log::error('EmailController@index: ' . $e);

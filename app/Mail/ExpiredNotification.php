@@ -34,6 +34,7 @@ class ExpiredNotification extends Mailable
      */
     public function build()
     {
+
         $subject = 'Medlemsskab udløbet';
         return $this->subject($subject)->markdown('emails.expired-notification');
     }
