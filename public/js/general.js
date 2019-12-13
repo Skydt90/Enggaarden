@@ -58,8 +58,7 @@ function ajax_requests(url, request, data, showSuccess, callback) {
                 return callback(result);
             }
         },
-        error: function(error) {
-            //hideLoader();
+        error: function(error) { 
             if(error.status === 422 || error.status === 400) {
                 var returnData = JSON.parse(error.responseText);
                 returnData.status = error.status;
@@ -73,14 +72,11 @@ function ajax_requests(url, request, data, showSuccess, callback) {
                 handleBadRequestMessage(error.responseJSON);
                 $.toastr.warning.show('Du kan ikke slette denne bruger, højst sandsynligt fordi det er dig selv');
             }
-            if(error.status === 404) { // page not found (wrong link provided)
-                $.toastr.warning.show('The link provided for the ajax call is not correct, please check it, and make correction to it.');
-            }
             if(error.status === 500) {
                 $.toastr.error.show('Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.');
             }
             if(error.status === 419) { //Csrf token expired, brugeren er blevet automatisk logget ud
-                $.toastr.warning.show('Du har været inaktiv for længe, så du er blevet automatisk logget ud. Du bliver desværre nødt til at logge ind igen, og starte forfra.')
+                $.toastr.warning.show('Du er blevet logget ud grundet inaktivitet. Log ind igen, for at fortsætte.')
             }
             if(callback !== undefined) {
                 callback(returnData);
@@ -92,8 +88,7 @@ function ajax_requests(url, request, data, showSuccess, callback) {
 function handleBadRequestMessage(returnData)
 {
     var message = '';
-    //hideLoader();
-    
+
     if(typeof returnData.error_title !== 'undefined') {
         message += returnData.error_title + '<br><br>';
     }
@@ -109,7 +104,6 @@ function handleBadRequestMessage(returnData)
     } else {
         message = returnData.error;
     }
-
     $.toastr.error.show(message);
 }
 
