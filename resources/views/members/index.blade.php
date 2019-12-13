@@ -13,12 +13,14 @@
         <div class="row">
             <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-user-plus"></i> Opret Medlem</button>
             <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1"><i class="far fa-building"></i> Opret Firma</button>
+            <button type="button" id="print" onClick="window.print();" class="btn btn-sm btn-primary ml-auto"><i class="fas fa-print"></i> Udskriv Medlemmer</button>
         </div>
         
         <div class="row mt-1">
             <input type="text" id="search" onkeyup="searchTable('members')" class="float-left" placeholder="Søg efter navn..">
             @view(['urlID' => 'member', 'type' => $type]) @endview 
-            <button type="button" id="print" onClick="window.print();" class="btn btn-sm btn-primary ml-auto"><i class="fas fa-print"></i> Udskriv Medlemmer</button>
+            <p class="ml-auto mb-n2"><strong>Antal medlemmer:</strong> {{ $members->count() }}</p>
+
         </div>
 
         <div class="row mt-2">  

@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="col-md-12"><br><br></div>
-                <a href="{{ route('email.index') }}" class="btn btn-warning btn-sm col-md-1">Tilbage</a>
+                <a href="{{ route('email.index') }}" class="btn btn-warning btn-sm col-md-1 ml-3">Tilbage</a>
             </div>
         </div>
     </div>

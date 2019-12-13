@@ -39,6 +39,11 @@ class StatisticsRepository implements StatisticsRepositoryContract
         return $entries;
     }
 
+    public function getAmountNotPaid()
+    {
+        return DB::select('select SUM(subscriptions.amount) as owed from subscriptions where subscriptions.pay_date IS null')[0];  
+    }
+
     
 
 }

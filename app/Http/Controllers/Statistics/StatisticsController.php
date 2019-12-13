@@ -7,7 +7,9 @@ use App\Contracts\StatisticsRepositoryContract;
 use App\Contracts\SubscriptionRepositoryContract;
 use App\Http\Controllers\Controller;
 use App\Models\Contribution;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class StatisticsController extends Controller
 {
@@ -24,14 +26,24 @@ class StatisticsController extends Controller
     }
 
     public function index() {
-        $contributions = $this->statisticsRepository->getContributionsGrouped();
-        $memberData = $this->statisticsRepository->getMembersAdded();
+        try {
+            $contributions = $this->statisticsRepository->getContributionsGrouped();
+            $memberData = $this->statisticsRepository->getMembersAdded();
+            $subscriptionSum = $this->subscriptionRepository->getSum();
+            $memberCount = $this->memberRepository->getMemberCount();
+            $owed = $this->statisticsRepository->getAmountNotPaid();
+        } catch (Exception $e) {
+            // Virker ikke??????
+            Log::error('StatisticsController@index: ' . $e);
+            return view('statistics.index')->withErrors($this->error);
+        }
         return view('statistics.index', [
             'title' => 'Test titel',
             'contributions' => $contributions,
             'memberData' => $memberData,
-            'subscriptionSum' => $this->subscriptionRepository->getSum(),
-            'memberCount' => $this->memberRepository->getMemberCount()
+            'subscriptionSum' => $subscriptionSum,
+            'memberCount' => $memberCount,
+            'owed' => $owed
         ]);
     }
 }

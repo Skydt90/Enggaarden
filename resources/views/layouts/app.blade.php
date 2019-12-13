@@ -26,7 +26,9 @@
     <div id="app">
         <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
+                <a href="/">
                 <img class="navbar-brand mt-n2" src="{{ asset('img/logo.png') }}" alt="" {{-- style="height: 60px width: 90px" --}}>
+                </a>
                 {{-- Toggle button on small screens --}}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
