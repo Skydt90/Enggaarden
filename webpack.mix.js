@@ -79,5 +79,6 @@ mix.copy(
 );
 
 mix.combine([
-   'resources/js/users/delete.js'
+   'resources/js/users/delete.js',
+   'resources/js/users/create.js'
 ], 'public/js/users.js');

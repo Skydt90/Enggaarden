@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('additional-scripts')
-<!-- Scripts -->
-<script src="{{ asset('js/users.js') }}" defer></script>
+    <script src="{{ asset('js/users.js') }}" defer></script>
 @endsection
 
 @section('content')
@@ -12,7 +11,7 @@
             Brugere
         </h2>
         <div class="row mt-2">
-            <a href="{{ route('register') }}" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> Opret bruger</a>
+            <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> Opret bruger</button>
             <table class="table table-hover table-sm mt-2 table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Brugernavn</th>
@@ -37,11 +36,6 @@
                 </tbody>
             </table>
         </div>
-
-
-
-
-
     </div>
-
+    @include('users.modals.register')
 @endsection

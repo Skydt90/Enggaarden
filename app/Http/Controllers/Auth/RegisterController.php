@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use App\Models\ExternalUser;
 use App\Models\User;
+use Exception;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -63,22 +65,37 @@ class RegisterController extends Controller
         return view('auth.register-external');
     }
 
-
     public function register(CreateUserRequest $request)
+    {
+        try {
+            event(new Registered($user = $this->create($request->all())));
+        } catch (Exception $e) {
+            Log::error('RegisterController@store: ' . $e);
+            return response()->json([
+                'status' => 500,
+                'message' => json_encode($e->__toString())
+            ], 500);
+        }
+        return response()->json([
+            'status' => 200,
+            'message' => 'Bruger oprettet korrekt',
+            'data' => $user
+        ], 200);
+    }
+
+    // LEFT HERE FOR NOW IN CASE WE GET ISSUES WITH AJAX REGISTRATION
+    /* public function register(CreateUserRequest $request)
     {
         // Because we made a custom request validation happens automatically
         // $this->validator($request->all())->validate();
-
         event(new Registered($user = $this->create($request->all())));
-
         // Man kan kun registrere brugere som admin, derfor skal
         // en nyligt registreret bruger ikke logges ind
         //
         // $this->guard()->login($user);
-
         return $this->registered($request, $user)
                         ?: redirect(route('register'))->withStatus('Bruger oprettet korrekt');
-    }
+    } */
 
     public function registerExternal(Request $request)
     {
@@ -91,12 +108,6 @@ class RegisterController extends Controller
         return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -114,12 +125,6 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
     protected function create(array $data)
     {
         return User::create([
