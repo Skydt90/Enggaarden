@@ -12,7 +12,7 @@ class UserRepository implements UserRepositoryContract
 
     public function getAll()
     {
-        return User::all();
+        return User::orderBy('created_at', 'desc')->get();
     }
 
     public function getById($id)

@@ -27,7 +27,7 @@
         <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
                 <a href="/">
-                <img class="navbar-brand mt-n2" src="{{ asset('img/logo.png') }}" alt="" {{-- style="height: 60px width: 90px" --}}>
+                <img class="navbar-brand mt-n2" src="{{ asset('img/logo.png') }}" alt="">
                 </a>
                 {{-- Toggle button on small screens --}}
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -94,9 +94,6 @@
         <main class="py-4">
             @yield('content')
         </main>
-        {{-- <footer>
-            &copy;2019 Enggården's Venner
-        </footer> --}}
     </div>
 </body>
 </html>

@@ -7,7 +7,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">Enggaardens forside</h2>
+                    <h2 class="text-center">Forside</h2>
                 </div>
                 <div class="card-body">
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
