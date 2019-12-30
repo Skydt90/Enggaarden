@@ -17,7 +17,6 @@ class ReassignIdToActivityTypesTable extends Migration
         Schema::table('contributions', function (Blueprint $table){
             $table->dropForeign(['activity_type']);
             $table->dropColumn('activity_type');
-            //$table->dropIndex('activityType');
         });
         Schema::table('activity_types', function (Blueprint $table) {
             $table->dropPrimary('activity_type');
@@ -33,7 +32,7 @@ class ReassignIdToActivityTypesTable extends Migration
             'activity_type' => 'Gammel data'
         ]);
         DB::table('contributions')->update([
-            'activity_type_id' => 20
+            'activity_type_id' => 6 // CHANGE THIS FOR LIVE DB WHEN DEPLOY TO 20!!!!
         ]);
         Schema::table('contributions', function (Blueprint $table){
             $table->foreign('activity_type_id')->references('id')->on('activity_types')->onUpdate('cascade');
