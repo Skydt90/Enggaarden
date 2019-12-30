@@ -22,7 +22,7 @@
         </div>
 
         <div class="row mt-2">
-            <table id="contributions" class="table table-hover table-sm table-striped table-bordered sortable">
+            <table id="contributions" class="table table-hover table-responsive-md table-sm table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Aktivitet</th>
                     <th>Beløb</th>

@@ -21,7 +21,7 @@
         </div>
 
         <div class="row mt-2">
-            <table id="emails" class="table table-hover table-sm table-striped table-bordered sortable">
+            <table id="emails" class="table table-hover table-responsive-lg table-sm table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Modtager:</th>
                     <th>Afsender:</th>
@@ -35,9 +35,9 @@
                             @if($email->group)
                                 <td>{{ $email->group }}</td>
                             @else
-                                <td>{{ $email->member->email }}</td>
+                                <td>{{ $email->member->email ?? 'Medlem slettet' }}</td>
                             @endif
-                            <td>{{ $email->user->username ?? null }}</td>
+                            <td>{{ $email->user->username ?? 'Bruger slettet' }}</td>
                             <td>{{ $email->subject }}</td>
                             <?php Carbon\Carbon::setLocale('da'); ?>
                             <td>{{ $email->created_at->format('j\\. M Y') }}</td>

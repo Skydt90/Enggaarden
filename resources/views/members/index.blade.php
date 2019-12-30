@@ -13,7 +13,7 @@
         <div class="row">
             <button type="button" id="register-button" data-toggle="modal" data-target="#register-modal" class="btn btn-sm btn-success"><i class="fas fa-user-plus"></i> Opret Medlem</button>
             <button type="button" id="register-company-button" data-toggle="modal" data-target="#register-company-modal" class="btn btn-sm btn-success ml-1"><i class="far fa-building"></i> Opret Firma</button>
-            <button type="button" id="print" onClick="window.print();" class="btn btn-sm btn-primary ml-auto"><i class="fas fa-print"></i> Udskriv Medlemmer</button>
+            <button type="button" id="print" onClick="window.print();" class="btn btn-sm btn-primary ml-auto"><i class="fas fa-print"></i> Udskriv</button>
         </div>
         
         <div class="row mt-1">
@@ -24,7 +24,7 @@
         </div>
 
         <div class="row mt-2">  
-            <table id="members" class="table table-hover table-sm table-striped table-bordered sortable">
+            <table id="members" class="table table-hover table-responsive-lg table-sm table-striped table-bordered sortable">
                 <thead class="thead-dark">
                     <th>Navn:</th>
                     <th>Medlemstype:</th>
@@ -71,9 +71,9 @@
                             <td>
                                 <a data-toggle="tooltip" data-placement="top" title="Rediger/Detaljer" href="{{ route('member.show', ['member' => $member]) }}"><i class="fas fa-edit"></i></a>
                                 @if ($member->email)
-                                    <a data-toggle="tooltip" data-placement="top" title="Send Mail" class="ml-2" href="{{ route('send.mail.show', ['id' => $member->id]) }}" style="color:orange"><i class="fas fa-envelope"></i></a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Send Mail" href="{{ route('send.mail.show', ['id' => $member->id]) }}" style="color:orange"><i class="fas fa-envelope"></i></a>
                                 @endif
-                                <a class="ml-2 delete-button" data-id="{{$member->id}}" data-name="{{$member->first_name}}" href=""><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
+                                <a class="delete-button" data-id="{{$member->id}}" data-name="{{$member->first_name}}" href=""><i data-toggle="tooltip" data-placement="top" title="Slet" style="color: red" class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                     @endforeach

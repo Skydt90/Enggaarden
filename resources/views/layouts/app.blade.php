@@ -63,13 +63,13 @@
                         <ul class="navbar-nav ml-auto">
                             <!-- Authentication Links -->
                             @guest
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Log ind') }}</a>
-                                </li>
+                                </li> --}}
                             @else
                             @if(Auth::user()->unreadNotifications()->get()->count() > 0)
                                 <i data-toggle="tooltip" data-placement="left" title="Ulæste notifikationer" class="fas fa-exclamation-triangle nav-link mt-1" style="color:orange"></i>
-                                @endif
+                            @endif
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->username }} <span class="caret"></span>

@@ -7,7 +7,7 @@
         @toast @endtoast
         
         <div class="row">
-            <table id="notifications" class="table table-hover table-sm table-striped table-bordered">
+            <table id="notifications" class="table table-hover table-responsive-md table-sm table-striped table-bordered">
                 <thead class="thead-dark">
                     <th>Fejltype:</th>
                     <th>Besked:</th>
@@ -42,7 +42,7 @@
                                 <td><i data-toggle="tooltip" data-placement="top" title="Læst" style="color: green" class="fas fa-check"></i></td>
                             @endif
                         </tr>
-                        <?php $i++; ?>
+                    <?php $i++; ?>
                     @endforeach
                 </tbody>   
             </table>

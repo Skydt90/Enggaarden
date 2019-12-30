@@ -68,7 +68,7 @@
                             @if ($email->group)
                                 <td>{{ $email->group }}</td>
                             @else
-                                <td>{{ $email->member->email }}</td>
+                                <td>{{ $email->member->email ?? 'Ukendt'}}</td>
                             @endif        
                             <td>{{ $email->subject }}</td>
                             <td><a data-toggle="tooltip" data-placement="top" title="Vis" href="{{ route('email.show', ['email' => $email]) }}"><i class="fas fa-eye"></i></a></td>

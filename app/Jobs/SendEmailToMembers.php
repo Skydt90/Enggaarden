@@ -36,11 +36,8 @@ class SendEmailToMembers implements ShouldQueue
      */
     public function handle()
     {
-        $when = 8;
-
-        $this->emails->each(function($receiver, $index) use($when) {
-            $when *= $index;
-            Mail::to($receiver)->later(now()->addSeconds($when), new MailToMember($this->message, $this->subject, $receiver));
+        $this->emails->each(function($receiver) {
+            Mail::to($receiver)->queue(new MailToMember($this->message, $this->subject, $receiver));
         }); 
     }
 
