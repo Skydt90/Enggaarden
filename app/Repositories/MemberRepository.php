@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Contracts\MemberRepositoryContract;
 use App\Models\Member;
-use Illuminate\Support\Facades\DB;
 
 class MemberRepository implements MemberRepositoryContract
 {
@@ -16,15 +15,19 @@ class MemberRepository implements MemberRepositoryContract
     public function getAllPaid($amount)
     {
         return Member::whereHas('subscriptions', function($query) {
-            $query->orderBy('member_id', 'DESC')->whereNotNull('pay_date')->limit(1);      
-        })->with(['invite', 'externalUser', 'address'])->get();
+            $query->latest();      
+        })->withRelations()->get()->filter(function($member) {
+            return $member->subscriptions->get(0)->pay_date != null;
+        });
     }
 
     public function getAllNotPaid($amount)
     {
         return Member::whereHas('subscriptions', function($query) {
-            $query->orderBy('member_id', 'DESC')->whereNull('pay_date')->limit(1);      
-        })->with(['invite', 'externalUser', 'address'])->get();
+            $query->latest();      
+        })->withRelations()->get()->filter(function($member) {
+            return $member->subscriptions->get(0)->pay_date === null;
+        });
     }
 
     public function getAllByMemberType($amount, $type)
@@ -106,6 +109,6 @@ class MemberRepository implements MemberRepositoryContract
 
     public function getMemberCount()
     {
-        return DB::table('members')->count();
+        return Member::all()->count();
     }
 }
