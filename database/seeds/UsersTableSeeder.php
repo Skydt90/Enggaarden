@@ -17,6 +17,7 @@ class UsersTableSeeder extends Seeder
         $userCount = (int) $this->command->ask('How many users would you like?', 10);
 
         factory(User::class)->states('britta')->create(); // user for login and testing purposes
+        factory(User::class)->states('iben')->create(); // user for login and testing purposes
         factory(User::class, $userCount)->create();
     }
 }

@@ -33,3 +33,11 @@ $factory->state(User::class, 'britta', function(Faker $faker) {
         'password' => '$2y$10$SVHYTn90cOCgqs.yZi9HiOThiU8yUn7qsKejlDNw/zwb4FJBha1WS' // 12345
     ];
 });
+
+$factory->state(User::class, 'iben', function(Faker $faker) {
+    return [
+        'username' => 'Iben',
+        'user_type' => 'Administrator',
+        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' // 12345
+    ];
+});
