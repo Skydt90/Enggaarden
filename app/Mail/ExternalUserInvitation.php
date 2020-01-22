@@ -29,7 +29,7 @@ class ExternalUserInvitation extends Mailable// this interface will make Laravel
 
     public function build()
     {
-        $subject = "Invitation til Enggaardens Venners nye it-system";
+        $subject = "Invitation til Enggaardens Venner's kartotek";
 
         return $this->subject($subject)->markdown('emails.external-user-invitation');
     }

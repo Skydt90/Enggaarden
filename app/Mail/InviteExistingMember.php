@@ -28,7 +28,7 @@ class InviteExistingMember extends Mailable
 
     public function build()
     {
-        $subject = "Invitation til Enggaardens Venners nye it-system";
+        $subject = "Invitation til Enggaardens Venner's kartotek";
 
         return $this->subject($subject)->markdown('emails.invite-existing-member');
     }
