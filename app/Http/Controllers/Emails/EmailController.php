@@ -6,13 +6,13 @@ use App\Contracts\EmailServiceContract;
 use App\Http\Controllers\Controller;
 use App\Traits\PageSetup;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class EmailController extends Controller
 {
     use PageSetup;
 
     private $emailService;
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
     public function __construct(EmailServiceContract $emailService)
     {

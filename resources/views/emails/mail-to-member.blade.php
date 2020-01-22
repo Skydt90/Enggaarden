@@ -1,8 +1,12 @@
 @component('mail::message')
-# {{ $subject }}
+<h2>{{ $subject }}</h2> 
 
+@component('mail::panel')
 {!! $message !!}
+@endcomponent
 
-<br>
-{{ config('app.name') }}
+Bedste hilsner, <b>{{ Auth::user()->username ?? '' }}</b> <br>
+Enggaarden's Venner   
+Enggårdsvej 2, Hundborg               
+7700 Thisted                
 @endcomponent

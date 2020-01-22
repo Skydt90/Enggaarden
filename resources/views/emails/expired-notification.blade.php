@@ -1,16 +1,17 @@
 @component('mail::message')
-<h1 style="text-align: center">Hej {{ $member->first_name }}<br><br></p>
+<h1 style="text-align: center">Hej {{ $member->first_name }}</p>
 @component('mail::panel')
 
-Dit betalte medlemsskab hos foreningen enggaardens venner, er desværre udløbet.
-Såfremt du fortsat ønsker at være medlem bedes du betale {{ $member->subscriptions[0]->amount}} kroner snarest muligt.
+Dit medlemsskab hos foreningen, Enggaardens Venner, er netop udløbet.  
+Såfremt du fortsat ønsker at være medlem bedes du kontakte os snarest muligt, for at finde ud af hvordan du kan forny dit medlemsskab
+på tlf: ***{{ env('PHONE') }}***
+
+<i><b>Obs:</b> Dette er en autogenereret mail og kan ikke besvares.</i>
 
 @endcomponent
 
-Bedste hilsner,<br>
-{{ config('app.name').'\'s' }} Venner   
-<br>
-Enggårdsvej 2, Hundborg 
-<br>               
+Bedste hilsner, <br>  
+Enggaarden's Venner <br>  
+Enggårdsvej 2, Hundborg  <br> 
 7700 Thisted                
 @endcomponent

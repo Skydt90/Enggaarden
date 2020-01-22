@@ -8,13 +8,13 @@ use App\Http\Requests\CreateContributionRequest;
 use App\Http\Requests\UpdateContributionRequest;
 use App\Traits\PageSetup;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ContributionController extends Controller
 {
     use PageSetup;
 
     private $contributionService;
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
     public function __construct(ContributionServiceContract $contributionService)
     {

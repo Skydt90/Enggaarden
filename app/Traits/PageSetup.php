@@ -4,7 +4,9 @@ namespace App\Traits;
 
 trait PageSetup
 {
-    public function pageSetup()
+    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
+    
+    private function pageSetup()
     {
         $params = collect();
 

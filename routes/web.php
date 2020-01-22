@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'test'], function () {
         Route::get('show', 'TestController@testPage');
         Route::get('error', 'TestController@error');
+        Route::get('mail', 'TestController@viewMail');
         Route::delete('delete/{id}', 'TestController@destroyTest');
     });
 });

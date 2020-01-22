@@ -18,7 +18,6 @@ class MemberController extends Controller
 
     private $memberService;
     private $inviteService;
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
 
     public function __construct(MemberServiceContract $memberService, InviteServiceContract $inviteService)
     {

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Contracts\InviteRepositoryContract;
 use App\Contracts\InviteServiceContract;
-use App\Models\Invite;
 
 class InviteService implements InviteServiceContract
 {

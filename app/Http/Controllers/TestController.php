@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SendExternalUserInvitation;
+use App\Mail\ExpiredNotification;
 use App\Mail\ExternalUserInvitation;
+use App\Mail\InviteExistingMember;
+use App\Mail\MailToMember;
 use App\Models\ExternalUser;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class TestController extends Controller
 {
+
+
+    private $message = "Lorem Ipsum er ganske enkelt fyldtekst fra print- og typografiindustrien. Lorem Ipsum har været standard fyldtekst siden 1500-tallet, hvor en ukendt trykker sammensatte en tilfældig spalte for at trykke en bog til sammenligning af forskellige skrifttyper. Lorem Ipsum har ikke alene overlevet fem århundreder, men har også vundet indpas i elektronisk typografi uden væsentlige ændringer. Sætningen blev gjordt kendt i 1960'erne med lanceringen af Letraset-ark, som indeholdt afsnit med Lorem Ipsum, og senere med layoutprogrammer som Aldus PageMaker, som også indeholdt en udgave af Lorem Ipsum.";
+
     public function testPage()
     {
         $externalUser = ExternalUser::withRelations()->findOrFail(22);
@@ -54,9 +62,13 @@ class TestController extends Controller
 
     public function viewMail() 
     {
-        $expire = now()->addMonth();
+        $expire = now()->addWeek();
         $member = Member::find(1);
-        return new ExternalUserInvitation($member, 'link', $expire);
+        $link = URL::temporarySignedRoute('reg-ext', $expire, ['id' => $member->id, 'email' => $member->email]);
+        //return new ExternalUserInvitation($member, $link, $expire);
+        return new MailToMember($this->message, 'Emne', 'christian@mail.dk');
+        //return new InviteExistingMember($member, $link, $expire);
+        //return new ExpiredNotification($member);
     }
 
     public function writeMail()
