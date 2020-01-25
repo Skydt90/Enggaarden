@@ -52,5 +52,9 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="row justify-content-center">
+        <p>Eksternt medlem? <a href="{{ route('login-ext') }}">Klik her for login</a></p>
+    </div>
 </div>
 @endsection

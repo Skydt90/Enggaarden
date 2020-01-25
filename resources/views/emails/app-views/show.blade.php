@@ -17,7 +17,7 @@
                                 @if($email->group)
                                 <p class="float-right"> Til: {{ $email->group }} </p>
                                 @else
-                                <p class="float-right"> Til: {{ $email->member->email }} </p>
+                                <p class="float-right"> Til: {{ $email->member->email ?? 'Slettet medlem' }} </p>
                                 @endif
                         </div>
                         <div class="card-body">
