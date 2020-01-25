@@ -59,7 +59,7 @@ class Kernel extends ConsoleKernel
                 $members = $memberRepository->getWithSubscriptions();
 
                 foreach($members as $member) {
-                    if($member->subscriptions[0]->pay_date && $member->subscriptions[0]->pay_date->addYear()->isPast()) {
+                    if($member->subscriptions[0]->pay_date && $member->subscriptions[0]->pay_date->addYears(2)->isPast()) {
                         $member->is_company ? $amount = 300 : $amount = 100;
                         $memberRepository->storeSubscriptionOnMember($member, new Subscription(['amount' => $amount]));
                         Mail::to($member->email)->queue(new ExpiredNotification($member));
