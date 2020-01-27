@@ -50,28 +50,29 @@ class Kernel extends ConsoleKernel
                 Notification::send(User::all(), new InviteCleanupFailed($e));
                 Log::error('Kernel@urls: ' . $e);
             }
-        })->everyMinute();//->daily();
+        })->daily();
 
         // check if memberships are valid
         $schedule->call(function() {
+            Log::info('Running membership check:');
             try { 
                 $memberRepository = new MemberRepository();
                 $members = $memberRepository->getWithSubscriptions();
 
                 foreach($members as $member) {
-                    if($member->subscriptions[0]->pay_date && $member->subscriptions[0]->pay_date->addYears(2)->isPast()) {
+                    if($member->subscriptions[0]->pay_date && $member->subscriptions[0]->pay_date->addYears(1)->isPast()) {
                         $member->is_company ? $amount = 300 : $amount = 100;
                         $memberRepository->storeSubscriptionOnMember($member, new Subscription(['amount' => $amount]));
                         Mail::to($member->email)->queue(new ExpiredNotification($member));
     
-                        echo($member->first_name . ' har sidst betalt ' . $member->subscriptions[0]->pay_date->diffForHumans());
+                        Log::info($member->first_name . ' har sidst betalt ' . $member->subscriptions[0]->pay_date->diffForHumans());
                     }
                 }
             } catch(Exception $e) {
                 Notification::send(User::all(), new SubscriptionUpdateFailed($e));
                 Log::error('Kernel@memberships: ' . $e);
             }
-        })->everyMinute(); // ->daily();
+        })->daily();
     }
 
     /**

@@ -63,12 +63,12 @@ class TestController extends Controller
     public function viewMail() 
     {
         $expire = now()->addWeek();
-        $member = Member::find(1);
+        $member = Member::with('subscriptions')->find(2);
         $link = URL::temporarySignedRoute('reg-ext', $expire, ['id' => $member->id, 'email' => $member->email]);
         //return new ExternalUserInvitation($member, $link, $expire);
-        return new MailToMember($this->message, 'Emne', 'christian@mail.dk');
+        //return new MailToMember($this->message, 'Emne', 'christian@mail.dk');
         //return new InviteExistingMember($member, $link, $expire);
-        //return new ExpiredNotification($member);
+        return new ExpiredNotification($member);
     }
 
     public function writeMail()
