@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Contracts\ContributionServiceContract;
 use App\Contracts\StatisticsRepositoryContract;
 use App\Models\Contribution;
+use App\Models\Subscription;
 use Illuminate\Support\Facades\DB;
 
 class StatisticsRepository implements StatisticsRepositoryContract
@@ -41,7 +42,16 @@ class StatisticsRepository implements StatisticsRepositoryContract
 
     public function getAmountNotPaid()
     {
-        return DB::select('select SUM(subscriptions.amount) as owed from subscriptions where subscriptions.pay_date IS null')[0];  
+        $total = 0;
+        Subscription::latest()->get()->filter(function($sub) {
+            if ($sub->pay_date === null) {
+                return $sub->amount;
+            }
+        })->each(function($sub) use(&$total) {
+            $total += $sub->amount;
+        });
+        return $total;
+        //return DB::select('select SUM(subscriptions.amount) as owed from subscriptions where subscriptions.pay_date IS null')[0];  
     }
 
     

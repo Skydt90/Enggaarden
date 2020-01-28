@@ -26,6 +26,15 @@ class SubscriptionRepository implements SubscriptionRepositoryContract
 
     public function getSum()
     {
-        return DB::select('select SUM(subscriptions.amount) as sum from subscriptions where subscriptions.pay_date IS NOT NULL')[0];
+        $total = 0;
+        Subscription::latest()->get()->filter(function($sub) {
+            if ($sub->pay_date != null) {
+                return $sub->amount;
+            }
+        })->each(function($sub) use(&$total) {
+            $total += $sub->amount;
+        });
+        return $total;
+        //return DB::select('select SUM(subscriptions.amount) as sum from subscriptions where subscriptions.pay_date IS NOT NULL')[0];
     }
 }
