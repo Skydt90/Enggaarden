@@ -36,7 +36,6 @@
                                 </select>                       
                             @endif
                         </div>
-                        
                         <div class="form-group col-md-6">
                             <label for="subject">Emne:</label>
                             <input type="text" name="subject" class="form-control" placeholder="Indtast emne" required="true">
@@ -46,9 +45,9 @@
                     
                     <div class="form-group">
                         <label for="message">Besked:</label>
-                        <textarea class="form-control ck-editor" id="text-editor" name="message" {{-- value="{{ old('message') }}" --}}></textarea>
+                        <textarea class="form-control ck-editor" id="text-editor" name="message"></textarea>
+                        <input type="file" name="file" class="mt-2 mb-n1">
                     </div>
-
                     <input type="submit" class="btn btn-primary btn-block" value="Afsend"> 
                 </form>     
             </div>

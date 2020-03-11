@@ -46,7 +46,11 @@ class EmailService implements EmailServiceContract
         } else {
             $emails = collect($request->email);
         }
-        SendEmailToMembers::dispatch($emails, $request->message, $request->subject);
+        if($request->hasFile('file')) {
+            SendEmailToMembers::dispatch($emails, $request->message, $request->subject, $request->file);
+        } else {
+            SendEmailToMembers::dispatch($emails, $request->message, $request->subject);
+        }
         return $this->emailRepository->create($request);
     }
 

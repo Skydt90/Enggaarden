@@ -14,19 +14,21 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
-class SendEmailToMembers implements ShouldQueue
+class SendEmailToMembers
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $emails;
     private $message;
     private $subject;
+    protected $file;
 
-    public function __construct($emails, $message, $subject)
+    public function __construct($emails, $message, $subject, $file = null)
     {
-        $this->emails = $emails;
+        $this->emails  = $emails;
         $this->message = $message;
         $this->subject = $subject;
+        $this->file    = $file;
     }
 
     /**
@@ -37,7 +39,7 @@ class SendEmailToMembers implements ShouldQueue
     public function handle()
     {
         $this->emails->each(function($receiver) {
-            Mail::to($receiver)->queue(new MailToMember($this->message, $this->subject, $receiver));
+            Mail::to($receiver)->send(new MailToMember($this->message, $this->subject, $receiver, $this->file));
         }); 
     }
 

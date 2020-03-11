@@ -18,17 +18,27 @@ class MailToMember extends Mailable
     public $message;
     public $subject;
     public $receiver;
+    protected $file;
     
-    public function __construct($message, $subject, $receiver)
+    public function __construct($message, $subject, $receiver, $file = null)
     {
-        $this->message = $message;
-        $this->subject = $subject;
+        $this->message  = $message;
+        $this->subject  = $subject;
         $this->receiver = $receiver;
+        $this->file     = $file;
     }
 
     public function build()
     {
-        return $this->subject($this->subject)->markdown('emails.mail-to-member');
+        if(is_null($this->file)) {
+            return $this->subject($this->subject)->markdown('emails.mail-to-member');
+        }
+        return $this->subject($this->subject)
+            ->markdown('emails.mail-to-member')
+            ->attach($this->file->getRealPath(), [
+                'as'   => $this->file->getClientOriginalName(), 
+                'mime' => $this->file->getMimeType()
+            ]);
     }
 
     public function failed(Exception $e)
