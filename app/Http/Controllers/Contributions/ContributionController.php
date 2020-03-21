@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Contributions;
 
-use App\Contracts\ContributionServiceContract;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateContributionRequest;
-use App\Http\Requests\UpdateContributionRequest;
-use App\Traits\PageSetup;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Traits\PageSetup;
+use App\Http\Controllers\Controller;
+use App\Contracts\ContributionServiceContract;
+use App\Http\Requests\UpdateContributionRequest;
+use App\Http\Requests\CreateContributionRequest;
 
 class ContributionController extends Controller
 {
@@ -24,7 +24,7 @@ class ContributionController extends Controller
     public function index()
     {
         try {
-            $pageParams = $this->pageSetup();
+            $pageParams    = $this->pageSetup();
             $activityTypes = $this->contributionService->getAllActivities(false, $pageParams->get('amount'));
             $contributions = $this->contributionService->getAll($pageParams->get('amount'));
         } catch (Exception $e) {
