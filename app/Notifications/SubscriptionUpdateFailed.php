@@ -12,10 +12,12 @@ class SubscriptionUpdateFailed extends Notification
     use Queueable;
 
     private $exception;
+    private $custom_message;
 
-    public function __construct($exception)
+    public function __construct($exception = null, $custom_message = null)
     {
-        $this->exception = $exception;
+        $this->exception      = $exception;
+        $this->custom_message = $custom_message;
     }
 
     public function via($notifiable)
@@ -25,11 +27,10 @@ class SubscriptionUpdateFailed extends Notification
 
     public function toDatabase()
     {
-        
         return [
-            'message' => 'Noget gik galt under automatisk opdatering af medlemskontingenter',
-            'solution' => 'Hvis flere af disse fejl dukker op indenfor 24 timer, kontakt udviklerne. Ellers ingenting',
-            'exception' => $this->exception->__toString()
+            'message'   => is_null($this->custom_message) ? 'Noget gik galt under automatisk opdatering af medlemskontingenter' : $this->custom_message,
+            'solution'  => is_null($this->custom_message) ? 'Hvis flere af disse fejl dukker op indenfor 24 timer, kontakt udviklerne. Ellers ingenting' : 'Tag selv stilling til hvad, der skal ske',
+            'exception' => is_null($this->exception) ? '' : $this->exception->__toString()
         ];
     }
 

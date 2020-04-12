@@ -2,19 +2,8 @@
 
 namespace App\Console;
 
-use App\Mail\ExpiredNotification;
-use App\Models\Subscription;
-use App\Models\User;
-use App\Notifications\InviteCleanupFailed;
-use App\Notifications\SubscriptionUpdateFailed;
-use App\Repositories\InviteRepository;
-use App\Repositories\MemberRepository;
-use Exception;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Notification;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\CleanInvites::class,
+        \App\Console\Commands\CheckSubscriptionStatus::class,
     ];
 
     /**
@@ -35,44 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // clear expired urls from db
-        $schedule->call(function () {
-            try {
-                $inviteRepository = new InviteRepository();
-                $invites = $inviteRepository->getAll();
-                
-                foreach ($invites as $invite) {
-                    if ($invite->expires_at->isPast()) {
-                        $invite->delete();
-                    }
-                }
-            } catch(Exception $e) {
-                Notification::send(User::all(), new InviteCleanupFailed($e));
-                Log::error('Kernel@urls: ' . $e);
-            }
-        })->daily();
-
-        // check if memberships are valid
-        $schedule->call(function() {
-            Log::info('Running membership check:');
-            try { 
-                $memberRepository = new MemberRepository();
-                $members = $memberRepository->getWithSubscriptions();
-
-                foreach($members as $member) {
-                    if($member->subscriptions[0]->pay_date && $member->subscriptions[0]->pay_date->addYears(1)->isPast()) {
-                        $member->is_company ? $amount = 300 : $amount = 100;
-                        $memberRepository->storeSubscriptionOnMember($member, new Subscription(['amount' => $amount]));
-                        Mail::to($member->email)->queue(new ExpiredNotification($member));
-    
-                        Log::info($member->first_name . ' har sidst betalt ' . $member->subscriptions[0]->pay_date->diffForHumans());
-                    }
-                }
-            } catch(Exception $e) {
-                Notification::send(User::all(), new SubscriptionUpdateFailed($e));
-                Log::error('Kernel@memberships: ' . $e);
-            }
-        })->daily();
+        $schedule->command("members:clean-invites")->daily();
+        $schedule->command("members:check-subscription-status")->daily();
     }
 
     /**
