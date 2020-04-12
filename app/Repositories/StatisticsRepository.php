@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Subscription;
 use App\Contracts\ContributionServiceContract;
 use App\Contracts\StatisticsRepositoryContract;
-use App\Models\Contribution;
-use App\Models\Subscription;
-use Illuminate\Support\Facades\DB;
 
 class StatisticsRepository implements StatisticsRepositoryContract
 {
@@ -51,9 +52,18 @@ class StatisticsRepository implements StatisticsRepositoryContract
             $total += $sub->amount;
         });
         return $total;
-        //return DB::select('select SUM(subscriptions.amount) as owed from subscriptions where subscriptions.pay_date IS null')[0];  
     }
-
     
-
+    public function getTotalAmountForYear($year)
+    {
+        $total = 0;
+        Subscription::where('pay_date', '>=', Carbon::parse("first day of January $year"))
+                ->where('pay_date', '<=', Carbon::parse("last day of December $year"))
+                ->whereNotNull('pay_date')
+                ->pluck('amount')
+                ->each(function($amount) use(&$total) {
+                    $total += $amount;
+                });
+        return $total;   
+    }
 }

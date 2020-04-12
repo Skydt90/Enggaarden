@@ -3,20 +3,20 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\ActivityTypeRepository;
-use App\Repositories\AddressRepository;
-use App\Repositories\InviteRepository;
-use App\Services\InviteService;
-use App\Repositories\MemberRepository;
-use App\Repositories\SubscriptionRepository;
-use App\Services\MemberService;
-use App\Repositories\ContributionRepository;
-use App\Services\ContributionService;
-use App\Repositories\EmailRepository;
-use App\Repositories\UserRepository;
+
 use App\Services\EmailService;
-use App\Services\PaginationService;
-use App\Services\StatisticsRepository;
+use App\Services\MemberService;
+use App\Services\InviteService;
+use App\Services\ContributionService;
+use App\Repositories\UserRepository;
+use App\Repositories\EmailRepository;
+use App\Repositories\InviteRepository;
+use App\Repositories\MemberRepository;
+use App\Repositories\AddressRepository;
+use App\Repositories\StatisticsRepository;
+use App\Repositories\ActivityTypeRepository;
+use App\Repositories\SubscriptionRepository;
+use App\Repositories\ContributionRepository;
 
 class DependencyServiceProvider extends ServiceProvider
 {

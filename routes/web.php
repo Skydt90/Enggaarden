@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function() {
     
     // Statistics
     Route::get('statistics', 'Statistics\StatisticsController@index')->name('statistics');
+    Route::get('statistics/total/{year}', 'Statistics\StatisticsController@getTotalAmountForYear');
     
     // Emails
     Route::group(['prefix' => 'email/send'], function() {
