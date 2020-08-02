@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\ExternalUsers;
 
-use App\Http\Controllers\Controller;
 use Exception;
+use App\Traits\Responses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class ExternalUserController extends Controller
 {
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
-    
+    use Responses;
+
     public function index()
     {
         //
@@ -30,10 +30,9 @@ class ExternalUserController extends Controller
     public function home()
     {
         try {
-            $user = Auth::user();
+            $user = Auth::user(); // TODO
         } catch(Exception $e) {
-            Log::error('ExternalUserController@home: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
         return view('external_users.show', ['ex_user' => $user]);
     }

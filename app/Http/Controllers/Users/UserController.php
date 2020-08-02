@@ -2,78 +2,64 @@
 
 namespace App\Http\Controllers\Users;
 
-use App\Contracts\UserRepositoryContract;
-use App\Http\Controllers\Controller;
 use Exception;
+use App\Traits\Responses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Repositories\User\UserRepoInterface;
 
 class UserController extends Controller
 {
-    private $userRepository;
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
+    use Responses;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    private $userRepo;
+
+    public function __construct(UserRepoInterface $userRepo)
     {
-        $this->userRepository = $userRepository;
+        $this->userRepo = $userRepo;
     }
 
     public function index()
     {
         try {
-            $users = $this->userRepository->getAll();
+            $users = $this->userRepo->getAll();
         } catch (Exception $e) {
-            Log::error('UserController@index' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
-        return view('users.index', ['users' => $users]);
+        return view('users.index', compact('users'));
     }
 
     public function notifications()
     {
         try {
-            $notifications = $this->userRepository->getAllUserNotifications();
+            $notifications = $this->userRepo->getAllUserNotifications();
         } catch (Exception $e) {
-            Log::error('UserController@notifications' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
-        return view('users.notifications', ['notifications' => $notifications]);
+        return view('users.notifications', compact('notifications'));
     }
 
     public function markAsRead(Request $request)
     {
         try {
-            $this->userRepository->markAsRead($request->created_at);
+            $this->userRepo->markAsRead($request->created_at);
         } catch (Exception $e) {
-            Log::error('UserController@markAsRead: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
         return redirect()->back()->withStatus('Markeret som læst');
     }
 
     public function destroy($id)
     {
-        if (Gate::allows('delete_user', $id)) {       
-            try {
-                $user = $this->userRepository->delete($id);
-            } catch (Exception $e) {
-                Log::error('UserController@destroy');
-                return response()->json([
-                    'status' => 500,
-                    'message' => json_encode($e->__toString())
-                ], 500);
-            }
-            return response()->json([
-                'status' => 200,
-                'message' => 'Bruger slettet korrekt',
-                'data' => $user
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 403,
-                'message' => 'Du kan ikke slette denne bruger, højst sandsynligt fordi det er dig selv',
-            ], 403);
+        if (Gate::denies('delete_user', $id)) {
+            return $this->jForbidden('Du kan ikke slette denne bruger');
         }
+        try {
+            $user = $this->userRepo->delete($id);
+        } catch (Exception $e) {
+            return $this->jError($e);
+        }
+        return $this->jSuccess('Bruger slettet korrekt', $user);
     }
 }

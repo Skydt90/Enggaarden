@@ -8,6 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 
+/**
+ * App\Models\Invite
+ *
+ * @property int $id
+ * @property int $member_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon $expires_at
+ * @property-read \App\Models\Member $member
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite whereExpiresAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite whereMemberId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invite whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Invite extends Model
 {
     protected $fillable = [

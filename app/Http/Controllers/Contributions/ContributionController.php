@@ -3,58 +3,51 @@
 namespace App\Http\Controllers\Contributions;
 
 use Exception;
-use Illuminate\Support\Facades\Log;
 use App\Traits\PageSetup;
+use App\Traits\Responses;
 use App\Http\Controllers\Controller;
-use App\Contracts\ContributionServiceContract;
 use App\Http\Requests\UpdateContributionRequest;
 use App\Http\Requests\CreateContributionRequest;
+use App\Services\Contribution\ContributionServiceInterface;
 
 class ContributionController extends Controller
 {
     use PageSetup;
+    use Responses;
 
     private $contributionService;
 
-    public function __construct(ContributionServiceContract $contributionService)
+    public function __construct(ContributionServiceInterface $contributionService)
     {
         $this->contributionService = $contributionService;
     }
 
     public function index()
     {
+        $this->pageSetup();
+
         try {
-            $pageParams    = $this->pageSetup();
-            $activityTypes = $this->contributionService->getAllActivities(false, $pageParams->get('amount'));
-            $contributions = $this->contributionService->getAll($pageParams->get('amount'));
+            $contributions = $this->contributionService->getAll($this->amount);
+            $activityTypes = $this->contributionService->getAllActivities(false, $this->amount);
         } catch (Exception $e) {
-            Log::error('ContributionController@index: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
         return view('contributions.index', [
+            'page' => $this->page,
+            'amount' => $this->amount,
             'contributions' => $contributions,
-            'activity_types' => $activityTypes, 
-            'page' => $pageParams->get('page'),
-            'amount' => $pageParams->get('amount')
+            'activity_types' => $activityTypes
         ]);
     }
 
     public function store(CreateContributionRequest $request)
     {
-        try{
+        try {
             $contribution = $this->contributionService->store($request);
         } catch (Exception $e) {
-            Log::error('ContributionController@store: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Bidrag tilføjet korrekt',
-            'data' => $contribution
-        ], 200);
+        return $this->jSuccess('Bidrag tilføjet', $contribution);
     }
 
     public function show($id)
@@ -63,13 +56,9 @@ class ContributionController extends Controller
             $activities = $this->contributionService->getAllActivities(false, 5000); // amount is not optional. Hence big num hardcode here for now
             $contribution = $this->contributionService->getByID($id);
         } catch (Exception $e) {
-            Log::error('ContributionController@show: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
-        return view('contributions.show', [
-            'contribution' => $contribution,
-            'activities' => $activities,
-        ]);
+        return view('contributions.show', compact('activities', 'contribution'));
     }
 
     public function update(UpdateContributionRequest $request, $id)
@@ -77,17 +66,9 @@ class ContributionController extends Controller
         try{
             $contribution = $this->contributionService->update($request, $id);
         } catch (Exception $e) {
-            Log::error('ContributionController@update: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Opdateret korrekt',
-            'data' => $contribution
-        ], 200);
+        return $this->jSuccess('Bidrag opdateret', $contribution);
     }
 
     public function destroy($id)
@@ -95,16 +76,8 @@ class ContributionController extends Controller
         try{
             $contribution = $this->contributionService->delete($id);
         } catch (Exception $e) {
-            Log::error('ContributionController@destroy: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Bidrag slettet korrekt',
-            'data' => $contribution
-        ], 200);
+        return $this->jSuccess('Bidrag slettet', $contribution);
     }
 }

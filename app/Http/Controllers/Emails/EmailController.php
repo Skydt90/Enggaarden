@@ -2,65 +2,53 @@
 
 namespace App\Http\Controllers\Emails;
 
-use App\Contracts\EmailServiceContract;
-use App\Http\Controllers\Controller;
-use App\Traits\PageSetup;
 use Exception;
-use Illuminate\Support\Facades\Log;
+use App\Traits\Responses;
+use App\Traits\PageSetup;
+use App\Http\Controllers\Controller;
+use App\Services\Email\EmailServiceInterface;
 
 class EmailController extends Controller
 {
     use PageSetup;
+    use Responses;
 
     private $emailService;
 
-    public function __construct(EmailServiceContract $emailService)
+    public function __construct(EmailServiceInterface $emailService)
     {
         $this->emailService = $emailService;
     }
 
     public function index()
     {
+        $this->pageSetup();
+
         try {
-            $pageParams = $this->pageSetup();
-            $emails = $this->emailService->getAllWithRelations($pageParams->get('amount'));
+            $emails = $this->emailService->getPaginatedWithRelations(['user', 'member'], $this->amount);
         } catch (Exception $e) {
-            Log::error('EmailController@index: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
-        return view('emails.app-views.index', [
-            'emails' => $emails,
-            'amount' => $pageParams->get('amount'),
-            'page' => $pageParams->get('page')
-        ]);
+        return view('emails.app-views.index', ['amount' => $this->amount, 'page' => $this->page, 'emails' => $emails]);
     }
 
     public function show($id)
     {
         try {
-            $email = $this->emailService->getByIDWithRelations($id);
+            $email = $this->emailService->getByIDWithRelations($id, ['user', 'member']);
         } catch(Exception $e) {
-            Log::error('EmailController@show: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
         return view('emails.app-views.show', ['email' => $email]);
     }
-    
+
     public function destroy($id)
     {
         try {
-            $deleted = $this->emailService->deleteByID($id);
+            $deleted = $this->emailService->delete($id);
         } catch (Exception $e) {
-            Log::error('EmailController@destroy: ' . json_encode($e->__toString()));
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Email slettet',
-            'data' => $deleted
-        ], 200);
+        return $this->jSuccess('Email slettet', $deleted);
     }
 }

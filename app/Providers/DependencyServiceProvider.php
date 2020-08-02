@@ -4,109 +4,50 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-use App\Services\EmailService;
-use App\Services\MemberService;
-use App\Services\InviteService;
-use App\Services\ContributionService;
-use App\Repositories\UserRepository;
-use App\Repositories\EmailRepository;
-use App\Repositories\InviteRepository;
-use App\Repositories\MemberRepository;
-use App\Repositories\AddressRepository;
-use App\Repositories\StatisticsRepository;
-use App\Repositories\ActivityTypeRepository;
-use App\Repositories\SubscriptionRepository;
-use App\Repositories\ContributionRepository;
+use App\Services\Email\EmailService;
+use App\Services\Email\EmailServiceInterface;
+use App\Services\Invite\InviteService;
+use App\Services\Invite\InviteServiceInterface;
+use App\Services\Member\MemberService;
+use App\Services\Member\MemberServiceInterface;
+use App\Services\Contribution\ContributionService;
+use App\Services\Contribution\ContributionServiceInterface;
+use App\Repositories\Email\EmailRepoInterface;
+use App\Repositories\Member\MemberRepoInterface;
+use App\Repositories\Invite\InviteRepoInterface;
+use App\Repositories\Address\AddressRepoInterface;
+use App\Repositories\Contribution\ContributionRepoInterface;
+use App\Repositories\ActivityType\ActivityTypeRepoInterface;
+use App\Repositories\Subscription\SubscriptionRepoInterface;
 
 class DependencyServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
     public function register()
     {
-        // dependency injections
-
         // Members
-        $this->app->singleton('App\Contracts\MemberRepositoryContract', function($app) {
-            return new MemberRepository();
-        });
-
-        $this->app->singleton('App\Contracts\AddressRepositoryContract', function($app) {
-            return new AddressRepository();
-        });
-
-        $this->app->singleton('App\Contracts\SubscriptionRepositoryContract', function($app) {
-            return new SubscriptionRepository();
-        });
-
-        $this->app->singleton('App\Contracts\MemberServiceContract', function($app) {
+        $this->app->singleton(MemberServiceInterface::class, function($app) {
             return new MemberService(
-                $app->make('App\Contracts\MemberRepositoryContract'), 
-                $app->make('App\Contracts\AddressRepositoryContract'), 
-                $app->make('App\Contracts\SubscriptionRepositoryContract'));
+                $app->make(MemberRepoInterface::class),
+                $app->make(AddressRepoInterface::class),
+                $app->make(SubscriptionRepoInterface::class));
         });
-        
         // Emails
-        $this->app->singleton('App\Contracts\EmailRepositoryContract', function($app) {
-            return new EmailRepository();
-        });
-
-        $this->app->singleton('App\Contracts\EmailServiceContract', function($app) {
+        $this->app->singleton(EmailServiceInterface::class, function($app) {
             return new EmailService(
-                $app->make('App\Contracts\EmailRepositoryContract'),
-                $app->make('App\Contracts\MemberRepositoryContract'));
+                $app->make(EmailRepoInterface::class),
+                $app->make(MemberRepoInterface::class));
         });
-
         // Invites
-        $this->app->singleton('App\Contracts\InviteRepositoryContract', function($app) {
-            return new InviteRepository();
+        $this->app->singleton(InviteServiceInterface::class, function($app) {
+            return new InviteService(
+                $app->make(InviteRepoInterface::class));
         });
-
-        $this->app->singleton('App\Contracts\InviteServiceContract', function($app) {
-            return new InviteService($app->make('App\Contracts\InviteRepositoryContract'));
-        }); 
-
-
         // Contributions
-        $this->app->singleton('App\Contracts\ContributionRepositoryContract', function($app) {
-            return new ContributionRepository();
-        });
-
-        $this->app->singleton('App\Contracts\ContributionServiceContract', function($app) {
+        $this->app->singleton(ContributionServiceInterface::class, function($app) {
             return new ContributionService(
-                $app->make('App\Contracts\ContributionRepositoryContract'),
-                $app->make('App\Contracts\ActivityTypeRepositoryContract')
-            );
-        }); 
-
-        // ActivityTypes
-        $this->app->singleton('App\Contracts\ActivityTypeRepositoryContract', function($app) {
-            return new ActivityTypeRepository();
-        });
-
-        // Users
-        $this->app->singleton('App\Contracts\UserRepositoryContract', function($app) {
-            return new UserRepository();
-        });
-
-        // Statistics
-        $this->app->singleton('App\Contracts\StatisticsRepositoryContract', function($app) {
-            return new StatisticsRepository(
-                $app->make('App\Contracts\ContributionServiceContract')
+                $app->make(ContributionRepoInterface::class),
+                $app->make(ActivityTypeRepoInterface::class)
             );
         });
-    }
-
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
     }
 }

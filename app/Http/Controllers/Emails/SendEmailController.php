@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers\Emails;
 
-use App\Contracts\EmailServiceContract;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\EmailRequest;
 use Exception;
+use App\Traits\Responses;
+use App\Http\Requests\EmailRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use App\Services\Email\EmailServiceInterface;
 
 class SendEmailController extends Controller
 {
-    private $emailService;
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
+    use Responses;
 
-    public function __construct(EmailServiceContract $emailService)
+    private $emailService;
+
+    public function __construct(EmailServiceInterface $emailService)
     {
         $this->emailService = $emailService;
     }
 
     public function show($id = null)
     {
-        $userEmails = Auth::user()->emails()->withRelations()->orderBy('id', 'desc')->take(12)->get();
+        try {
+            $userEmails = Auth::user()->emails()->withRelations()->orderBy('id', 'desc')->take(12)->get(); // TODO
 
-        if(isset($id)) {
-            try {
-                $email = $this->emailService->getEmailByID($id);
+            if (isset($id)) {
+                $email = $this->emailService->getMemberEmail($id);
                 return view('emails.app-views.send-show', ['email' => $email, 'member_id' => $id, 'user_emails' => $userEmails]);
-            } catch (Exception $e) {
-                Log::error('SendEmailController@show: ' . $e);
-                return redirect()->back()->withErrors($this->error);
+            } else {
+                return view('emails.app-views.send-show', ['user_emails' => $userEmails]);
             }
-        } else {
-            return view('emails.app-views.send-show', ['user_emails' => $userEmails]);
+        } catch (Exception $e) {
+            return $this->rError($e);
         }
     }
 
@@ -41,8 +41,7 @@ class SendEmailController extends Controller
         try {
             $this->emailService->sendEmail($request);
         } catch (Exception $e) {
-            Log::error('SendEmailController@send: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
         return redirect()->back()->withStatus('Email Afsendt');
     }

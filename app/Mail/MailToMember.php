@@ -2,13 +2,13 @@
 
 namespace App\Mail;
 
-use App\Models\User;
-use App\Notifications\EmailFailed;
 use Exception;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use App\Notifications\EmailFailed;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
 
 class MailToMember extends Mailable
@@ -19,24 +19,24 @@ class MailToMember extends Mailable
     public $subject;
     public $receiver;
     protected $file;
-    
-    public function __construct($message, $subject, $receiver, $file = null)
+
+    public function __construct(string $receiver, array $content)
     {
-        $this->message  = $message;
-        $this->subject  = $subject;
+        $this->message  = $content['message'];
+        $this->subject  = $content['subject'];
+        $this->file     = $content['file'] ?? null;
         $this->receiver = $receiver;
-        $this->file     = $file;
     }
 
     public function build()
     {
-        if(is_null($this->file)) {
+        if (is_null($this->file)) {
             return $this->subject($this->subject)->markdown('emails.mail-to-member');
         }
         return $this->subject($this->subject)
             ->markdown('emails.mail-to-member')
             ->attach($this->file->getRealPath(), [
-                'as'   => $this->file->getClientOriginalName(), 
+                'as'   => $this->file->getClientOriginalName(),
                 'mime' => $this->file->getMimeType()
             ]);
     }

@@ -2,49 +2,32 @@
 
 namespace App\Console\Commands;
 
-use App\Contracts\InviteRepositoryContract;
+use Exception;
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use App\Notifications\InviteCleanupFailed;
+use Illuminate\Support\Facades\Notification;
+use App\Repositories\Invite\InviteRepoInterface;
 
 class CleanInvites extends Command
 {
     private $inviteRepo;
-    private $invites;
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'members:clean-invites';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Clears out expired invites from DB';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct(InviteRepositoryContract $inviteRepo)
+    public function __construct(InviteRepoInterface $inviteRepo)
     {
         parent::__construct();
         $this->inviteRepo = $inviteRepo;
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
     public function handle()
     {
         try {
-            $this->invites = $this->inviteRepo->getAll();
+            $invites = $this->inviteRepo->getAll();
 
-            foreach ($this->invites as $invite) {
+            foreach ($invites as $invite) {
                 if ($invite->expires_at->isPast()) {
                     $invite->delete();
                 }

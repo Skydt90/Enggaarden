@@ -3,59 +3,53 @@
 namespace App\Http\Controllers\Statistics;
 
 use Exception;
-use Illuminate\Support\Facades\Log;
+use App\Traits\Responses;
 use App\Http\Controllers\Controller;
-use App\Contracts\MemberRepositoryContract;
-use App\Contracts\StatisticsRepositoryContract;
-use App\Contracts\SubscriptionRepositoryContract;
+use App\Repositories\Member\MemberRepoInterface;
+use App\Repositories\Statistic\StatisticRepoInterface;
+use App\Repositories\Subscription\SubscriptionRepoInterface;
 
 class StatisticsController extends Controller
 {
-    private $statisticsRepository;
-    private $subscriptionRepository;
-    private $memberRepository;
-    private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
+    use Responses;
 
-    public function __construct(StatisticsRepositoryContract $statisticsRepository, SubscriptionRepositoryContract $subscriptionRepository, MemberRepositoryContract $memberRepository)
+    private $statisticsRepo;
+    private $subscriptionRepo;
+    private $memberRepo;
+
+    public function __construct(
+        StatisticRepoInterface $statisticsRepo,
+        SubscriptionRepoInterface $subscriptionRepo,
+        MemberRepoInterface $memberRepo)
     {
-        $this->statisticsRepository = $statisticsRepository;
-        $this->subscriptionRepository = $subscriptionRepository;
-        $this->memberRepository = $memberRepository;
+        $this->memberRepo = $memberRepo;
+        $this->statisticsRepo = $statisticsRepo;
+        $this->subscriptionRepo = $subscriptionRepo;
     }
 
     public function index() {
         $year = now()->year;
-        
+
         try {
-            $owed            = $this->statisticsRepository->getAmountNotPaid();
-            $sum_year        = $this->statisticsRepository->getTotalAmountForYear($year);
-            $memberData      = $this->statisticsRepository->getMembersAdded();
-            $memberCount     = $this->memberRepository->getMemberCount();
-            $contributions   = $this->statisticsRepository->getContributionsGrouped();
-            $subscriptionSum = $this->subscriptionRepository->getSum();
+            $owed = $this->statisticsRepo->getAmountNotPaid();
+            $sum_year = $this->statisticsRepo->getTotalAmountForYear($year);
+            $memberData = $this->statisticsRepo->getMembersAdded();
+            $memberCount = $this->memberRepo->getMemberCount();
+            $contributions = $this->statisticsRepo->getContributionsGrouped();
+            $subscriptionSum = $this->subscriptionRepo->getSum();
         } catch (Exception $e) {
-            Log::error('StatisticsController@index: ' . $e);
-            return view('statistics.index')->withErrors($this->error);
+            return $this->rError($e);
         }
-        return view('statistics.index', [
-            'contributions' => $contributions,
-            'memberData' => $memberData,
-            'subscriptionSum' => $subscriptionSum,
-            'memberCount' => $memberCount,
-            'owed' => $owed,
-            'sum_year' => $sum_year
-        ]);
+        return view('statistics.index', compact('contributions', 'memberData', 'subscriptionSum', 'memberCount', 'owed', 'sum_year'));
     }
 
     public function getTotalAmountForYear($year)
     {
-        $amount = $this->statisticsRepository->getTotalAmountForYear($year);
-
-        return response()->json([
-            'message' => 'success',
-            'status'  => 200,
-            'amount'  => $amount
-        ], 200);
+        try {
+            $amount = $this->statisticsRepo->getTotalAmountForYear($year);
+        } catch (Exception $e) {
+            return $this->jError($e);
+        }
+        return $this->jSuccess('Success', $amount);
     }
-
 }

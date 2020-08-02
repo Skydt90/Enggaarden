@@ -2,16 +2,16 @@
 
 namespace App\Jobs;
 
-use App\Mail\MailToMember;
-use App\Models\User;
-use App\Notifications\EmailToGroupFailed;
 use Exception;
+use App\Models\User;
+use App\Mail\MailToMember;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use App\Notifications\EmailToGroupFailed;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
 class SendEmailToMembers
@@ -19,16 +19,12 @@ class SendEmailToMembers
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $emails;
-    private $message;
-    private $subject;
-    protected $file;
+    private $content;
 
-    public function __construct($emails, $message, $subject, $file = null)
+    public function __construct($emails, array $content)
     {
-        $this->emails  = $emails;
-        $this->message = $message;
-        $this->subject = $subject;
-        $this->file    = $file;
+        $this->emails = $emails;
+        $this->content = $content;
     }
 
     /**
@@ -39,8 +35,8 @@ class SendEmailToMembers
     public function handle()
     {
         $this->emails->each(function($receiver) {
-            Mail::to($receiver)->send(new MailToMember($this->message, $this->subject, $receiver, $this->file));
-        }); 
+            Mail::to($receiver)->send(new MailToMember($receiver, $this->content));
+        });
     }
 
     public function failed(Exception $e)

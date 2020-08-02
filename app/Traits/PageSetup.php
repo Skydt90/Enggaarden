@@ -5,15 +5,14 @@ namespace App\Traits;
 trait PageSetup
 {
     private $error = 'Noget gik galt under håndteringen af din forespørgsel. En log med fejlen er oprettet. Beklager ulejligheden.';
-    
+    private $page = 1;
+    private $type = 'all';
+    private $amount = 100;
+
     private function pageSetup()
     {
-        $params = collect();
-
-        isset($_GET['page']) ? $params->put('page', $_GET['page']) : $params->put('page', 1);
-        isset($_GET['amount']) ? $params->put('amount', $_GET['amount']) : $params->put('amount', 100);
-        isset($_GET['type']) ? $params->put('type', $_GET['type']) : $params->put('type', 'all');
-
-        return $params; 
+        isset($_GET['page']) ? $this->page = $_GET['page'] : $this->page = 1;
+        isset($_GET['type']) ? $this->type = $_GET['type'] : $this->type = 'all';
+        isset($_GET['amount']) ? $this->amount = $_GET['amount'] : $this->amount = 100;
     }
 }

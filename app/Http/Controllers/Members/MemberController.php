@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Members;
 
-use App\Contracts\InviteServiceContract;
-use App\Contracts\MemberServiceContract;
+use Exception;
+use App\Traits\Responses;
+use App\Traits\PageSetup;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateMemberRequest;
-use App\Http\Requests\CreateInvitationRequest;
 use App\Http\Requests\UpdateMemberRequest;
-use App\Traits\PageSetup;
-use Exception;
-use Illuminate\Support\Facades\Log;
+use App\Http\Requests\CreateInvitationRequest;
+use App\Services\Member\MemberServiceInterface;
+use App\Services\Invite\InviteServiceInterface;
 
 class MemberController extends Controller
 {
     use PageSetup;
+    use Responses;
 
     private $memberService;
     private $inviteService;
 
-    public function __construct(MemberServiceContract $memberService, InviteServiceContract $inviteService)
+    public function __construct(MemberServiceInterface $memberService, InviteServiceInterface $inviteService)
     {
         $this->memberService = $memberService;
         $this->inviteService = $inviteService;
@@ -27,49 +28,37 @@ class MemberController extends Controller
 
     public function index()
     {
+        $this->pageSetup();
+
         try {
-            $params = $this->pageSetup();
-            $members = $this->memberService->getAll($params->get('amount'), $params->get('type'));
+            $members = $this->memberService->getAllByType($this->type);
         } catch (Exception $e) {
-            Log::error('MemberController@index: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->jError($e);
         }
-        
         return view('members.index', [
-            'members' => $members, 
-            'page' => $params->get('page'),
-            'amount' => $params->get('amount'),
-            'type' => $params->get('type'),
+            'type' => $this->type, 'page' => $this->page,
+            'amount' => $this->amount, 'members' => $members,
         ]);
     }
 
     public function store(CreateMemberRequest $request)
     {
         try {
-            $member = $this->memberService->store($request);
+            $member = $this->memberService->create($request);
         } catch (Exception $e) {
-            Log::error('MemberController@store: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Medlem tilføjet korrekt',
-            'data' => $member
-        ], 200);
+        return $this->jSuccess('Medlem tilføjet korrekt', $member);
     }
-    
+
     public function show($id)
     {
         try {
-            $member = $this->memberService->getByID($id);
+            $member = $this->memberService->getByIdWithRelations($id, []);
         } catch (Exception $e) {
-            Log::error('MemberController@show: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->rError($e);
         }
-        return view('members.show', ['member' => $member]);
+        return view('members.show', compact('member'));
     }
 
     public function update(UpdateMemberRequest $request, $id)
@@ -77,35 +66,19 @@ class MemberController extends Controller
         try {
             $member = $this->memberService->update($request, $id);
         } catch (Exception $e) {
-            Log::error('MemberController@update: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Medlem opdateret',
-            'data' => $member
-        ], 200);
+        return $this->jSuccess('Medlem opdateret', $member);
     }
 
     public function destroy($id)
     {
         try {
-            $deleted = $this->memberService->deleteByID($id);
+            $deleted = $this->memberService->delete($id);
         } catch (Exception $e) {
-            Log::error('MemberController@destroy: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Medlem slettet',
-            'data' => $deleted
-        ], 200);
+        return $this->jSuccess('Medlem slettet', $deleted);
     }
 
     public function invite(CreateInvitationRequest $request)
@@ -113,17 +86,9 @@ class MemberController extends Controller
         try {
             $savedInvite = $this->inviteService->store($request);
         } catch (Exception $e) {
-            Log::error('MemberController@invite: ' . $e);
-            return response()->json([
-                'status' => 500,
-                'message' => json_encode($e->__toString())
-            ], 500);
+            return $this->jError($e);
         }
-        return response()->json([
-            'status' => 200,
-            'message' => 'Invitation sendt',
-            'data' => $savedInvite
-        ]);
+        return $this->jSuccess('Invitation afsendt', $savedInvite);
     }
 
     public function deleteInvite($id)
@@ -131,8 +96,7 @@ class MemberController extends Controller
         try {
             $this->inviteService->destroyByMemberId($id);
         } catch (Exception $e) {
-            Log::error('MemberController@deleteInvite: ' . $e);
-            return redirect()->back()->withErrors($this->error);
+            return $this->jError($e);
         }
         return redirect(route('member.show', ['member' => $id]));
     }
