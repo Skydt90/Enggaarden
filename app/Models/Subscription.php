@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Subscription
@@ -37,7 +37,6 @@ class Subscription extends Model
         'pay_date'
     ];
 
-    
     // relationships
     public function member() {
         return $this->belongsTo(Member::class);

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -60,7 +59,7 @@ class ExternalUser extends Authenticatable
     ];
 
     // relationships
-    public function member() 
+    public function member()
     {
         return $this->belongsTo(Member::class);
     }

@@ -2,12 +2,12 @@
 
 namespace App\Mail;
 
-use App\Models\Member;
-use App\Models\User;
-use App\Notifications\EmailFailed;
 use Exception;
+use App\Models\User;
+use App\Models\Member;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use App\Notifications\EmailFailed;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
 
@@ -17,21 +17,11 @@ class ExpiredNotification extends Mailable
 
     public $member;
 
-    /**
-     * Create a new message instance.
-     *
-     * @return void
-     */
     public function __construct(Member $member)
     {
         $this->member = $member;
     }
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
     public function build()
     {
 

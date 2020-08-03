@@ -2,12 +2,12 @@
 
 namespace App\Mail;
 
-use App\Models\Member;
-use App\Models\User;
-use App\Notifications\EmailFailed;
 use Exception;
+use App\Models\User;
+use App\Models\Member;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use App\Notifications\EmailFailed;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Notification;
 

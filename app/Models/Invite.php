@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use App\Mail\ExternalUserInvitation;
 use App\Mail\InviteExistingMember;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ExternalUserInvitation;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Models\Invite
@@ -49,7 +49,7 @@ class Invite extends Model
             $invite->expires_at = $expire;
             $link = URL::temporarySignedRoute('reg-ext', $expire, ['id' => $invite->member->id, 'email' => $invite->member->email]);
 
-            if($invite->member->created_at->addMinute()->isPast()) {
+            if ($invite->member->created_at->addMinute()->isPast()) {
                 Mail::to($invite->member->email)->queue(new InviteExistingMember($invite->member, $link, $expire));
             } else {
                 Mail::to($invite->member->email)->queue(new ExternalUserInvitation($invite->member, $link, $expire));

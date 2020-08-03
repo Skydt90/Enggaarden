@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Models\Member;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Http\FormRequest;
 
 class CreateMemberRequest extends FormRequest
 {
@@ -15,7 +16,7 @@ class CreateMemberRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
