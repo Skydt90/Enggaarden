@@ -6,7 +6,6 @@ use Exception;
 use App\Traits\Responses;
 use App\Http\Requests\EmailRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Services\Email\EmailServiceInterface;
 
 class SendEmailController extends Controller
@@ -23,10 +22,10 @@ class SendEmailController extends Controller
     public function show($id = null)
     {
         try {
-            $userEmails = Auth::user()->emails()->withRelations()->orderBy('id', 'desc')->take(12)->get(); // TODO
+            $userEmails = $this->emailService->getLatestUserEmails();
 
             if (isset($id)) {
-                $email = $this->emailService->getMemberEmail($id);
+                $email = $this->emailService->getMemberEmailAddress($id);
                 return view('emails.app-views.send-show', ['email' => $email, 'member_id' => $id, 'user_emails' => $userEmails]);
             } else {
                 return view('emails.app-views.send-show', ['user_emails' => $userEmails]);

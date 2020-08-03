@@ -2,7 +2,6 @@
 
 namespace App\Repositories\User;
 
-use App\Models\User;
 use App\Repositories\BaseRepo;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,30 +13,29 @@ class UserRepository extends BaseRepo implements UserRepoInterface
         $this->model = $user;
     }
 
-    public function getAll()
+    public function get()
     {
-        return User::orderBy('created_at', 'desc')->get();
+        return $this->model->orderBy('created_at', 'desc')->get();
     }
 
-    public function getById($id)
+    public function getCurrentUser()
     {
-        return User::findOrFail($id);
+        return Auth::user();
     }
 
-    /*public function delete($id)
+    public function getLatestUserEmails()
     {
-        $user = User::findOrFail($id);
-        return $user->delete();
-    }*/
+        return Auth::user()->emails()->withRelations()->orderBy('id', 'desc')->take(12)->get();
+    }
 
     public function getAllUserNotifications()
     {
         return Auth::user()->notifications;
     }
 
-    public function markAsRead($created)
+    public function markNotificationAsRead($created)
     {
-        $users = User::with('notifications')->get();
+        $users = $this->model->with('notifications')->get();
 
         foreach($users as $user) {
             foreach($user->notifications as $notification) {

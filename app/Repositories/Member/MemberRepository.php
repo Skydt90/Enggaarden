@@ -7,20 +7,6 @@ use App\Repositories\BaseRepo;
 
 class MemberRepository extends BaseRepo implements MemberRepoInterface
 {
-    /*
-     * public function getAll($amount);
-    public function getByID($id);
-    public function create($request);
-    public function storeAddressOnMember($member, $address);
-    public function storeSubscriptionOnMember($member, $subscription);
-    public function updateByID($request, $id);
-    public function deleteByID($id);
-    public function getEmailByID($id);
-    public function getEmailsByMemberType($type);
-    public function getAllEmails();
-    public function getEmailsByBoard();
-    public function getMemberCount();
-    * */
 
     public function __construct(Member $member)
     {
@@ -51,21 +37,9 @@ class MemberRepository extends BaseRepo implements MemberRepoInterface
         return $this->model->withRelations()->where($column, $value)->get();
     }
 
-    /**
-     * Always want all relationships on members, so second param is never used
-     *
-     * @param int $id
-     * @param array $relations
-     * @return Member
-     */
     public function getByIdWithRelations($id, $relations)
     {
         return $this->model->withRelations()->find($id);
-    }
-
-    public function getWithSubscriptions()
-    {
-        return Member::with(['subscriptions'])->get();
     }
 
     public function storeAddressOnMember($member, $address)
@@ -80,31 +54,18 @@ class MemberRepository extends BaseRepo implements MemberRepoInterface
         return $member;
     }
 
-    public function updateByID($request, $id)
+    public function getAllMemberEmails()
     {
-        $member = Member::findOrFail($id);
-        $member->fill($request->all());
-        $member->save();
-        return $member;
+        return $this->model->whereNotNull('email')->pluck('email');
     }
 
-    public function getAllEmails()
+    public function getEmailsWhere(string $column, $value)
     {
-        return Member::all()->whereNotNull('email')->pluck('email');
-    }
-
-    public function getEmailsByBoard()
-    {
-        return Member::all()->where('is_board', '==', 'Ja')->whereNotNull('email')->pluck('email');
-    }
-
-    public function getEmailsByMemberType($type)
-    {
-        return Member::all()->where('member_type', '==', $type)->whereNotNull('email')->pluck('email');
+        return $this->model->whereNotNull('email')->where($column, $value)->pluck('email');
     }
 
     public function getMemberCount()
     {
-        return Member::all()->count();
+        return $this->model->count();
     }
 }

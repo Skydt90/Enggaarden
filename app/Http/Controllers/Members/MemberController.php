@@ -29,7 +29,6 @@ class MemberController extends Controller
     public function index()
     {
         $this->pageSetup();
-
         try {
             $members = $this->memberService->getAllByType($this->type);
         } catch (Exception $e) {
@@ -44,7 +43,7 @@ class MemberController extends Controller
     public function store(CreateMemberRequest $request)
     {
         try {
-            $member = $this->memberService->create($request);
+            $member = $this->memberService->postMember($request);
         } catch (Exception $e) {
             return $this->jError($e);
         }
@@ -64,7 +63,7 @@ class MemberController extends Controller
     public function update(UpdateMemberRequest $request, $id)
     {
         try {
-            $member = $this->memberService->update($request, $id);
+            $member = $this->memberService->updateMember($request, $id);
         } catch (Exception $e) {
             return $this->jError($e);
         }

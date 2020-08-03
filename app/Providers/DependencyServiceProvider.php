@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\User\UserRepoInterface;
 use Illuminate\Support\ServiceProvider;
 
 use App\Services\Email\EmailService;
@@ -35,7 +36,8 @@ class DependencyServiceProvider extends ServiceProvider
         $this->app->singleton(EmailServiceInterface::class, function($app) {
             return new EmailService(
                 $app->make(EmailRepoInterface::class),
-                $app->make(MemberRepoInterface::class));
+                $app->make(MemberRepoInterface::class),
+                $app->make(UserRepoInterface::class));
         });
         // Invites
         $this->app->singleton(InviteServiceInterface::class, function($app) {

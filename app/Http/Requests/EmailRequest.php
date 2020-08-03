@@ -17,7 +17,7 @@ class EmailRequest extends FormRequest
     {
         return true;
     }
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -27,10 +27,10 @@ class EmailRequest extends FormRequest
     {
         return [
             'receiver' => 'sometimes|required|email',
-            'group'    => 'sometimes|required|' . Rule::in(Email::MAIL_GROUPS),
+//            'group'    => 'sometimes|required|' . Rule::in(Email::MAIL_GROUPS),
             'subject'  => 'required|string|max:30|min:2',
             'message'  => 'required|string|min:10',
-            'file'     => 'sometimes|file|mimes:pdf,txt,text,docx,xlsx,csv|max:250', 
+            'file'     => 'sometimes|file|mimes:pdf,txt,text,docx,xlsx,csv|max:250',
         ];
     }
 

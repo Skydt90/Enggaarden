@@ -8,9 +8,9 @@
 @section('content')
     <div class="container">
         <h2 class="text-center">Email</h2>
-        
+
         @toast @endtoast
-        
+
         <br>
         <br>
 
@@ -28,28 +28,28 @@
                                 <input type="email" name="email" class="form-control" readonly value="{{ $email ?? '' }}">
                             @else
                                 <select class="form-control" name="group">
-                                    @foreach (App\Models\Email::MAIL_GROUPS as $group)
-                                        <option value="{{ $group }}">
-                                            {{ $group }}
+                                    @foreach (App\Models\Email::MAIL_GROUPS as $group => $type)
+                                        <option value="{{ $group.','.$type }}">
+                                            {{ $group }}{{ $type == 'member_type' ? 'e' : '' }}
                                         </option>
                                     @endforeach
-                                </select>                       
+                                </select>
                             @endif
                         </div>
                         <div class="form-group col-md-6">
                             <label for="subject">Emne:</label>
                             <input type="text" name="subject" class="form-control" placeholder="Indtast emne" required="true">
                         </div>
-                        
-                    </div>    
-                    
+
+                    </div>
+
                     <div class="form-group">
                         <label for="message">Besked:</label>
                         <textarea class="form-control ck-editor" id="text-editor" name="message"></textarea>
                         <input type="file" name="file" class="mt-2 mb-n1">
                     </div>
-                    <input type="submit" class="btn btn-primary btn-block" value="Afsend"> 
-                </form>     
+                    <input type="submit" class="btn btn-primary btn-block" value="Afsend">
+                </form>
             </div>
             <div class="col-md-5">
                 <h4 class="text-center">Dine seneste 12 emails</h4>
@@ -68,16 +68,16 @@
                                 <td>{{ $email->group }}</td>
                             @else
                                 <td>{{ $email->member->email ?? 'Ukendt'}}</td>
-                            @endif        
+                            @endif
                             <td>{{ $email->subject }}</td>
                             <td><a data-toggle="tooltip" data-placement="top" title="Vis" href="{{ route('email.show', ['email' => $email]) }}"><i class="fas fa-eye"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>
-                </table>    
-            </div> 
+                </table>
+            </div>
         </div>
     </div>
-    
+
 
 @endsection

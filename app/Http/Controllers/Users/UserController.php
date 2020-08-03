@@ -23,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
         try {
-            $users = $this->userRepo->getAll();
+            $users = $this->userRepo->get();
         } catch (Exception $e) {
             return $this->rError($e);
         }
@@ -43,7 +43,7 @@ class UserController extends Controller
     public function markAsRead(Request $request)
     {
         try {
-            $this->userRepo->markAsRead($request->created_at);
+            $this->userRepo->markNotificationAsRead($request->created_at);
         } catch (Exception $e) {
             return $this->rError($e);
         }
@@ -60,6 +60,6 @@ class UserController extends Controller
         } catch (Exception $e) {
             return $this->jError($e);
         }
-        return $this->jSuccess('Bruger slettet korrekt', $user);
+        return $this->jSuccess('Bruger slettet', $user);
     }
 }

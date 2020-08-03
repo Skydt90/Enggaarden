@@ -29,14 +29,13 @@ class StatisticsController extends Controller
 
     public function index() {
         $year = now()->year;
-
         try {
             $owed = $this->statisticsRepo->getAmountNotPaid();
             $sum_year = $this->statisticsRepo->getTotalAmountForYear($year);
             $memberData = $this->statisticsRepo->getMembersAdded();
             $memberCount = $this->memberRepo->getMemberCount();
             $contributions = $this->statisticsRepo->getContributionsGrouped();
-            $subscriptionSum = $this->subscriptionRepo->getSum();
+            $subscriptionSum = $this->subscriptionRepo->getTotalSubscriptionSum();
         } catch (Exception $e) {
             return $this->rError($e);
         }

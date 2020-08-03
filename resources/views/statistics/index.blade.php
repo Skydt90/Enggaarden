@@ -5,14 +5,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             @include('statistics.piechartJS')
-            
+
             document.querySelector('.by-year').addEventListener('change', async function() {
                 let url      = `statistics/total/${this.value}`;
                 let response = await fetch(url);
                 let jData    = await response.json();
-                
-                if(jData.status == 200) {
-                    document.querySelector('.value').innerHTML = jData.amount;
+
+                if(jData.status === 200) {
+                    document.querySelector('.value').innerHTML = jData.data;
                 } else {
                     $.toastr.error.show('Noget gik galt');
                 }
@@ -31,7 +31,7 @@
                     </div>
                     <div class="card-body">
                         <div id="container">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -45,7 +45,7 @@
                         <p><strong>Antal medlemmer: </strong>{{ $memberCount }}</p>
                         <p><strong>Betalt kontingent i alt: </strong>{{ $subscriptionSum }} kr.</p>
                         <p><strong>Ubetalt kontingent: </strong>{{ $owed }} kr.</p>
-                        
+
                         <p style="display: inline"><strong>Betalt kontingent i: </strong></p>
                         <select name="by-year" id="by-year" class="by-year">
                             <option value="2020">2020</option>
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="card mt-3">
             <div class="card-header">
                 <h4 class="text-center">Tilkomne medlemmer</h4>
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         </div>
     </div>

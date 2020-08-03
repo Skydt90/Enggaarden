@@ -4,50 +4,55 @@ namespace App\Services\Email;
 
 use App\Services\BaseService;
 use App\Jobs\SendEmailToMembers;
+use App\Repositories\User\UserRepoInterface;
 use App\Repositories\Email\EmailRepoInterface;
 use App\Repositories\Member\MemberRepoInterface;
 
 class EmailService extends BaseService implements EmailServiceInterface
 {
+    private $userRepo;
     private $memberRepo;
 
-    public function __construct(EmailRepoInterface $emailRepo, MemberRepoInterface $memberRepo)
+    public function __construct(
+        EmailRepoInterface $emailRepo,
+        MemberRepoInterface $memberRepo,
+        UserRepoInterface $userRepo)
     {
         $this->repo = $emailRepo;
+        $this->userRepo = $userRepo;
         $this->memberRepo = $memberRepo;
     }
 
-    public function getMemberEmail($id)
+    public function getMemberEmailAddress($id)
     {
         return $this->memberRepo->getById($id)->email;
     }
 
+    public function getLatestUserEmails()
+    {
+        return $this->userRepo->getLatestUserEmails();
+    }
+
     public function sendEmail($request)
     {
-        $request->filled('group') ? $emails = $this->getEmailAddresses($request) : $emails = collect($request->email);
+        $request->filled('group') ? $emails = $this->getEmailsBasedOnGroup($request) : $emails = collect($request->email);
 
         SendEmailToMembers::dispatch($emails, $request->all());
 
         return $this->repo->create($request);
     }
 
-    private function getEmailAddresses($request)
+    private function getEmailsBasedOnGroup($request)
     {
         $group = $request->group;
+        $column = explode(',', $group)[1];
+        $value  = explode(',', $group)[0];
 
-        switch($group) {
-            case('Bestyrelsen'):
-                return $this->memberRepo->getEmailsByBoard();
-            case('Sekundære'):
-                return $this->memberRepo->getEmailsByMemberType('Sekundær');
-            case('Primære'):
-                return $this->memberRepo->getEmailsByMemberType('Primær');
-            case('Eksterne'):
-                return $this->memberRepo->getEmailsByMemberType('Ekstern');
-            case('Alle'):
-                return $this->memberRepo->getAllEmails();
-            default:
-                break;
+        if ($value === 'Alle') {
+            return $this->memberRepo->getAllMemberEmails();
+        } elseif ($value === 'Bestyrelsen') {
+            $value = 'Ja';
         }
+        return $this->memberRepo->getEmailsWhere($column, $value);
     }
 }

@@ -6,5 +6,7 @@ use App\Services\BaseServiceInterface;
 
 interface EmailServiceInterface extends BaseServiceInterface
 {
-    public function getMemberEmail(int $id);
+    public function getMemberEmailAddress(int $id);
+    public function getLatestUserEmails();
+    public function sendEmail($request);
 }

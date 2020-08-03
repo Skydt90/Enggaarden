@@ -27,8 +27,8 @@ class ContributionController extends Controller
         $this->pageSetup();
 
         try {
-            $contributions = $this->contributionService->getAll($this->amount);
-            $activityTypes = $this->contributionService->getAllActivities(false, $this->amount);
+            $activityTypes = $this->contributionService->getAllActivities();
+            $contributions = $this->contributionService->getPaginated($this->amount);
         } catch (Exception $e) {
             return $this->rError($e);
         }

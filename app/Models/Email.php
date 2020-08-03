@@ -40,7 +40,8 @@ class Email extends Model
 
     // static attributes for server validation
     public const MAIL_GROUPS = [
-        'Primære', 'Sekundære', 'Eksterne', 'Bestyrelsen', 'Alle' 
+        'Primær' => 'member_type', 'Sekundær' => 'member_type',
+        'Ekstern' => 'member_type', 'Bestyrelsen' => 'is_board', 'Alle' => 'Alle'
     ];
 
     // relationships

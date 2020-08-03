@@ -2,15 +2,14 @@
 
 namespace App\Services\Member;
 
-use Exception;
 use App\Services\BaseService;
 use App\Repositories\Member\MemberRepoInterface;
 use App\Repositories\Address\AddressRepoInterface;
 use App\Repositories\Subscription\SubscriptionRepoInterface;
-use Illuminate\Support\Facades\Log;
 
 class MemberService extends BaseService implements MemberServiceInterface
 {
+    private $request;
     private $addressRepo;
     private $subscriptionRepo;
 
@@ -24,21 +23,16 @@ class MemberService extends BaseService implements MemberServiceInterface
         $this->subscriptionRepo = $subscriptionRepo;
     }
 
-    public function sayHi()
-    {
-        Log::alert('JEG VIRKER!');
-    }
-
     public function getAllByType(string $type)
     {
-        switch($type) {
-            case 'all':
-                return $this->get();
-            case 'paid':
-                return $this->repo->getWherePaid();
-            case 'unpaid':
-                return $this->repo->getWhereNotPaid();
-
+        if ($type == 'all') {
+            return $this->get();
+        }
+        else if ($type == 'paid') {
+            return $this->repo->getWherePaid();
+        }
+        else if ($type == 'unpaid') {
+            return $this->repo->getWhereNotPaid();
         }
         $column = explode(',', $type)[0];
         $value  = explode(',', $type)[1];
@@ -46,55 +40,58 @@ class MemberService extends BaseService implements MemberServiceInterface
         return $this->getWhere($column, $value);
     }
 
-    public function create($request)
+    public function postMember($request)
+    {
+        $this->request = $request;
+        $this->request->type == 'member' ? $this->createMember() : $this->createCompany();
+
+        if ($this->hasAddress()) {
+            $this->addressRepo->create($this->request->all());
+        }
+        $this->subscriptionRepo->create($this->request->all());
+        return $this->getById($this->request->member_id);
+    }
+
+    public function updateMember($request, $id)
     {
         $type = $request->type;
 
-        switch($type) {
-            case 'member':
-                $member = $this->repo->create($request->all());
-                $amount = 100;
-                break;
-            case 'company':
-                $request->merge(['is_board' => 'Nej', 'is_company' => true, 'member_type' => 'Ekstern']);
-                $member = $this->repo->create($request->all());
-                $amount = 300;
-                break;
-            default:
-                throw new Exception('Unknown type');
+        if ($type == 'member') {
+            return $this->updateById($request, $id);
         }
-        $request->merge(['amount' => $amount, 'pay_date' => null]);
-
-        if ($this->hasAddress($request)) {
-            $member = $this->addressRepo->createOnMember($member, $request);
+        elseif ($type == 'address') {
+            return $this->addressRepo->updateByMemberID($request, $id);
         }
-        $member = $this->subscriptionRepo->createOnMember($member, $request);
-        return $member;
+        return $this->subscriptionRepo->updateByMemberID($request, $id);
     }
 
-    public function update($request, $id)
+    public function getTotalSubscriptionSum()
     {
-        $type = $request->type;
-
-        switch($type) {
-            case 'member':
-                return $this->repo->updateByID($request, $id);
-            case 'address':
-                return $this->addressRepo->updateByMemberID($request, $id);
-            case 'subscription':
-                return $this->subscriptionRepo->updateByMemberID($request, $id);
-            default:
-                throw new Exception('Unknown type');
-        }
+        return $this->subscriptionRepo->getTotalSubscriptionSum();
     }
 
-    public function getSubscriptionSum()
+    private function createMember()
     {
-        return $this->subscriptionRepo->getSum();
+        $amount = 100;
+        $member = $this->create($this->request);
+        $this->mergeMemberRequestData($member, $amount);
     }
 
-    private function hasAddress($request) : bool
+    private function createCompany()
     {
-        return $request->filled('street_name') || $request->filled('zip_code') || $request->filled('city');
+        $this->request->merge(['is_board' => 'Nej', 'is_company' => true, 'member_type' => 'Ekstern']);
+        $amount = 300;
+        $member = $this->create($this->request);
+        $this->mergeMemberRequestData($member, $amount);
+    }
+
+    private function mergeMemberRequestData($member, $amount): void
+    {
+        $this->request->merge(['member_id' => $member->id, 'amount' => $amount, 'pay_date' => null]);
+    }
+
+    private function hasAddress(): bool
+    {
+        return $this->request->filled('street_name') || $this->request->filled('zip_code') || $this->request->filled('city');
     }
 }

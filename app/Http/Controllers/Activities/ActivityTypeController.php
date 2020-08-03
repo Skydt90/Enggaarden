@@ -22,7 +22,7 @@ class ActivityTypeController extends Controller
     public function index()
     {
         try {
-            $activities = $this->activityTypeRepo->getAll();
+            $activities = $this->activityTypeRepo->get();
         } catch (Exception $e) {
             return $this->rError($e);
         }
@@ -32,7 +32,7 @@ class ActivityTypeController extends Controller
     public function store(CreateActivityTypeRequest $request)
     {
         try {
-            $activityType = $this->activityTypeRepo->store($request);
+            $activityType = $this->activityTypeRepo->create($request->all());
         } catch (Exception $e) {
             return $this->jError($e);
         }
@@ -42,7 +42,7 @@ class ActivityTypeController extends Controller
     public function update(CreateActivityTypeRequest $request, $id)
     {
         try {
-            $activityType = $this->activityTypeRepo->updateById($request, $id); // TODO
+            $activityType = $this->activityTypeRepo->updateById($request->validated(), $id);
         } catch (Exception $e) {
             return $this->jError($e);
         }

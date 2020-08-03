@@ -4,51 +4,27 @@ namespace App\Http\Controllers\ExternalUsers;
 
 use Exception;
 use App\Traits\Responses;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Repositories\User\UserRepoInterface;
 
 class ExternalUserController extends Controller
 {
     use Responses;
 
-    public function index()
-    {
-        //
-    }
+    private $userRepo;
 
-    public function create()
+    public function __construct(UserRepoInterface $userRepo)
     {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
+        $this->userRepo = $userRepo;
     }
 
     public function home()
     {
         try {
-            $user = Auth::user(); // TODO
+            $user = $this->userRepo->getCurrentUser();
         } catch(Exception $e) {
             return $this->rError($e);
         }
         return view('external_users.show', ['ex_user' => $user]);
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }
