@@ -79,4 +79,9 @@ class BaseRepo implements BaseRepoInterface
     {
         return $this->model->findOrFail($id)->destroy($id);
     }
+
+    public function deleteWhere($column, $value): bool
+    {
+        return $this->model->where($column, $value)->delete();
+    }
 }

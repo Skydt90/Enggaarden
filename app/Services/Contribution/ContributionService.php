@@ -33,16 +33,15 @@ class ContributionService extends BaseService implements ContributionServiceInte
         $activity = $this->activityTypeRepo->getWhere('activity_type', $request->activity_type);
         $request->merge(['activity_type_id' => $activity->id]);
 
-        return $this->repo->store($request);
+        return $this->create($request);
     }
 
-    public function update($request, $id)
+    public function updateById($request, $id)
     {
-        // If the activity_type has not been changed the id will be null
         if ($request->activity_type != null) {
             $activity = $this->activityTypeRepo->getWhere('activity_type', $request->activity_type);
             $request->merge(['activity_type_id' => $activity->id]);
         }
-        return $this->repo->updateById($request, $id);
+        return $this->repo->updateById($request->all(), $id);
     }
 }

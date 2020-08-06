@@ -32,4 +32,5 @@ interface BaseRepoInterface
       Delete
     */
     public function delete(int $id): bool;
+    public function deleteWhere($column, $value): bool;
 }

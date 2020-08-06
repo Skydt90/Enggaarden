@@ -14,7 +14,7 @@ class SubscriptionRepository extends BaseRepo implements SubscriptionRepoInterfa
 
     public function updateByMemberID($request, $id)
     {
-        $subscription = $this->model->firstOrCreate(['member_id' => $id]);
+        $subscription = $this->firstOrCreate(['member_id' => $id]);
         $subscription->fill($request->validated());
         $subscription->save();
         return $subscription;

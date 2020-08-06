@@ -39,7 +39,7 @@ class EmailService extends BaseService implements EmailServiceInterface
 
         SendEmailToMembers::dispatch($emails, $request->all());
 
-        return $this->repo->create($request);
+        return $this->emailSentByUser($request);
     }
 
     private function getEmailsBasedOnGroup($request)
@@ -54,5 +54,12 @@ class EmailService extends BaseService implements EmailServiceInterface
             $value = 'Ja';
         }
         return $this->memberRepo->getEmailsWhere($column, $value);
+    }
+
+    private function emailSentByUser($request)
+    {
+        $request->merge(['user_id' => $this->userRepo->getCurrentUser()->id]);
+
+        return $this->create($request);
     }
 }

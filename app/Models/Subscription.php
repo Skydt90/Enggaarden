@@ -43,6 +43,7 @@ class Subscription extends Model
     }
 
     // adding global scope to sort by newest entry
+    // if removed, fix sub update in repo
     protected static function boot()
     {
         parent::boot();

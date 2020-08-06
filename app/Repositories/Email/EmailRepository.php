@@ -14,19 +14,8 @@ class EmailRepository extends BaseRepo implements EmailRepoInterface
         $this->model = $email;
     }
 
-    public function create($request)
-    {
-        $request->merge(['user_id' => Auth::user()->id]);
-        return Email::create($request->all());
-    }
-
     public function getWithRelations(array $relations)
     {
         return $this->model->with($relations)->paginate();
-    }
-
-    public function deleteByID($id)
-    {
-        return Email::findOrFail($id)->destroy($id);
     }
 }

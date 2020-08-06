@@ -83,7 +83,7 @@ class MemberController extends Controller
     public function invite(CreateInvitationRequest $request)
     {
         try {
-            $savedInvite = $this->inviteService->store($request);
+            $savedInvite = $this->inviteService->create($request);
         } catch (Exception $e) {
             return $this->jError($e);
         }
@@ -93,7 +93,7 @@ class MemberController extends Controller
     public function deleteInvite($id)
     {
         try {
-            $this->inviteService->destroyByMemberId($id);
+            $this->inviteService->deleteWhere('member_id', $id);
         } catch (Exception $e) {
             return $this->jError($e);
         }

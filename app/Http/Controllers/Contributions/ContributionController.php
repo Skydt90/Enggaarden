@@ -53,7 +53,7 @@ class ContributionController extends Controller
     public function show($id)
     {
         try {
-            $activities = $this->contributionService->getAllActivities(false, 5000); // amount is not optional. Hence big num hardcode here for now
+            $activities = $this->contributionService->getAllActivities();
             $contribution = $this->contributionService->getByID($id);
         } catch (Exception $e) {
             return $this->rError($e);
@@ -63,8 +63,8 @@ class ContributionController extends Controller
 
     public function update(UpdateContributionRequest $request, $id)
     {
-        try{
-            $contribution = $this->contributionService->update($request, $id);
+        try {
+            $contribution = $this->contributionService->updateById($request, $id);
         } catch (Exception $e) {
             return $this->jError($e);
         }
@@ -73,7 +73,7 @@ class ContributionController extends Controller
 
     public function destroy($id)
     {
-        try{
+        try {
             $contribution = $this->contributionService->delete($id);
         } catch (Exception $e) {
             return $this->jError($e);

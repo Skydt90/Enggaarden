@@ -25,7 +25,7 @@ class CleanInvites extends Command
     public function handle()
     {
         try {
-            $invites = $this->inviteRepo->getAll();
+            $invites = $this->inviteRepo->get();
 
             foreach ($invites as $invite) {
                 if ($invite->expires_at->isPast()) {

@@ -7,7 +7,6 @@ use App\Models\Subscription;
 use App\Repositories\BaseRepo;
 use Illuminate\Support\Facades\DB;
 
-
 class StatisticsRepository extends BaseRepo implements StatisticRepoInterface
 {
 

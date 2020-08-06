@@ -17,48 +17,4 @@ class MemberObserver
     {
         Invite::create(['member_id' => $member->id]);
     }
-
-    /**
-     * Handle the member "updated" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
-    public function updated(Member $member)
-    {
-        //
-    }
-
-    /**
-     * Handle the member "deleted" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
-    public function deleted(Member $member)
-    {
-        //
-    }
-
-    /**
-     * Handle the member "restored" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
-    public function restored(Member $member)
-    {
-        //
-    }
-
-    /**
-     * Handle the member "force deleted" event.
-     *
-     * @param  \App\Models\Member  $member
-     * @return void
-     */
-    public function forceDeleted(Member $member)
-    {
-        //
-    }
 }

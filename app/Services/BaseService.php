@@ -65,4 +65,9 @@ class BaseService implements BaseServiceInterface
     {
         return $this->repo->delete($id);
     }
+
+    public function deleteWhere($column, $value): bool
+    {
+        return $this->repo->deleteWhere($column, $value);
+    }
 }
