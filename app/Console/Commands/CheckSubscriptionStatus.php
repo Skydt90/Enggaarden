@@ -42,7 +42,7 @@ class CheckSubscriptionStatus extends Command
                     Log::info($member->first_name . '\'s medlemskab er udløbet');
 
                     $this->count++;
-                    $member->is_company ? $amount = 300 : $amount = 100;
+                    $member->is_company ? $amount = 300 : $amount = 150;
                     $this->memberRepo->storeSubscriptionOnMember($member, new Subscription(['amount' => $amount]));
 
                     if ($this->memberHasEmailAddress($member)) {
