@@ -72,7 +72,7 @@ class MemberService extends BaseService implements MemberServiceInterface
 
     private function createMember()
     {
-        $amount = 100;
+        $amount = 150;
         $member = $this->create($this->request);
         $this->mergeMemberRequestData($member, $amount);
     }
