@@ -38,22 +38,32 @@ class CheckSubscriptionStatus extends Command
 
         try {
             $this->members->each(function($member) {
+
                 if ($this->subscriptionWasPayedMoreThanAYearAgo($member)) {
                     Log::info($member->first_name . '\'s medlemskab er udløbet');
 
                     $this->count++;
-                    $member->is_company ? $amount = 300 : $amount = 150;
+
+                    if ($member->is_company) {
+                        $amount = 300;
+                    } else {
+                        $amount = $member->member_type === 'Primær' ? 150 : 100;
+                    }
+
                     $this->memberRepo->storeSubscriptionOnMember($member, new Subscription(['amount' => $amount]));
 
                     if ($this->memberHasEmailAddress($member)) {
                         Mail::to($member->email)->queue(new ExpiredNotification($member));
+                        $member->update(['last_reminder_sent_at' => now()]);
                     }
                 }
             });
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             Log::error('CheckSubscriptionStatus: ' . $e);
             Notification::send($this->users, new SubscriptionUpdateFailed($e));
         }
+
         Log::info("Finished check with: $this->count expirations found");
     }
 
@@ -68,7 +78,7 @@ class CheckSubscriptionStatus extends Command
         return true;
     }
 
-    private function setupData()
+    private function setupData(): void
     {
         $this->count = 0;
         $this->users = $this->userRepo->get();

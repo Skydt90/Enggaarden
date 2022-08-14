@@ -13,7 +13,7 @@
         @empty($member->email)
             <div class="alert alert-danger text-center" role="alert">
                <strong>OBS! Ændringer fortaget her, gemmes ikke før der er tilføjet en email!</strong>
-            </div>    
+            </div>
         @endempty
         <br>
         {{-- Member Details --}}
@@ -24,15 +24,15 @@
                     @method('PUT')
                     <div class="row">
                         <input type="hidden" name="type" value="member">
-                        
+
                         @if (!$member->is_company)
                             <label for="first_name" class="col-md-3"><strong>Fornavn:</strong></label>
                         @else
-                            <label for="first_name" class="col-md-3"><strong>Firmanavn:</strong></label>    
-                        @endif                   
-                        <input type="text" autocomplete="off" class="form-control col-md-9 input" name="first_name" value="{{ $member->first_name }}"> 
+                            <label for="first_name" class="col-md-3"><strong>Firmanavn:</strong></label>
+                        @endif
+                        <input type="text" autocomplete="off" class="form-control col-md-9 input" name="first_name" value="{{ $member->first_name }}">
                         <br><br>
-                        
+
                         @if (!$member->is_company)
                             <label for="last_name" class="col-md-3"><strong>Efternavn:</strong></label>
                             <input type="text" autocomplete="off" class="form-control col-md-9 input" name="last_name" value="{{ $member->last_name ?? null }}">
@@ -45,7 +45,7 @@
 
                         <label for="member_type" class="col-md-3"><strong>Medlemstype:</strong></label>
                         @if ($member->is_company)
-                            <input type="text" class="form-control col-md-9 input" readonly value="{{ $member->member_type }}">                            
+                            <input type="text" class="form-control col-md-9 input" readonly value="{{ $member->member_type }}">
                         @else
                             <select class="form-control col-md-9 member-type" name="member_type">
                                 <option value="" selected disabled hidden>{{ $member->member_type }}</option>
@@ -58,7 +58,7 @@
                         @endif
                         </select>
                         <br><br>
-    
+
                         <label for="is_board" class="col-md-3"><strong>Bestyrelsesmedlem:</strong></label>
                         <select class="form-control col-md-9 is-board" name="is_board">
                             <option value="" selected disabled hidden>{{ $member->is_board }}</option>
@@ -69,9 +69,9 @@
                             @endforeach
                         </select>
                         <br><br>
-    
+
                         <label for="phone_number" class="col-md-3"><strong>Mobil:</strong></label>
-                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="phone_number" value="{{ $member->phone_number === 0 ? '' : $member->phone_number }}">                       
+                        <input type="number" autocomplete="off" class="form-control col-md-9 input" name="phone_number" value="{{ $member->phone_number === 0 ? '' : $member->phone_number }}">
                         <br><br>
                     </div>
                 </form>
@@ -100,19 +100,19 @@
                         <label for="street_name" class="col-md-3"><strong>Vejnavn og nummer:</strong></label>
                         <input type="text" autocomplete="off" class="form-control col-md-9 input" name="street_name" value="{{ $member->address->street_name ?? null }}">
                         <br><br>
-    
+
                         <label for="zip_code" class="col-md-3"><strong>Postnummer:</strong></label>
                         <input type="number" autocomplete="off" class="form-control col-md-9 input" name="zip_code" value="{{ $member->address->zip_code ?? null }}">
                         <br><br>
-                        
+
                         <label for="city" class="col-md-3"><strong>By:</strong></label>
                         <input type="text" autocomplete="off" class="form-control col-md-9 input" name="city" value="{{ $member->address->city ?? null}}">
                         <br><br>
                     </div>
                 </form>
-            </div>           
+            </div>
             {{-- Payments --}}
-            <div class="col md-4">            
+            <div class="col md-4">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="text-center">Kontingentoversigt</h4>
@@ -128,7 +128,7 @@
                                     @foreach ($member->subscriptions as $subscription)
                                         <tr>
                                             @if (is_null($subscription->pay_date))
-                                                <?php continue; ?>      
+                                                <?php continue; ?>
                                             @else
                                                 <td>{{ $subscription->pay_date->format('j\\. M Y') }}</td>
                                                 <td>{{ $subscription->amount }} kr.</td>
@@ -138,12 +138,12 @@
                                 @else
                                     <p class="lead text-center">Ingen betalinger endnu</p>
                                 @endif
-                            </tbody>   
+                            </tbody>
                         </table>
                     </div>
                 </div>
                 <br>
-                {{-- Infomation --}}   
+                {{-- Infomation --}}
                 <div class="card">
                     <div class="card-header">
                         <h4 class="text-center">Info</h4>
@@ -159,6 +159,12 @@
 
                             <p class="col-md-5"><strong>Har en bruger:</strong></p>
                             <p class="col-md-7">{{ $member->externalUser ? 'Ja' : 'Nej' }}</p>
+
+                            <p class="col-md-5"><strong>Fornyelsesmail:</strong></p>
+                            @if(!is_null($member->last_reminder_sent_at))
+                                <p class="col-md-7">{{ $member->last_reminder_sent_at->format('j\\. F Y') ?? '' }}</p>
+                            @endif
+
                             @if ($member->invite)
                                 <p class="col-md-5"><strong>Invitation sendt: </strong></p>
                                 <p class="col-md-7"><a href="" class="btn btn-danger btn-sm" onclick="event.preventDefault();
@@ -171,11 +177,11 @@
                             @endif
                         </div>
                     </div>
-                </div>      
+                </div>
             </div>
         </div>
         <br>
         <a href="{{ route('member.index') }}" class="btn btn-warning btn-sm">Tilbage</a>
         <button type="button" id="success" data-toggle="modal" data-target="#success-modal" style="display:none"></button>
-    </div>    		
+    </div>
 @endsection
